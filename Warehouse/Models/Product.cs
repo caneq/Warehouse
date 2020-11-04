@@ -18,5 +18,6 @@ namespace Warehouse.Models
         public int ManufactureCountryId { get; set; }
         public Country ManufactureCountry { get; set; }
         public int CountInStock { get; set; }
+        public List<Url> Pictures { get; set; }
     }
 }

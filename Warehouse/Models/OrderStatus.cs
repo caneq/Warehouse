@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Warehouse.Models
 {
-    public enum OrderStatus
+    public class OrderStatus
     {
-        WaitingForPayment,
-        Completed,
+        public int OrderStatusId { get; set; }
+        public string OrderStatusString { get; set; }
     }
 }

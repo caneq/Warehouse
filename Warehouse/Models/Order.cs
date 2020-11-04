@@ -8,12 +8,12 @@ namespace Warehouse.Models
 {
     public class Order
     {
-        public int OrderId;
-        public DateTime OrderDate;
-        public int UserId;
-        public IdentityUser User;
-        public List<(Product, float)> Products;
-        public float TotalPrice;
-        public OrderStatus OrderStatus;
+        public int OrderId { get; set; }
+        public DateTime OrderDate { get; set; }
+        public int UserId { get; set; }
+        public IdentityUser User { get; set; }
+        public List<OrderItem> Items { get; set; }
+        public float TotalPrice { get; set; }
+        public OrderStatus OrderStatus { get; set; }
     }
 }

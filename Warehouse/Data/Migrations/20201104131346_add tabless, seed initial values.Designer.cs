@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Warehouse.Data;
 
 namespace Warehouse.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201104131346_add tabless, seed initial values")]
+    partial class addtablessseedinitialvalues
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -232,23 +234,6 @@ namespace Warehouse.Data.Migrations
                     b.HasKey("CountryId");
 
                     b.ToTable("Countries");
-
-                    b.HasData(
-                        new
-                        {
-                            CountryId = 1,
-                            Name = "Китай"
-                        },
-                        new
-                        {
-                            CountryId = 2,
-                            Name = "Беларусь"
-                        },
-                        new
-                        {
-                            CountryId = 3,
-                            Name = "Россия"
-                        });
                 });
 
             modelBuilder.Entity("Warehouse.Models.Order", b =>
@@ -320,23 +305,6 @@ namespace Warehouse.Data.Migrations
                     b.HasKey("OrderStatusId");
 
                     b.ToTable("OrderStatuses");
-
-                    b.HasData(
-                        new
-                        {
-                            OrderStatusId = 1,
-                            OrderStatusString = "Ожидание оплаты"
-                        },
-                        new
-                        {
-                            OrderStatusId = 2,
-                            OrderStatusString = "Ожидание доставки"
-                        },
-                        new
-                        {
-                            OrderStatusId = 3,
-                            OrderStatusString = "Завершен"
-                        });
                 });
 
             modelBuilder.Entity("Warehouse.Models.Product", b =>
@@ -377,44 +345,6 @@ namespace Warehouse.Data.Migrations
                     b.HasIndex("UnitId");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductId = 1,
-                            CountInStock = 10,
-                            Description = "",
-                            ManufactureCountryId = 1,
-                            Name = "Материнская плата ASRock X370 Pro4",
-                            Price = 300f,
-                            ShelfLife = 2147483647,
-                            UnitId = 1,
-                            Weight = 0.2f
-                        },
-                        new
-                        {
-                            ProductId = 2,
-                            CountInStock = 14,
-                            Description = "",
-                            ManufactureCountryId = 1,
-                            Name = "Процессор AMD Ryzen 7 2700",
-                            Price = 210f,
-                            ShelfLife = 2147483647,
-                            UnitId = 1,
-                            Weight = 0.4f
-                        },
-                        new
-                        {
-                            ProductId = 3,
-                            CountInStock = 30,
-                            Description = "",
-                            ManufactureCountryId = 1,
-                            Name = "Твердотельный накопитель Samsung 970 EVO Plus 500 GB",
-                            Price = 270f,
-                            ShelfLife = 2147483647,
-                            UnitId = 1,
-                            Weight = 0.3f
-                        });
                 });
 
             modelBuilder.Entity("Warehouse.Models.Unit", b =>
@@ -430,23 +360,6 @@ namespace Warehouse.Data.Migrations
                     b.HasKey("UnitId");
 
                     b.ToTable("Units");
-
-                    b.HasData(
-                        new
-                        {
-                            UnitId = 1,
-                            UnitString = "шт"
-                        },
-                        new
-                        {
-                            UnitId = 2,
-                            UnitString = "л."
-                        },
-                        new
-                        {
-                            UnitId = 3,
-                            UnitString = "кг"
-                        });
                 });
 
             modelBuilder.Entity("Warehouse.Models.Url", b =>
@@ -456,7 +369,7 @@ namespace Warehouse.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ProductId")
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<string>("UrlString")
@@ -467,20 +380,6 @@ namespace Warehouse.Data.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("Uris");
-
-                    b.HasData(
-                        new
-                        {
-                            UrlId = 1,
-                            ProductId = 1,
-                            UrlString = "https://avatars.mds.yandex.net/get-mpic/1365202/img_id7828880432754619849.png/orig"
-                        },
-                        new
-                        {
-                            UrlId = 2,
-                            ProductId = 1,
-                            UrlString = "https://avatars.mds.yandex.net/get-mpic/1056698/img_id5528712325692372091.png/orig"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -577,9 +476,7 @@ namespace Warehouse.Data.Migrations
                 {
                     b.HasOne("Warehouse.Models.Product", null)
                         .WithMany("Pictures")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProductId");
                 });
 #pragma warning restore 612, 618
         }
