@@ -33,6 +33,10 @@ namespace Warehouse
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
+
+            services.AddControllersWithViews();
+
+            services.AddMvcCore().AddAuthorization().AddDataAnnotations();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,8 +54,10 @@ namespace Warehouse
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseStatusCodePages();
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -60,7 +66,11 @@ namespace Warehouse
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                     name: "default",
+                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+
             });
         }
     }

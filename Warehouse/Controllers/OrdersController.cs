@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 
 namespace Warehouse.Controllers
 {
+    [Authorize]
     public class OrdersController : Controller
     {
         // GET: Orders
+        [Authorize]
         public ActionResult Index()
         {
             return View();
