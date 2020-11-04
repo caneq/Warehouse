@@ -4,15 +4,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Warehouse.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Warehouse.Controllers
 {
     public class ProductsController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
+        public ProductsController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         // GET: Products
         public ActionResult Index()
         {
-            return View();
+            
+            return View(_context.Products.Include(p => p.Pictures).Include(p => p.Unit).Include(p=>p.ManufactureCountry).AsEnumerable());
         }
 
         // GET: Products/Details/5

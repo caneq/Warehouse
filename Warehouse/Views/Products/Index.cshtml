@@ -1,0 +1,33 @@
+﻿@using Warehouse.Models;
+@model IEnumerable<Product>
+@{
+
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+
+}
+
+<h1>Products Index</h1>
+
+@foreach (Product p in Model)
+{
+    <div class="card lg-12" style="max-width: 768px; margin-bottom: 10px">
+        <div class="row no-gutters">
+            <div class="col-lg-4">
+                <img src="@p?.Pictures.FirstOrDefault()" class="card-img" alt="..." style="max-height:220px;max-width:220px">
+            </div>
+            <div class="col-lg-7">
+                <div class="card-body">
+                    <h5 class="card-title">@p.Name</h5>
+                    <p class="card-text">@p.Description</p>
+                    <p class="card-text"><small class="text-muted">На складе @p.CountInStock @p?.Unit </small></p>
+                    <p class="card-text"><small class="text-muted">Страна происхождения: @p.ManufactureCountry </small></p>
+                </div>
+            </div>
+            <div class="col-sm-1">
+                <h6><b>@p.Price Руб</b></h6>
+            </div>
+        </div>
+    </div>
+
+}
