@@ -34,7 +34,7 @@ namespace Warehouse
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             services.AddMvcCore().AddAuthorization().AddDataAnnotations();
         }

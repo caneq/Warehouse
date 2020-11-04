@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Warehouse.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Warehouse.Controllers
 {
@@ -20,7 +21,8 @@ namespace Warehouse.Controllers
         // GET: Products
         public ActionResult Index()
         {
-            return View();
+            
+            return View(_context.Products.Include(p => p.Pictures).Include(p => p.Unit).Include(p=>p.ManufactureCountry).AsEnumerable());
         }
 
         // GET: Products/Details/5

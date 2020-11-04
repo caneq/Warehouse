@@ -10,5 +10,10 @@ namespace Warehouse.Models
         public int UrlId { get; set; }
         public int ProductId { get; set; }
         public string UrlString { get; set; }
+
+        public override string ToString()
+        {
+            return UrlString;
+        }
     }
 }

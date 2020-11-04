@@ -9,5 +9,10 @@ namespace Warehouse.Models
     {
         public int OrderStatusId { get; set; }
         public string OrderStatusString { get; set; }
+
+        public override string ToString()
+        {
+            return OrderStatusString;
+        }
     }
 }

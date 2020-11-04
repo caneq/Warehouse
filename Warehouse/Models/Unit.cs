@@ -9,5 +9,10 @@ namespace Warehouse.Models
     {
         public int UnitId { get; set; }
         public string UnitString { get; set; }
+
+        public override string ToString()
+        {
+            return UnitString;
+        }
     }
 }
