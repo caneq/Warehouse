@@ -20,7 +20,7 @@ namespace Warehouse.Controllers
         // GET: Cart
         public ActionResult Index()
         {
-            return View(_context.Products.Include(p => p.Pictures).Include(p => p.Unit).Include(p => p.ManufactureCountry).AsEnumerable());
+            return View(_context.Products.Skip(3).Include(p => p.Pictures).Include(p => p.Unit).Include(p => p.ManufactureCountry).AsEnumerable());
         }
 
         // GET: Cart/Details/5

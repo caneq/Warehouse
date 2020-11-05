@@ -39,9 +39,9 @@ namespace Warehouse.Controllers
             l.Add(new Order { OrderDate = DateTime.Now, OrderId = 2, UserId = 1, OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() });
             
             items = new OrderItem[]{
-                new OrderItem{ OrderItemId = 1, Price = 220.2f, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
-                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.ProductId == 2)},
-                new OrderItem{ OrderItemId = 2, Price = 150, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+                new OrderItem{ OrderItemId = 3, Price = 3999.99f, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.ProductId == 5)},
+                new OrderItem{ OrderItemId = 4, Price = 260.99f, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
                     .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.ProductId == 3)},
 
             };
