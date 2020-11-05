@@ -6,6 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\20201105131251_add cart product many to many 2.cs" />
+    <Compile Remove="Data\Migrations\20201105131251_add cart product many to many 2.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Pages\Shared\_CarouselPartial.cshtml" />
     <Content Remove="Views\Products\Details.cshtml" />
   </ItemGroup>

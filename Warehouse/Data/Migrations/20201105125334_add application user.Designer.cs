@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Warehouse.Data;
 
 namespace Warehouse.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201105125334_add application user")]
+    partial class addapplicationuser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -240,28 +242,6 @@ namespace Warehouse.Data.Migrations
                     b.ToTable("Carts");
                 });
 
-            modelBuilder.Entity("Warehouse.Models.CartProduct", b =>
-                {
-                    b.Property<int>("CartProductId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CartId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CartProductId");
-
-                    b.HasIndex("CartId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("CartProduct");
-                });
-
             modelBuilder.Entity("Warehouse.Models.Country", b =>
                 {
                     b.Property<int>("CountryId")
@@ -394,6 +374,9 @@ namespace Warehouse.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("CartId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CountInStock")
                         .HasColumnType("int");
 
@@ -419,6 +402,8 @@ namespace Warehouse.Data.Migrations
                         .HasColumnType("real");
 
                     b.HasKey("ProductId");
+
+                    b.HasIndex("CartId");
 
                     b.HasIndex("ManufactureCountryId");
 
@@ -606,21 +591,6 @@ namespace Warehouse.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Warehouse.Models.CartProduct", b =>
-                {
-                    b.HasOne("Warehouse.Models.Cart", null)
-                        .WithMany("CartProducts")
-                        .HasForeignKey("CartId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Warehouse.Models.Product", null)
-                        .WithMany("CartProducts")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Warehouse.Models.Order", b =>
                 {
                     b.HasOne("Warehouse.Data.ApplicationUser", null)
@@ -651,6 +621,10 @@ namespace Warehouse.Data.Migrations
 
             modelBuilder.Entity("Warehouse.Models.Product", b =>
                 {
+                    b.HasOne("Warehouse.Models.Cart", null)
+                        .WithMany("Products")
+                        .HasForeignKey("CartId");
+
                     b.HasOne("Warehouse.Models.Country", "ManufactureCountry")
                         .WithMany()
                         .HasForeignKey("ManufactureCountryId")
