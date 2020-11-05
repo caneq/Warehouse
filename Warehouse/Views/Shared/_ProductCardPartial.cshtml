@@ -1,0 +1,21 @@
+﻿@using Warehouse.Models
+@model Product
+
+    <div class="card card-secondary lg-12">
+        <div class="row no-gutters">
+            <div class="col-lg-2">
+                <img src="@Model.Pictures.FirstOrDefault()" class="card-img" alt="...">
+            </div>
+            <div class="col-lg-9">
+                <div class="card-body">
+                    <h6 class="card-title"><a asp-action="Details" asp-route-id="@Model.ProductId">@Model.Name</a></h6>
+                    <p class="card-text" style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">@Model.Description</p>
+                </div>
+            </div>
+            <div class="col-sm-1">
+                <h6><b>@Model.Price Руб</b></h6>
+                <h6 class="text-muted">@Model.ManufactureCountry</h6>
+                <h6 class=" @(@Model.CountInStock < 12? "red-higlight": "text-muted" ) ">@Model.CountInStock @Model?.Unit</h6>
+            </div>
+        </div>
+    </div>

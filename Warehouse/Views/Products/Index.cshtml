@@ -11,25 +11,5 @@
 
 @foreach (Product p in Model)
 {
-    <div class="card card-secondary lg-12">
-        <div class="row no-gutters">
-            <div class="col-lg-2">
-                <img src="@p?.Pictures.FirstOrDefault()" class="card-img" alt="...">
-            </div>
-            <div class="col-lg-9">
-                <div class="card-body">
-                    <h6 class="card-title"><a asp-action="Details" asp-route-id="@p.ProductId">@p.Name</a></h6>
-                    <p class="card-text" style="        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;">@p.Description</p>
-                </div>
-            </div>
-            <div class="col-sm-1">
-                <h6><b>@p.Price Руб</b></h6>
-                <h6 class="text-muted">@p.ManufactureCountry</h6>
-                <h6 class=" @(@p.CountInStock < 12? "red-higlight": "text-muted" ) ">@p.CountInStock @p?.Unit</h6>
-            </div>
-        </div>
-    </div>
-
+    @await Html.PartialAsync("_ProductCardPartial", p)
 }
