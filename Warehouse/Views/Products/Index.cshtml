@@ -24,6 +24,10 @@
     }
 </style>
 
+<div class="md-form active-cyan-2 mb-3 lg-12" style="max-width: 768px">
+    <input class="form-control" type="text" placeholder="Искать" aria-label="Искать">
+</div>
+
 @foreach (Product p in Model)
 {
     <div class="card lg-12">
@@ -34,7 +38,9 @@
             <div class="col-lg-9">
                 <div class="card-body">
                     <h6 class="card-title"><a asp-action="Details" asp-route-id="@p.ProductId">@p.Name</a></h6>
-                    <p class="card-text" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">@p.Description</p>
+                    <p class="card-text" style="        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;">@p.Description</p>
                 </div>
             </div>
             <div class="col-sm-1">
