@@ -65,13 +65,13 @@ namespace Warehouse.Data
             builder.Entity<Product>().HasData(
                 new Product[]
                 {
-                    new Product { ProductId = 1, Name = "Материнская плата ASRock X370 Pro4", Description = "",
+                    new Product { ProductId = 1, Name = "Материнская плата ASRock X370 Pro4", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                         CountInStock = 10, Price = 300.0f, ShelfLife = int.MaxValue, Weight = 0.2f,
                         UnitId = 1, ManufactureCountryId = 1 },
-                    new Product { ProductId = 2, Name = "Процессор AMD Ryzen 7 2700", Description = "",
+                    new Product { ProductId = 2, Name = "Процессор AMD Ryzen 7 2700", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                         CountInStock = 14, Price = 210.0f, ShelfLife = int.MaxValue, Weight = 0.4f,
                         UnitId = 1, ManufactureCountryId = 1 },
-                    new Product { ProductId = 3, Name = "Твердотельный накопитель Samsung 970 EVO Plus 500 GB", Description = "",
+                    new Product { ProductId = 3, Name = "Твердотельный накопитель Samsung 970 EVO Plus 500 GB", Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                         CountInStock = 30, Price = 270.0f, ShelfLife = int.MaxValue, Weight = 0.3f,
                         UnitId = 1, ManufactureCountryId = 1 },
                 }

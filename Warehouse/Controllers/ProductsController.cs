@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Warehouse.Data;
 using Microsoft.EntityFrameworkCore;
+using Warehouse.Models;
 
 namespace Warehouse.Controllers
 {
@@ -26,9 +27,18 @@ namespace Warehouse.Controllers
         }
 
         // GET: Products/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            try
+            {
+                Product p = await _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+                    .Include(p => p.ManufactureCountry).FirstAsync(p => p.ProductId == id);
+                return View(p);
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
 
         // GET: Products/Create
