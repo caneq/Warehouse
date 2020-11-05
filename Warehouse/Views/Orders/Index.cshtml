@@ -9,7 +9,7 @@
 
 @foreach (Order o in Model)
 {
-    <div class="card">
+    <div class="card margin-bottom-15px">
         <a asp-action="Details" asp-route-id="@o.OrderId" class="card-title" style="margin-left:30px;">Заказ №@o.OrderId @o.OrderDate</a>
         <div class="card-body">
             <div class="row">
@@ -40,7 +40,7 @@
                     <div class="card">
                         <div class="text-center">
                             <div class="card-title">Состояние заказа:</div>
-                            <p class="card-text">Ожидание оплаты</p>
+                            <p class="card-text">@o.OrderStatus</p>
                         </div>
                     </div>
                 </div>

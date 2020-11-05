@@ -36,7 +36,18 @@ namespace Warehouse.Controllers
 
 
             var l = new List<Order>();
-            l.Add(new Order { OrderDate = DateTime.Now, OrderId = 1, UserId = 1, OrderStatus = new OrderStatus { OrderStatusId = 1 }, TotalPrice = resultPrice, Items = items.ToList() });
+            l.Add(new Order { OrderDate = DateTime.Now, OrderId = 2, UserId = 1, OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() });
+            
+            items = new OrderItem[]{
+                new OrderItem{ OrderItemId = 1, Price = 220.2f, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.ProductId == 2)},
+                new OrderItem{ OrderItemId = 2, Price = 150, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.ProductId == 3)},
+
+            };
+            resultPrice = items.Sum(i => i.Price);
+
+            l.Add(new Order { OrderDate = DateTime.Today, OrderId = 1, UserId = 1, OrderStatus = _context.OrderStatuses.Find(3), TotalPrice = resultPrice, Items = items.ToList() });
             return View(l);
         }
 

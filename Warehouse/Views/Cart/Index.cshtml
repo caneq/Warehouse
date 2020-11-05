@@ -6,12 +6,19 @@
     Layout = "_Layout";
 }
 
-<h1>Моя корзина</h1>
+<style>
+    button{
+        margin-left: 20px;
+    }
+</style>
+<h1 class="text-center">Моя корзина</h1>
 
 <div class="row" style="margin: 30px 30px 30px 15px">
-    <button class="btn-primary" style="margin-right: 20px">Заказать все</button>
+    <button class="btn-primary">Заказать все</button>
     <button class="btn-primary">Заказать выбранные</button>
+    <button class="btn-danger">Удалить выбранные</button>
 </div>
+
 
 @foreach (Product p in Model)
 {
