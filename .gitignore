@@ -2,3 +2,4 @@
 Warehouse/bin/*
 Warehouse/obj/*
 Warehouse/node_modules/*
+Warehouse/wwwroot/lib/*
