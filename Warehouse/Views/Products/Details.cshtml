@@ -20,7 +20,11 @@
             <li>На складе @Model.CountInStock @Model.Unit</li>
             <li>Срок хранения @(Model.ShelfLife != int.MaxValue ? @Model.ShelfLife + "дней" : "неограничен")</li>
             <li>Страна происхождения @Model.ManufactureCountry</li>
-            <li>Вес @(@Model.Weight > 0.9? @Model.Weight + " кг" : @Model.Weight*1000 + " г")</li>
+            <li>Вес @(@Model.Weight > 0.9 ? @Model.Weight + " кг" : @Model.Weight * 1000 + " г")</li>
         </ul>
+        <div class="row">
+            <button class="btn-primary" style="margin-right: 10px">Заказать</button>
+            <button class="btn-primary">Добавить в корзину</button>
+        </div>
     </div>
 </div>
