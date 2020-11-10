@@ -124,3 +124,6 @@
 В строке статуса приложения (Statusbar) выводить итоговую стоимость всех товаров на складе и текущую дату.
 
 ![Use case diagram](https://psv4.userapi.com/c856228/u241345107/docs/d5/ec0f80554c0d/Sistema_skladskogo_ucheta_1.png?extra=zpeyOwDr4qzUTMVVeMH5nszal0nLdoWyE9TaRMFy1u1tGZaO_3Y7er3W8Qe1Ie-yLQBR_fxMBLavTlmZESpVIpT63ytGnJwOdtgNDc-l8qR_NkESJdGT5I3zUrkZ-Gw8FI6FSbWJIgyHl-5SrseVV13aPw)
+
+![Activity diagram](/Diagrams/Activity.png)
+
