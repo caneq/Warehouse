@@ -126,4 +126,6 @@
 ![Use case diagram](/Diagrams/UseCase.png)
 
 ![Activity diagram](/Diagrams/Activity.png)
+![Activity diagram](/Diagrams/Activity2.png)
+![Activity diagram](/Diagrams/Activity3.png)
 
