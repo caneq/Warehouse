@@ -5,12 +5,23 @@
     <ul class="navbar-nav">
         @if (SignInManager.IsSignedIn(User))
         {
-            <li class="nav-item">
-                <a asp-controller="Cart" asp-action="Index" class="nav-link text-dark" title="Корзина">Корзина</a>
-            </li>
-            <li class="nav-item">
-                <a asp-controller="Orders" asp-action="Index" class="nav-link text-dark" title="Корзина">Мои заказы</a>
-            </li>
+            @switch (User.Identity.Name)
+            {
+                case "PurchasingManager1@gmail.com":
+                    <li class="nav-item">
+                        <a asp-controller="SupplierOrders" asp-action="Index" class="nav-link text-dark" title="Корзина">Заказы у поставщиков</a>
+                    </li>
+                    break;
+
+                default:
+                    <li class="nav-item">
+                        <a asp-controller="Cart" asp-action="Index" class="nav-link text-dark" title="Корзина">Корзина</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Orders" asp-action="Index" class="nav-link text-dark" title="Корзина">Мои заказы</a>
+                    </li>
+                    break;
+            }
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity.Name</a>
             </li>

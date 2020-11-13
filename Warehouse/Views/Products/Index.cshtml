@@ -5,8 +5,17 @@
     Layout = "_Layout";
 }
 
-<div class="md-form active-cyan-2 mb-3 lg-12" style="max-width: 768px">
-    <input class="form-control" type="text" placeholder="Искать" aria-label="Искать">
+<div class="row" style="max-width: 768px">
+    <div class="md-form active-cyan-2 mb-3 lg-12">
+        <input class="form-control" type="text" placeholder="Искать" aria-label="Искать">
+    </div>
+    <div class="col-auto">
+        <a role="button" class="btn btn-primary btn-md active" asp-controller="Products" asp-action="Index" asp-route-search="10">Искать</a>
+        @if(User.Identity.Name == "PurchasingManager1@gmail.com")
+        {
+            <a role="button" class="btn btn-primary btn-md active" asp-controller="Products" asp-action="Index" asp-route-maxCount="15">Заканчивающиеся</a>
+        }
+    </div>
 </div>
 
 @foreach (Product p in Model)

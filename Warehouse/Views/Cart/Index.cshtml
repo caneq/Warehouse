@@ -14,9 +14,9 @@
 <h1 class="text-center">Моя корзина</h1>
 
 <div class="row" style="margin: 30px 30px 30px 15px">
-    <button class="btn-primary">Заказать все</button>
-    <button class="btn-primary">Заказать выбранные</button>
-    <button class="btn-danger">Удалить выбранные</button>
+    @Html.ActionLink("Заказать все", "Create", "Orders", new { ids = 1 }, new { @class = "btn btn-primary btn-md active" })
+    @Html.ActionLink("Заказать выбранные", "Create", "Orders", new { ids = 1 }, new { @class = "btn btn-primary btn-md active" })
+    @Html.ActionLink("Удалить выбранные", "Create", "Orders", new { ids = 1 }, new { @class = "btn btn-danger btn-md active" })
 </div>
 
 

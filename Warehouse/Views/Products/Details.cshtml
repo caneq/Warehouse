@@ -23,8 +23,8 @@
             <li>Вес @(@Model.Weight > 0.9 ? @Model.Weight + " кг" : @Model.Weight * 1000 + " г")</li>
         </ul>
         <div class="row">
-            <button class="btn-primary" style="margin-right: 10px">Заказать</button>
-            <button class="btn-primary">Добавить в корзину</button>
+            @Html.ActionLink("Заказать","Create", "Orders", new {ids = Model.ProductId }, new {@class = "btn btn-primary btn-md active" })
+            <a class="btn btn-primary btn-md active"  style="margin-left: 10px">Добавить в корзину</a>
         </div>
     </div>
 </div>

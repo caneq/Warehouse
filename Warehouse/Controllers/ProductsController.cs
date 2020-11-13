@@ -20,10 +20,15 @@ namespace Warehouse.Controllers
         }
 
         // GET: Products
-        public ActionResult Index()
+        public ActionResult Index(int? maxCount)
         {
-            
-            return View(_context.Products.Include(p => p.Pictures).Include(p => p.Unit).Include(p=>p.ManufactureCountry).AsEnumerable());
+            IQueryable<Product> r;
+            r = _context.Products.Include(p => p.Pictures).Include(p => p.Unit).Include(p => p.ManufactureCountry);
+            if (maxCount != null)
+            {
+                r = r.Where(p => p.CountInStock < maxCount);
+            }
+            return View(r);
         }
 
         // GET: Products/Details/5

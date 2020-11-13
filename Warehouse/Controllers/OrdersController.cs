@@ -52,15 +52,37 @@ namespace Warehouse.Controllers
         }
 
         // GET: Orders/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            var items = new OrderItem[]{
+                new OrderItem{ OrderItemId = 1, Price = 100, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.ProductId == 1)},
+                new OrderItem{ OrderItemId = 2, Price = 102, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.ProductId == 2)},
+
+            };
+            var resultPrice = items.Sum(i => i.Price);
+
+            Order o = new Order { OrderDate = DateTime.Now, OrderId = 2, UserId = 1, OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() };
+            return View(o);
         }
 
         // GET: Orders/Create
-        public ActionResult Create()
+        public ActionResult Create([FromQuery] int[] ids)
         {
-            return View();
+            IQueryable<Product> products = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+                    .Include(p => p.ManufactureCountry).Where(i => ids.Contains(i.ProductId));
+            var items = new OrderItem[ids.Length];
+            int i = 0;
+            foreach(Product p in products)
+            {
+                items[i++] = new OrderItem {Product = p, ProductId = p.ProductId, Price = p.Price };
+            }
+            var resultPrice = items.Sum(i => i.Price);
+
+            Order o = new Order { OrderDate = DateTime.Now, UserId = 1, OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() };
+
+            return View(o);
         }
 
         // POST: Orders/Create
