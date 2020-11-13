@@ -1,0 +1,89 @@
+﻿@using Warehouse.Models
+@model Order
+@{
+    Layout = "_Layout";
+}
+
+@if (Model != null)
+{
+    ViewData["Title"] = $"Детали заказа {Model?.OrderId}";
+    <h3>Заказ №@Model.OrderId <small class="text-muted">@Model.OrderDate.ToString("HH:mm dd MMMM yyyy")</small></h3>
+
+    <div class="card margin-bottom-15px col-lg-9">
+        <div class="card-body">
+
+            <div>
+                @foreach (OrderItem orderItem in Model.Items)
+                {
+                    <div class="card card-secondary lg-12">
+                        <div class="row no-gutters">
+                            <div class="col-lg-2">
+                                <img src="@orderItem.Product.Pictures.FirstOrDefault()" class="card-img" alt="...">
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="card-body">
+                                    <h6 class="card-title"><a asp-controller="Products" asp-action="Details" asp-route-id="@orderItem.Product.ProductId">@orderItem.Product.Name</a></h6>
+                                    <p class="card-text" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">@orderItem.Product.Description</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <h6><b>@orderItem.Price Руб</b></h6>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+            <p>Итоговая стоимость: <b>@Model.TotalPrice руб</b></p>
+
+        </div>
+
+
+        <div class="d-flex justify-content-center margin-bottom-15px">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-title">История состояний заказа:</div>
+                    <table class="card-body">
+                        <tr>
+                            <td>
+                                <p class="card-text"><small>11:51 14 ноября 2020</small></p>
+                            </td>
+                            <td>
+                                <p class="card-text">Оформлено кладовщиком</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="card-text"><small>20:51 13 ноября 2020</small></p>
+                            </td>
+                            <td>
+                                <p class="card-text"> Доставлено</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="card-text"><small>12:45 7 ноября 2020</small></p>
+                            </td>
+                            <td>
+                                <p> Ожидание доставки</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p class="card-text"><small>19:10 8 ноября 2020</small></p>
+                            </td>
+                            <td>
+                                <p class="card-text"> Ожидание оплаты</p>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h1>Заказ не найден</h1>
+    ViewData["Title"] = "Заказ не найден";
+}

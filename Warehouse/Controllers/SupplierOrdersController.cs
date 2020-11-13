@@ -4,21 +4,62 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Warehouse.Data;
+using Warehouse.Models;
 
 namespace Warehouse.Controllers
 {
     public class SupplierOrdersController : Controller
     {
+        private readonly ApplicationDbContext _context;
+        public SupplierOrdersController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
         // GET: SupplierOrders
         public ActionResult Index()
         {
-            return View();
+            var items = new OrderItem[]{
+                new OrderItem{ OrderItemId = 1, Price = 100, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.ProductId == 3)},
+                new OrderItem{ OrderItemId = 2, Price = 102, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.ProductId == 4)},
+
+            };
+            var resultPrice = items.Sum(i => i.Price);
+
+
+            var l = new List<Order>();
+            l.Add(new Order { OrderDate = DateTime.Now, OrderId = 2, UserId = 1, OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() });
+
+            items = new OrderItem[]{
+                new OrderItem{ OrderItemId = 3, Price = 3999.99f, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.ProductId == 5)},
+                new OrderItem{ OrderItemId = 4, Price = 260.99f, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.ProductId == 1)},
+
+            };
+            resultPrice = items.Sum(i => i.Price);
+
+            l.Add(new Order { OrderDate = DateTime.Today, OrderId = 1, UserId = 1, OrderStatus = _context.OrderStatuses.Find(3), TotalPrice = resultPrice, Items = items.ToList() });
+            return View(l);
         }
 
         // GET: SupplierOrders/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            var items = new OrderItem[]{
+                new OrderItem{ OrderItemId = 1, Price = 100, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.ProductId == 3)},
+                new OrderItem{ OrderItemId = 2, Price = 102, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.ProductId == 4)},
+
+            };
+            var resultPrice = items.Sum(i => i.Price);
+
+            Order o = new Order { OrderDate = DateTime.Now, OrderId = 2, UserId = 1, OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() };
+            return View(o);
         }
 
         // GET: SupplierOrders/Create
