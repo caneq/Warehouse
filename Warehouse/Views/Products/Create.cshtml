@@ -1,0 +1,71 @@
+﻿@using Warehouse.Models
+@model Product
+@{
+    ViewData["Title"] = "Оформить новый товар";
+    Layout = "_Layout";
+}
+
+<section class="order-form my-4 mx-4 col-lg-9">
+    <div class="container pt-4">
+
+        <div class="row">
+            <div class="col-12">
+                <h3>Новый товар</h3>
+                <hr class="mt-1">
+            </div>
+            <div class="col-12">
+
+                <div class="row mt-7 mx-4">
+                    <div class="col-12 col-sm-11">
+                        <label class="order-form-label">Название</label>
+                        <input class="order-form-input" placeholder="" required>
+                    </div>
+                </div>
+                <div class="row mt-3 mx-4">
+                    <div class="col-3">
+                        <label class="order-form-label">Количество</label>
+                        <input type="number" min="0" class="order-form-input" placeholder=" " required>
+                    </div>
+
+                    <div class="col-3">
+                        <label class="order-form-label">Единица измерения</label>
+                        <input class="order-form-input" placeholder=" " required>
+                    </div>
+
+                    <div class="col-3">
+                        <label class="order-form-label">Срок хранения (дни)</label>
+                        <input type="number" min="0" class="order-form-input" placeholder=" " required>
+                    </div>
+                    <div class="col-3">
+                        <label class="order-form-label">Вес (кг)</label>
+                        <input class="order-form-input" placeholder=" " required>
+                    </div>
+                    <div class="col-3">
+                        <label class="order-form-label">Цена (руб)</label>
+                        <input class="order-form-input" placeholder=" " required>
+                    </div>
+
+                    <div class="col-3">
+                        <label class="order-form-label">Страна происхождения</label>
+                        <input class="order-form-input" placeholder=" " required>
+                    </div>
+                </div>
+                <div class="row mt-3 mx-4">
+                    <label class="order-form-label">Описание</label>
+                    <textarea class="order-form-input">
+
+                    </textarea>
+                </div>
+                <div class="row mt-3 justify-content-center">
+                    <div class="col-auto">
+                        <button type="button" id="btnSubmit" class="btn btn-primary d-block mx-auto btn-submit">Добавить фотографии</button>
+                    </div>
+                    <div class="col-auto">
+                        <button type="button" id="btnSubmit" class="btn btn-primary d-block mx-auto btn-submit">Оформить</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
