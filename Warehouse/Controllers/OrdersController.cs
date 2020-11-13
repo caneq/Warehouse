@@ -131,6 +131,11 @@ namespace Warehouse.Controllers
             return View();
         }
 
+        public ActionResult Deliver(int id)
+        {
+            return View();
+        }
+
         // POST: Orders/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
