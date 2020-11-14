@@ -2,66 +2,78 @@
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
-<ul class="navbar-nav">
-    @if (SignInManager.IsSignedIn(User))
-    {
-        @switch (User.Identity.Name)
+    <ul class="navbar-nav">
+        @if (SignInManager.IsSignedIn(User))
         {
-            case "PurchasingManager1@gmail.com":
-                <li class="nav-item">
-                    <a asp-controller="SupplierOrders" asp-action="Index" class="nav-link text-dark" title="Корзина">Заказы у поставщиков</a>
-                </li>
-                <li class="nav-item">
-                    <a asp-controller="SupplierOrders" asp-action="Create" class="nav-link text-dark" title="Заказать у поставщиков">Заказать</a>
-                </li>
-                break;
+            @switch (User.Identity.Name)
+            {
+                case "PurchasingManager1@gmail.com":
+                    <li class="nav-item">
+                        <a asp-controller="SupplierOrders" asp-action="Index" class="nav-link text-dark" title="Корзина">Заказы у поставщиков</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="SupplierOrders" asp-action="Create" class="nav-link text-dark" title="Заказать у поставщиков">Заказать</a>
+                    </li>
+                    break;
 
-            case "Courier1@gmail.com":
-                <li class="nav-item">
-                    <a asp-controller="Orders" asp-action="Deliver" class="nav-link text-dark" title="Корзина">Доставить заказ</a>
-                </li>
-                break;
+                case "Courier1@gmail.com":
+                    <li class="nav-item">
+                        <a asp-controller="Orders" asp-action="Deliver" class="nav-link text-dark" title="Корзина">Доставить заказ</a>
+                    </li>
+                    break;
 
-            case "StoreKeeper1@gmail.com":
-                <li class="nav-item">
-                    <a asp-controller="Products" asp-action="Create" class="nav-link text-dark" title="Корзина">Оформить новый товар</a>
-                </li>
-                break;
+                case "StoreKeeper1@gmail.com":
+                    <li class="nav-item">
+                        <a asp-controller="Products" asp-action="Create" class="nav-link text-dark" title="Корзина">Оформить новый товар</a>
+                    </li>
+                    break;
 
-            case "UsersManager1@gmail.com":
-                <li class="nav-item">
-                    <a asp-controller="UnprocessedOrders" asp-action="Index" class="nav-link text-dark" title="Запросы клиентов">Необработанные заказы</a>
-                </li>
-                <li class="nav-item">
-                    <a asp-controller="ClientRequests" asp-action="Index" class="nav-link text-dark" title="Запросы клиентов">Запросы клиентов</a>
-                </li>
-                break;
+                case "UsersManager1@gmail.com":
+                    <li class="nav-item">
+                        <a asp-controller="UnprocessedOrders" asp-action="Index" class="nav-link text-dark" title="Запросы клиентов">Необработанные заказы</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="ClientRequests" asp-action="Index" class="nav-link text-dark" title="Запросы клиентов">Запросы клиентов</a>
+                    </li>
+                    break;
 
-            default:
-                <li class="nav-item">
-                    <a asp-controller="Cart" asp-action="Index" class="nav-link text-dark" title="Корзина">Корзина</a>
-                </li>
-                <li class="nav-item">
-                    <a asp-controller="Orders" asp-action="Index" class="nav-link text-dark" title="Корзина">Мои заказы</a>
-                </li>
-                break;
+                case "Accountant1@gmail.com":
+                    <li class="nav-item">
+                        <a asp-controller="Payments" asp-action="Index" class="nav-link text-dark" title="Запросы клиентов">Оплаты</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Orders" asp-action="Index" class="nav-link text-dark" title="Неоплаченные заказы">Неоплаченные заказы</a>
+                    </li>
+                    @*<li class="nav-item">
+                        <a asp-controller="Waybills" asp-action="Index" class="nav-link text-dark" title="Неоплаченные заказы">Оформить накладную</a>
+                    </li>*@
+                    break;
+
+                default:
+                    <li class="nav-item">
+                        <a asp-controller="Cart" asp-action="Index" class="nav-link text-dark" title="Корзина">Корзина</a>
+                    </li>
+                    <li class="nav-item">
+                        <a asp-controller="Orders" asp-action="Index" class="nav-link text-dark" title="Корзина">Мои заказы</a>
+                    </li>
+                    break;
+            }
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity.Name</a>
+            </li>
+            <li class="nav-item">
+                <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+                    <button type="submit" class="nav-link btn btn-link text-dark">Выйти</button>
+                </form>
+            </li>
         }
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@User.Identity.Name</a>
-        </li>
-        <li class="nav-item">
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                <button type="submit" class="nav-link btn btn-link text-dark">Выйти</button>
-            </form>
-        </li>
-    }
-    else
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Зарегистрироваться</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Войти</a>
-        </li>
-    }
-</ul>
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Зарегистрироваться</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Войти</a>
+            </li>
+        }
+    </ul>

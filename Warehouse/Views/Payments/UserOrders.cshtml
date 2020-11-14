@@ -5,14 +5,13 @@
     Layout = "_Layout";
 }
 
-
-@if (User.Identity.Name == "Accountant1@gmail.com")
+@if (User.Identity.Name == "")
 {
     <h1>Неоплаченные заказы</h1>
 }
 else
 {
-    <h1>Мои заказы</h1>
+    <h1>Неоплаченные заказы</h1>
 }
 
 

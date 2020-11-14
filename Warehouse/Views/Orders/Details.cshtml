@@ -88,6 +88,10 @@
                 </div>
             </div>
         </div>
+        @if (User.Identity.Name == "Accountant1@gmail.com")
+        {
+            <button class="btn btn-primary btn-md active">Оплачен</button>
+        }
     </div>
 }
 else

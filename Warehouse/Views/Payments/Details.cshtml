@@ -1,0 +1,79 @@
+﻿@using Warehouse.Models
+@model int
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Заказать у поставщиков";
+}
+
+<section class="order-form my-4 mx-4 col-lg-9">
+    <div class="container pt-4">
+
+        <div class="row">
+            <div class="col-12">
+                <h3>Оплатить заказ у поставщика</h3>
+                <hr class="mt-1">
+            </div>
+            <div class="col-12">
+
+                <div class="row mt-7 mx-4">
+                    <div class="col-12 col-sm-8">
+                        <label class="order-form-label">Поставщик</label>
+                        <input class="order-form-input" value="ООО 'Пример' " placeholder="" readonly>
+                    </div>
+                </div>
+
+                <div class="row mt-7 mx-4">
+                    <div class="col-12 col-sm-8">
+                        <label class="order-form-label">Реквизиты</label>
+                        <textarea class="order-form-input" placeholder="" readonly>ИНН: 6449013711, КПП: 644901001О, КПО: 24399828, ОГРН: 1026402000657</textarea>
+                    </div>
+                </div>
+
+                <div class="row mt-7 mx-4">
+                    <div class="col-12 col-sm-8">
+                        <label class="order-form-label">Товар</label>
+                        <input class="order-form-input" value="Материнская плата ASRock X370 Pro4" placeholder="" readonly>
+                    </div>
+                    <div class="col-12 col-sm-3">
+                        <label class="order-form-label">Количество</label>
+                        <input class="order-form-input" value="100" type="number" min="1" placeholder="" readonly>
+                    </div>
+                </div>
+
+                <div class="row mt-7 mx-4">
+                    <div class="col-12 col-sm-8">
+                        <label class="order-form-label">Товар</label>
+                        <input class="order-form-input" value="Процессор AMD Ryzen 7 2700" placeholder="" readonly>
+                    </div>
+                    <div class="col-12 col-sm-3">
+                        <label class="order-form-label">Количество</label>
+                        <input class="order-form-input" value="100" type="number" min="1" placeholder="" readonly>
+                    </div>
+                </div>
+
+                <div class="row mt-2 mx-4">
+                    <div class="col-12 col-sm-8">
+                        <b>Итоговая стоимость: 1245432.9 руб.</b>
+                    </div>
+                </div>
+
+                <div class="row mt-2 mx-4">
+                    <div class="col-12 col-sm-8">
+                        <p class="text-danger"><b>Статус: неоплачено</b></p>
+                    </div>
+                </div>
+
+                <div class="row mt-3 mx-4">
+                    <label class="order-form-label">Адрес доставки</label>
+                    <input class="order-form-input" value="Минск, улица ленина, д. 7" placeholder="" readonly>
+                </div>
+                <div class="row mt-3 justify-content-center">
+                    <div class="col-auto">
+                        <button type="button" id="btnSubmit" class="btn btn-primary d-block mx-auto btn-submit">Оплачено</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
