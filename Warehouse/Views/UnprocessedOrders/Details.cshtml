@@ -1,0 +1,79 @@
+﻿@using Warehouse.Models
+@model int
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Запрос №1. Состояние заказа";
+}
+
+
+<section class="order-form my-4 mx-4 col-lg-9">
+    <div class="container pt-4">
+
+        <div class="row">
+            <div class="col-12">
+                <h3>Небработанный заказ №1.</h3>
+                <hr class="mt-1">
+            </div>
+            <div class="col-12">
+                <div class="row mt-3 mx-4">
+                    <label class="col-lg-11 order-form-label">Текст заказа</label>
+                    <p>Материнская плата ASRock X370 Pro4, Процессор AMD Ryzen 7 2700</p>
+                </div>
+                <div class="row mt-3 mx-4">
+                    <label class="col-lg-11 order-form-label">Адрес доставки</label>
+                    <p>Минск, улица ленина, д. 7</p>
+                </div>
+                <div class="row mt-3 mx-4">
+                    <label class="col-lg-11 order-form-label">Номер телефона</label>
+                    <p>+375292929292</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<section class="order-form my-4 mx-4 col-lg-9">
+    <div class="container pt-4">
+
+        <div class="row">
+            <div class="col-12">
+                <h3>Обработать заказ</h3>
+                <hr class="mt-1">
+            </div>
+            <div class="col-12">
+
+                <div class="row mt-7 mx-4">
+                    <div class="col-12 col-sm-8">
+                        <label class="order-form-label">Товар</label>
+                        <input class="order-form-input" placeholder="" required>
+                    </div>
+                    <div class="col-12 col-sm-3">
+                        <label class="order-form-label">Количество</label>
+                        <input class="order-form-input" type="number" min="1" placeholder="" required>
+                    </div>
+                </div>
+
+                <div class="row mt-7 mx-4">
+                    <div class="col-12 col-sm-8">
+                        <div class="col-sm-3">
+                            <button type="button" class="btn btn-primary d-block mx-auto btn-submit"><i class="fas fa-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mt-3 mx-4">
+                    <label class="order-form-label">Адрес доставки</label>
+                    <input class="order-form-input" value="Минск, улица ленина, д. 7" placeholder="" required>
+                </div>
+                <div class="row mt-3 justify-content-center">
+                    <div class="col-auto">
+                        <button type="button" id="btnSubmit" class="btn btn-primary d-block mx-auto btn-submit">Обработать</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

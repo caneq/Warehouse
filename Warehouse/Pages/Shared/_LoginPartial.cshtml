@@ -11,6 +11,9 @@
                 <li class="nav-item">
                     <a asp-controller="SupplierOrders" asp-action="Index" class="nav-link text-dark" title="Корзина">Заказы у поставщиков</a>
                 </li>
+                <li class="nav-item">
+                    <a asp-controller="SupplierOrders" asp-action="Create" class="nav-link text-dark" title="Заказать у поставщиков">Заказать</a>
+                </li>
                 break;
 
             case "Courier1@gmail.com":
@@ -22,6 +25,15 @@
             case "StoreKeeper1@gmail.com":
                 <li class="nav-item">
                     <a asp-controller="Products" asp-action="Create" class="nav-link text-dark" title="Корзина">Оформить новый товар</a>
+                </li>
+                break;
+
+            case "UsersManager1@gmail.com":
+                <li class="nav-item">
+                    <a asp-controller="UnprocessedOrders" asp-action="Index" class="nav-link text-dark" title="Запросы клиентов">Необработанные заказы</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="ClientRequests" asp-action="Index" class="nav-link text-dark" title="Запросы клиентов">Запросы клиентов</a>
                 </li>
                 break;
 

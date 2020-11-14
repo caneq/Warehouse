@@ -85,6 +85,11 @@ namespace Warehouse.Controllers
             return View(o);
         }
 
+        public ActionResult Unprocessed()
+        {
+            return View();
+        }
+
         // POST: Orders/Create
         [HttpPost]
         [ValidateAntiForgeryToken]

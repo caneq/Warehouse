@@ -1,0 +1,12 @@
+﻿@using Warehouse.Models
+@model Order
+@{
+    ViewData["Title"] = "Необработанные заказы";
+    Layout = "_Layout";
+}
+
+<h2>Необработанные заказы:</h2>
+<ul class="list-group">
+    <li class="list-group-item"><a asp-controller="UnprocessedOrders" asp-action="Details" asp-route-id="1">Заказ №1. Материнская плата ASRock X370 Pro4, ...</a></li>
+    <li class="list-group-item"><a asp-controller="UnprocessedOrders" asp-action="Details" asp-route-id="1">Заказ №2. Процессор AMD Ryzen 7 2700, ...</a></li>
+</ul>
