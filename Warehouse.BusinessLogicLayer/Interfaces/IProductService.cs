@@ -6,7 +6,7 @@ using Warehouse.BusinessLogicLayer.DataTransferObjects;
 
 namespace Warehouse.BusinessLogicLayer.Interfaces
 {
-    interface IProductService
+    public interface IProductService
     {
         Task CreateAsync(ProductDTO item);
         Task<ProductDTO> ReadAsync(int id);

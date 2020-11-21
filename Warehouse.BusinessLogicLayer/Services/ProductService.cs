@@ -10,7 +10,7 @@ using AutoMapper;
 
 namespace Warehouse.BusinessLogicLayer.Services
 {
-    class ProductService : IProductService
+    public class ProductService : IProductService
     {
         private readonly IRepository<Product> _repo;
         private IMapper _mapper;

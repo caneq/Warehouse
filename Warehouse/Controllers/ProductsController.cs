@@ -4,40 +4,41 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Warehouse.DataAccessLayer.Data;
 using Microsoft.EntityFrameworkCore;
-using Warehouse.DataAccessLayer.Models;
+using Warehouse.BusinessLogicLayer.Interfaces;
+using Warehouse.BusinessLogicLayer.DataTransferObjects;
+using AutoMapper;
+using Warehouse.PresentationLayer.ViewModel;
 
 namespace Warehouse.Controllers
 {
     public class ProductsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IProductService _productService;
+        private readonly IMapper _mapper;
 
-        public ProductsController(ApplicationDbContext context)
+        public ProductsController(IProductService productService, IMapper mapper)
         {
-            _context = context;
+            _productService = productService;
+            _mapper = mapper;
+
         }
 
         // GET: Products
         public ActionResult Index(int? maxCount)
         {
-            IQueryable<Product> r;
-            r = _context.Products.Include(p => p.Pictures).Include(p => p.Unit).Include(p => p.ManufactureCountry);
-            if (maxCount != null)
-            {
-                r = r.Where(p => p.CountInStock < maxCount);
-            }
-            return View(r);
+            var a = _productService.ReadWithInclude(p => p.CountInStock < (maxCount ?? int.MaxValue),
+                p => p.Pictures, p => p.Unit, p => p.ManufactureCountry);
+            return View(a);
         }
 
         // GET: Products/Details/5
-        public async Task<ActionResult> Details(int id)
+        public ActionResult Details(int id)
         {
             try
             {
-                Product p = await _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
-                    .Include(p => p.ManufactureCountry).FirstAsync(p => p.ProductId == id);
+                ProductViewModel p = _mapper.Map<ProductViewModel>(_productService.ReadWithInclude(p => p.CountInStock == id,
+                    p => p.Pictures, p => p.Unit, p => p.ManufactureCountry).First());
                 return View(p);
             }
             catch

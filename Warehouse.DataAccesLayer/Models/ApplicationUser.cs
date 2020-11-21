@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Warehouse.DataAccessLayer.Models;
 
-namespace Warehouse.DataAccessLayer.Data
+namespace Warehouse.DataAccessLayer.Models
 {
     public class ApplicationUser : IdentityUser
     {
