@@ -3,5 +3,5 @@ Warehouse/bin/*
 Warehouse/obj/*
 Warehouse/node_modules/*
 Warehouse/wwwroot/lib/*
-Warehouse/Warehouse.DataAccesLayer/bin/*
-Warehouse/Warehouse.DataAccesLayer/obj/*
+Warehouse.DataAccesLayer/bin/*
+Warehouse.DataAccesLayer/obj/*
