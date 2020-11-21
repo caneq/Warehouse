@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
-namespace Warehouse.DataAccesLayer.Models
+namespace Warehouse.DataAccessLayer.Models
 {
     public class Order
     {

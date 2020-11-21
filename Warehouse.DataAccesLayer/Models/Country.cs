@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Warehouse.DataAccesLayer.Models
+namespace Warehouse.DataAccessLayer.Models
 {
     public class Country
     {

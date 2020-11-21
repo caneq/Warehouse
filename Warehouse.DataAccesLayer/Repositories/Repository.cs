@@ -5,11 +5,11 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using Warehouse.DataAccesLayer.Interfaces;
+using Warehouse.DataAccessLayer.Interfaces;
 
-namespace Warehouse.DataAccesLayer.Repositories
+namespace Warehouse.DataAccessLayer.Repositories
 {
-    internal class Repository<T> : IRepository<T> where T : class
+    class Repository<T> : IRepository<T> where T : class
     {
         private readonly DbContext _context;
         private readonly DbSet<T> _dbSet;

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Warehouse.DataAccesLayer.Data;
+using Warehouse.DataAccessLayer.Data;
 using Microsoft.EntityFrameworkCore;
-using Warehouse.DataAccesLayer.Models;
+using Warehouse.DataAccessLayer.Models;
 
 namespace Warehouse.Controllers
 {

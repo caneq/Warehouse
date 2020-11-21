@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Warehouse.DataAccesLayer.Models;
+using Warehouse.DataAccessLayer.Models;
 
-namespace Warehouse.DataAccesLayer.Data
+namespace Warehouse.DataAccessLayer.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {

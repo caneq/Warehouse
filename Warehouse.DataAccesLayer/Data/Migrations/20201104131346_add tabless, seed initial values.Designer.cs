@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Warehouse.DataAccesLayer.Data;
+using Warehouse.DataAccessLayer.Data;
 
-namespace Warehouse.DataAccesLayer.Data.Migrations
+namespace Warehouse.DataAccessLayer.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20201104131346_add tabless, seed initial values")]
@@ -221,7 +221,7 @@ namespace Warehouse.DataAccesLayer.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Warehouse.DataAccesLayer.Models.Country", b =>
+            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.Country", b =>
                 {
                     b.Property<int>("CountryId")
                         .ValueGeneratedOnAdd()
@@ -236,7 +236,7 @@ namespace Warehouse.DataAccesLayer.Data.Migrations
                     b.ToTable("Countries");
                 });
 
-            modelBuilder.Entity("Warehouse.DataAccesLayer.Models.Order", b =>
+            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.Order", b =>
                 {
                     b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
@@ -267,7 +267,7 @@ namespace Warehouse.DataAccesLayer.Data.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("Warehouse.DataAccesLayer.Models.OrderItem", b =>
+            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.OrderItem", b =>
                 {
                     b.Property<int>("OrderItemId")
                         .ValueGeneratedOnAdd()
@@ -292,7 +292,7 @@ namespace Warehouse.DataAccesLayer.Data.Migrations
                     b.ToTable("OrderItem");
                 });
 
-            modelBuilder.Entity("Warehouse.DataAccesLayer.Models.OrderStatus", b =>
+            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.OrderStatus", b =>
                 {
                     b.Property<int>("OrderStatusId")
                         .ValueGeneratedOnAdd()
@@ -307,7 +307,7 @@ namespace Warehouse.DataAccesLayer.Data.Migrations
                     b.ToTable("OrderStatuses");
                 });
 
-            modelBuilder.Entity("Warehouse.DataAccesLayer.Models.Product", b =>
+            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
@@ -347,7 +347,7 @@ namespace Warehouse.DataAccesLayer.Data.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Warehouse.DataAccesLayer.Models.Unit", b =>
+            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.Unit", b =>
                 {
                     b.Property<int>("UnitId")
                         .ValueGeneratedOnAdd()
@@ -362,7 +362,7 @@ namespace Warehouse.DataAccesLayer.Data.Migrations
                     b.ToTable("Units");
                 });
 
-            modelBuilder.Entity("Warehouse.DataAccesLayer.Models.Url", b =>
+            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.Url", b =>
                 {
                     b.Property<int>("UrlId")
                         .ValueGeneratedOnAdd()
@@ -433,9 +433,9 @@ namespace Warehouse.DataAccesLayer.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Warehouse.DataAccesLayer.Models.Order", b =>
+            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.Order", b =>
                 {
-                    b.HasOne("Warehouse.DataAccesLayer.Models.OrderStatus", "OrderStatus")
+                    b.HasOne("Warehouse.DataAccessLayer.Models.OrderStatus", "OrderStatus")
                         .WithMany()
                         .HasForeignKey("OrderStatusId");
 
@@ -444,37 +444,37 @@ namespace Warehouse.DataAccesLayer.Data.Migrations
                         .HasForeignKey("UserId1");
                 });
 
-            modelBuilder.Entity("Warehouse.DataAccesLayer.Models.OrderItem", b =>
+            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.OrderItem", b =>
                 {
-                    b.HasOne("Warehouse.DataAccesLayer.Models.Order", null)
+                    b.HasOne("Warehouse.DataAccessLayer.Models.Order", null)
                         .WithMany("Items")
                         .HasForeignKey("OrderId");
 
-                    b.HasOne("Warehouse.DataAccesLayer.Models.Product", "Product")
+                    b.HasOne("Warehouse.DataAccessLayer.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Warehouse.DataAccesLayer.Models.Product", b =>
+            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.Product", b =>
                 {
-                    b.HasOne("Warehouse.DataAccesLayer.Models.Country", "ManufactureCountry")
+                    b.HasOne("Warehouse.DataAccessLayer.Models.Country", "ManufactureCountry")
                         .WithMany()
                         .HasForeignKey("ManufactureCountryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Warehouse.DataAccesLayer.Models.Unit", "Unit")
+                    b.HasOne("Warehouse.DataAccessLayer.Models.Unit", "Unit")
                         .WithMany()
                         .HasForeignKey("UnitId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Warehouse.DataAccesLayer.Models.Url", b =>
+            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.Url", b =>
                 {
-                    b.HasOne("Warehouse.DataAccesLayer.Models.Product", null)
+                    b.HasOne("Warehouse.DataAccessLayer.Models.Product", null)
                         .WithMany("Pictures")
                         .HasForeignKey("ProductId");
                 });

@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Warehouse.DataAccesLayer.Models;
+using Warehouse.DataAccessLayer.Models;
 
-namespace Warehouse.DataAccesLayer.Data
+namespace Warehouse.DataAccessLayer.Data
 {
     public class ApplicationUser : IdentityUser
     {

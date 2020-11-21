@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Warehouse.DataAccesLayer.Data.Migrations
+namespace Warehouse.DataAccessLayer.Data.Migrations
 {
     public partial class seed3 : Migration
     {
