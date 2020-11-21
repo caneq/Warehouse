@@ -6,11 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\Migrations\20201105131251_add cart product many to many 2.cs" />
-    <Compile Remove="Data\Migrations\20201105131251_add cart product many to many 2.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Remove="Pages\Shared\_CarouselPartial.cshtml" />
     <Content Remove="Views\Products\Details.cshtml" />
   </ItemGroup>
@@ -29,6 +24,11 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\Warehouse.DataAccesLayer\Warehouse.DataAccesLayer.csproj" />
   </ItemGroup>
 
 </Project>

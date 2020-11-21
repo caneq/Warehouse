@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
-using Warehouse.Models;
-using Warehouse.Data;
 using Microsoft.EntityFrameworkCore;
+using Warehouse.DataAccesLayer.Data;
+using Warehouse.DataAccesLayer.Models;
 
 namespace Warehouse.Controllers
 {
