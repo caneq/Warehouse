@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse", "Warehouse\Warehouse.csproj", "{697FA092-0E39-4A0F-BB93-95B92EE5A0DE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.DataAccesLayer", "Warehouse.DataAccesLayer\Warehouse.DataAccesLayer.csproj", "{283F2831-4683-42E9-823B-8D2D4EE34DCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Warehouse.DataAccessLayer", "Warehouse.DataAccesLayer\Warehouse.DataAccessLayer.csproj", "{283F2831-4683-42E9-823B-8D2D4EE34DCE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Warehouse.BusinessLogicLayer", "Warehouse.BusinessLogicLayer\Warehouse.BusinessLogicLayer.csproj", "{57E0E1CA-24B8-4638-B3E7-DBB396BF2C25}"
 EndProject

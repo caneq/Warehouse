@@ -4,45 +4,52 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Warehouse.BusinessLogicLayer.DataTransferObjects;
 using Warehouse.BusinessLogicLayer.Interfaces;
-using Warehouse.DataAccesLayer.Models;
-using Warehouse.DataAccesLayer.Interfaces;
+using Warehouse.DataAccessLayer.Models;
+using Warehouse.DataAccessLayer.Interfaces;
+using AutoMapper;
 
 namespace Warehouse.BusinessLogicLayer.Services
 {
     class ProductService : IProductService
     {
-        public ProductService(IRepository<Product> repo)
+        private readonly IRepository<Product> _repo;
+        private IMapper _mapper;
+        public ProductService(IRepository<Product> repo, IMapper mapper)
         {
-
+            _repo = repo;
+            _mapper = mapper;
         }
-        public void CreateAsync(ProductDTO item)
+        public async Task CreateAsync(ProductDTO item)
         {
-            throw new NotImplementedException();
+            await _repo.CreateAsync(_mapper.Map<Product>(item));
         }
 
-        public void DeleteAsync(ProductDTO item)
+        public async Task DeleteAsync(ProductDTO item)
         {
-            throw new NotImplementedException();
+            await _repo.DeleteAsync(_mapper.Map<Product>(item));
         }
 
         public IEnumerable<ProductDTO> Read(Func<ProductDTO, bool> predicate)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<IEnumerable<ProductDTO>>(_mapper.Map<Func<Product, bool>>(predicate));
         }
 
-        public Task<ProductDTO> ReadAsync(int id)
+        public async Task<ProductDTO> ReadAsync(int id)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<ProductDTO>(await _repo.ReadAsync(id));
         }
 
         public IEnumerable<ProductDTO> ReadWithInclude(Func<ProductDTO, bool> predicate, params Expression<Func<ProductDTO, object>>[] includeProperties)
         {
-            throw new NotImplementedException();
+            var mappedPredicate = _mapper.Map<Func<Product, bool>>(predicate);
+            var mappedIncludeProperties = _mapper.Map<Expression<Func<Product, object>>[]>(includeProperties);
+            return _mapper.Map<IEnumerable<ProductDTO>>(_repo.ReadWithInclude(mappedPredicate, mappedIncludeProperties));
         }
 
-        public void UpdateAsync(ProductDTO item)
+        public async Task UpdateAsync(ProductDTO item)
         {
-            throw new NotImplementedException();
+            var mappedItem = _mapper.Map<Product>(item);
+            await _repo.UpdateAsync(mappedItem);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Warehouse.DataAccessLayer.Repositories
             return includeProperties
                 .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
         }
-        public async void CreateAsync(T item)
+        public async Task CreateAsync(T item)
         {
             await _dbSet.AddAsync(item);
             await _context.SaveChangesAsync();
@@ -45,13 +45,13 @@ namespace Warehouse.DataAccessLayer.Repositories
             return Include(includeProperties).Where(predicate).ToList();
         }
 
-        public async void UpdateAsync(T item)
+        public async Task UpdateAsync(T item)
         {
             _context.Entry(item).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
 
-        public async void DeleteAsync(T item)
+        public async Task DeleteAsync(T item)
         {
             _dbSet.Remove(item);
             await _context.SaveChangesAsync();
