@@ -1,8 +1,0 @@
-D:\Projects\Warehouse\Warehouse.DataAccesLayer\bin\Debug\netcoreapp3.1\Warehouse.DataAccesLayer.deps.json
-D:\Projects\Warehouse\Warehouse.DataAccesLayer\bin\Debug\netcoreapp3.1\Warehouse.DataAccesLayer.dll
-D:\Projects\Warehouse\Warehouse.DataAccesLayer\obj\Debug\netcoreapp3.1\Warehouse.DataAccesLayer.AssemblyInfoInputs.cache
-D:\Projects\Warehouse\Warehouse.DataAccesLayer\obj\Debug\netcoreapp3.1\Warehouse.DataAccesLayer.AssemblyInfo.cs
-D:\Projects\Warehouse\Warehouse.DataAccesLayer\obj\Debug\netcoreapp3.1\Warehouse.DataAccesLayer.csprojAssemblyReference.cache
-D:\Projects\Warehouse\Warehouse.DataAccesLayer\bin\Debug\netcoreapp3.1\Warehouse.DataAccesLayer.pdb
-D:\Projects\Warehouse\Warehouse.DataAccesLayer\obj\Debug\netcoreapp3.1\Warehouse.DataAccesLayer.dll
-D:\Projects\Warehouse\Warehouse.DataAccesLayer\obj\Debug\netcoreapp3.1\Warehouse.DataAccesLayer.pdb
