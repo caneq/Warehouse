@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Warehouse.DataAccessLayer.Models;
 using Warehouse.DataAccessLayer.Data;
+using AutoMapper;
+using Warehouse.ViewModels;
+using Warehouse.BusinessLogicLayer.DataTransferObjects;
 
 namespace Warehouse.Controllers
 {
@@ -15,8 +18,10 @@ namespace Warehouse.Controllers
     public class OrdersController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public OrdersController(ApplicationDbContext context)
+        private readonly IMapper _mapper;
+        public OrdersController(ApplicationDbContext context, IMapper mapper)
         {
+            _mapper = mapper;
             _context = context;
         }
 
@@ -51,7 +56,7 @@ namespace Warehouse.Controllers
             {
                 l.Remove(l.ElementAt(1));
             }
-            return View(l);
+            return View(_mapper.Map<IEnumerable<OrderViewModel>>(_mapper.Map<IEnumerable<OrderDTO>>(l)));
         }
 
         // GET: Orders/Details/5
@@ -67,7 +72,7 @@ namespace Warehouse.Controllers
             var resultPrice = items.Sum(i => i.Price);
 
             Order o = new Order { OrderDate = DateTime.Now, OrderId = 2, UserId = 1, OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() };
-            return View(o);
+            return View(_mapper.Map<OrderViewModel>(o));
         }
 
         // GET: Orders/Create
@@ -84,8 +89,8 @@ namespace Warehouse.Controllers
             var resultPrice = items.Sum(i => i.Price);
 
             Order o = new Order { OrderDate = DateTime.Now, UserId = 1, OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() };
-
-            return View(o);
+            //TODO: add insertion logic
+            return View(_mapper.Map<IEnumerable<OrderViewModel>>(o));
         }
 
         public ActionResult Unprocessed()
