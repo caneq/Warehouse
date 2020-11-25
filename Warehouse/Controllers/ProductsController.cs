@@ -4,31 +4,32 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Warehouse.Data;
 using Microsoft.EntityFrameworkCore;
-using Warehouse.Models;
+using Warehouse.BusinessLogicLayer.Interfaces;
+using Warehouse.BusinessLogicLayer.DataTransferObjects;
+using AutoMapper;
+using Warehouse.ViewModels;
+using Warehouse.BusinessLogicLayer.Models;
 
 namespace Warehouse.Controllers
 {
     public class ProductsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IProductService _productService;
+        private readonly IMapper _mapper;
 
-        public ProductsController(ApplicationDbContext context)
+        public ProductsController(IProductService productService, IMapper mapper)
         {
-            _context = context;
+            _productService = productService;
+            _mapper = mapper;
+
         }
 
         // GET: Products
         public ActionResult Index(int? maxCount)
         {
-            IQueryable<Product> r;
-            r = _context.Products.Include(p => p.Pictures).Include(p => p.Unit).Include(p => p.ManufactureCountry);
-            if (maxCount != null)
-            {
-                r = r.Where(p => p.CountInStock < maxCount);
-            }
-            return View(r);
+            var a = _mapper.Map<IEnumerable<ProductViewModel>>(_productService.ReadManyWithInclude(new ProductFilterParams {MaxCount = maxCount}));
+            return View(a);
         }
 
         // GET: Products/Details/5
@@ -36,8 +37,7 @@ namespace Warehouse.Controllers
         {
             try
             {
-                Product p = await _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
-                    .Include(p => p.ManufactureCountry).FirstAsync(p => p.ProductId == id);
+                ProductViewModel p = _mapper.Map<ProductViewModel>(await _productService.ReadWithIncludeAsync(id));
                 return View(p);
             }
             catch

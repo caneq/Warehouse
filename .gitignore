@@ -3,3 +3,7 @@ Warehouse/bin/*
 Warehouse/obj/*
 Warehouse/node_modules/*
 Warehouse/wwwroot/lib/*
+Warehouse.DataAccesLayer/bin/*
+Warehouse.DataAccesLayer/obj/*
+Warehouse.BusinessLogicLayer/bin/*
+Warehouse.BusinessLogicLayer/obj/*

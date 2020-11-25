@@ -1,5 +1,5 @@
-﻿@using Warehouse.Models
-@model Order
+﻿@using Warehouse.ViewModels
+@model OrderViewModel
 @{
     Layout = "_Layout";
 }
@@ -13,7 +13,7 @@
         <div class="card-body">
 
             <div>
-                @foreach (OrderItem orderItem in Model.Items)
+                @foreach (var orderItem in Model.Items)
                 {
                     <div class="card card-secondary lg-12">
                         <div class="row no-gutters">

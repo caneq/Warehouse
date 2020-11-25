@@ -5,22 +5,28 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Warehouse.Data;
+using Warehouse.BusinessLogicLayer.Interfaces;
+using Warehouse.BusinessLogicLayer.DataTransferObjects;
+using Warehouse.DataAccessLayer.Data;
+using Warehouse.ViewModels;
+using AutoMapper;
 
 namespace Warehouse.Controllers
 {
     public class CartController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public CartController(ApplicationDbContext context)
+        private readonly IMapper _mapper;
+        public CartController(ApplicationDbContext context, IMapper mapper)
         {
+            _mapper = mapper;
             _context = context;
         }
 
         // GET: Cart
         public ActionResult Index()
         {
-            return View(_context.Products.Skip(3).Include(p => p.Pictures).Include(p => p.Unit).Include(p => p.ManufactureCountry).AsEnumerable());
+            return View(_mapper.Map<IEnumerable<ProductViewModel>>(_context.Products.Skip(3).Include(p => p.Pictures).Include(p => p.Unit).Include(p => p.ManufactureCountry).AsEnumerable()));
         }
 
         // GET: Cart/Details/5
