@@ -10,8 +10,9 @@ namespace Warehouse.DataAccessLayer.Interfaces
     {
         Task CreateAsync(T item);
         Task<T> ReadAsync(int id);
-        IEnumerable<T> Read(Func<T, Boolean> predicate);
-        IEnumerable<T> ReadWithInclude(Func<T, Boolean> predicate, params Expression<Func<T, object>>[] includeProperties);
+        IEnumerable<T> ReadMany(Func<T, Boolean> predicate);
+        IEnumerable<T> ReadManyWithInclude(Func<T, Boolean> predicate);
+        Task<T> ReadFirstWithIncludeAsync(Expression<Func<T, bool>> predicate);
         Task UpdateAsync(T item);
         Task DeleteAsync(T item);
     }

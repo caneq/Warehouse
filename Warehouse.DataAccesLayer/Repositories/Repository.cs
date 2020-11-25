@@ -20,11 +20,19 @@ namespace Warehouse.DataAccessLayer.Repositories
             _context = context;
             _dbSet = context.Set<T>();
         }
-        private IQueryable<T> Include(params Expression<Func<T, object>>[] includeProperties)
+        private IQueryable<T> Include()
         {
-            IQueryable<T> query = _dbSet.AsNoTracking();
-            return includeProperties
-                .Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
+            var query = _context.Set<T>().AsNoTracking().AsQueryable();
+
+            var navigations = _context.Model.FindEntityType(typeof(T))
+                .GetDerivedTypesInclusive()
+                .SelectMany(type => type.GetNavigations())
+                .Distinct();
+
+            foreach (var property in navigations)
+                query = query.Include(property.Name);
+
+            return query;
         }
         public async Task CreateAsync(T item)
         {
@@ -36,14 +44,17 @@ namespace Warehouse.DataAccessLayer.Repositories
         {
             return await _dbSet.FindAsync(id);
         }
-
-        public IEnumerable<T> Read(Func<T, bool> predicate)
+        public async Task<T> ReadFirstWithIncludeAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await Include().FirstOrDefaultAsync(predicate);
+        }
+        public IEnumerable<T> ReadMany(Func<T, bool> predicate)
         {
             return _dbSet.AsNoTracking().Where(predicate).ToList();
         }
-        public IEnumerable<T> ReadWithInclude(Func<T, bool> predicate, params Expression<Func<T, object>>[] includeProperties)
+        public IEnumerable<T> ReadManyWithInclude(Func<T, bool> predicate)
         {
-            return Include(includeProperties).Where(predicate).ToList();
+            return Include().Where(predicate).ToList();
         }
 
         public async Task UpdateAsync(T item)
