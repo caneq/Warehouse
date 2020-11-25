@@ -7,6 +7,7 @@ using Warehouse.BusinessLogicLayer.Interfaces;
 using Warehouse.DataAccessLayer.Models;
 using Warehouse.DataAccessLayer.Interfaces;
 using AutoMapper;
+using Warehouse.BusinessLogicLayer.Models;
 
 namespace Warehouse.BusinessLogicLayer.Services
 {
@@ -24,21 +25,20 @@ namespace Warehouse.BusinessLogicLayer.Services
             await _repo.CreateAsync(_mapper.Map<Product>(item));
         }
 
-        public IEnumerable<ProductDTO> Read(Func<ProductDTO, bool> predicate)
-        {
-            return _mapper.Map<IEnumerable<ProductDTO>>(_mapper.Map<Func<Product, bool>>(predicate));
-        }
-
         public async Task<ProductDTO> ReadAsync(int id)
         {
             return _mapper.Map<ProductDTO>(await _repo.ReadAsync(id));
         }
-
-        public IEnumerable<ProductDTO> ReadWithInclude(Func<ProductDTO, bool> predicate, params Expression<Func<ProductDTO, object>>[] includeProperties)
+        private Func<Product, bool> _predicateFromFilterParams(ProductFilterParams f)
         {
-            var mappedPredicate = _mapper.Map<Func<Product, bool>>(predicate);
-            var mappedIncludeProperties = _mapper.Map<Expression<Func<Product, object>>[]>(includeProperties);
-            return _mapper.Map<IEnumerable<ProductDTO>>(_repo.ReadWithInclude(mappedPredicate, mappedIncludeProperties));
+            return (Product p) => p.CountInStock > (f.MinCount ?? int.MinValue) &&
+            p.CountInStock < (f.MaxCount ?? int.MaxValue) &&
+            p.Weight < (f.MaxWeight ?? float.MaxValue);
+        }
+        public IEnumerable<ProductDTO> Read(ProductFilterParams filterParams)
+        {
+            var filterPredicate = _predicateFromFilterParams(filterParams);
+            return _mapper.Map<IEnumerable<ProductDTO>>(_repo.ReadWithInclude(filterPredicate, p=>p.Pictures, p=>p.ManufactureCountry, p=>p.Unit));
         }
 
         public async Task UpdateAsync(ProductDTO item)

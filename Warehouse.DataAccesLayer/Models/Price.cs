@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Warehouse.DataAccessLayer.Models
 {
-    class Price : IComparable
+    public class Price : IComparable
     {
         public long Penny { get; private set; }
         public decimal Roubles {

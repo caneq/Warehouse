@@ -8,7 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Warehouse.BusinessLogicLayer.Interfaces;
 using Warehouse.BusinessLogicLayer.DataTransferObjects;
 using AutoMapper;
-using Warehouse.PresentationLayer.ViewModel;
+using Warehouse.ViewModels;
+using Warehouse.BusinessLogicLayer.Models;
 
 namespace Warehouse.Controllers
 {
@@ -27,18 +28,16 @@ namespace Warehouse.Controllers
         // GET: Products
         public ActionResult Index(int? maxCount)
         {
-            var a = _productService.ReadWithInclude(p => p.CountInStock < (maxCount ?? int.MaxValue),
-                p => p.Pictures, p => p.Unit, p => p.ManufactureCountry);
+            var a = _mapper.Map<IEnumerable<ProductViewModel>>(_productService.Read(new ProductFilterParams {MaxCount = maxCount}));
             return View(a);
         }
 
         // GET: Products/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
             try
             {
-                ProductViewModel p = _mapper.Map<ProductViewModel>(_productService.ReadWithInclude(p => p.CountInStock == id,
-                    p => p.Pictures, p => p.Unit, p => p.ManufactureCountry).First());
+                ProductViewModel p = _mapper.Map<ProductViewModel>(await _productService.ReadAsync(id));
                 return View(p);
             }
             catch

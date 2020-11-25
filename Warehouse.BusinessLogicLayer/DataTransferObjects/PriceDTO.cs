@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Warehouse.BusinessLogicLayer.DataTransferObjects
 {
-    class PriceDTO : IComparable
+    public class PriceDTO : IComparable
     {
         public long Penny { get; private set; }
         public decimal Roubles {

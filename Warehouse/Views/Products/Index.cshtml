@@ -1,5 +1,5 @@
-﻿@using Warehouse.DataAccessLayer.Models;
-@model IEnumerable<Product>
+﻿@using Warehouse.ViewModels;
+@model IEnumerable<ProductViewModel>
 @{
     ViewData["Title"] = "Index";
     Layout = "_Layout";
@@ -18,7 +18,7 @@
     </div>
 </div>
 
-@foreach (Product p in Model)
+@foreach (ProductViewModel p in Model)
 {
     @await Html.PartialAsync("_ProductCardPartial", p)
 }

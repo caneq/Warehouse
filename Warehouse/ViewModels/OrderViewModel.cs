@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
-namespace Warehouse.PresentationLayer.ViewModel
+namespace Warehouse.ViewModels
 {
     public class OrderViewModel
     {

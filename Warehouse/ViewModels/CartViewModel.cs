@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Warehouse.PresentationLayer.ViewModel
+namespace Warehouse.ViewModels
 {
     public class CartViewModel
     {
