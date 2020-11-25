@@ -18,7 +18,7 @@
     </div>
 </div>
 
-@foreach (ProductViewModel p in Model)
+@foreach (var p in Model)
 {
     @await Html.PartialAsync("_ProductCardPartial", p)
 }
