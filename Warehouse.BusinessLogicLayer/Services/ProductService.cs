@@ -24,11 +24,6 @@ namespace Warehouse.BusinessLogicLayer.Services
             await _repo.CreateAsync(_mapper.Map<Product>(item));
         }
 
-        public async Task DeleteAsync(ProductDTO item)
-        {
-            await _repo.DeleteAsync(_mapper.Map<Product>(item));
-        }
-
         public IEnumerable<ProductDTO> Read(Func<ProductDTO, bool> predicate)
         {
             return _mapper.Map<IEnumerable<ProductDTO>>(_mapper.Map<Func<Product, bool>>(predicate));
@@ -51,5 +46,11 @@ namespace Warehouse.BusinessLogicLayer.Services
             var mappedItem = _mapper.Map<Product>(item);
             await _repo.UpdateAsync(mappedItem);
         }
+
+        public async Task DeleteAsync(ProductDTO item)
+        {
+            await _repo.DeleteAsync(_mapper.Map<Product>(item));
+        }
+
     }
 }
