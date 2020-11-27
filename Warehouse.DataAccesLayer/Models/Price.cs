@@ -21,26 +21,12 @@ namespace Warehouse.DataAccessLayer.Models
         {
             this.Penny = penny;
         }
-        public override string ToString()
-        {
-            return $"{Roubles} руб.";
-        }
-        public static Price operator +(Price c1, Price c2)
-        {
-            return new Price (c1.Penny + c2.Penny);
-        }
-        public static Price operator -(Price c1, Price c2)
-        {
-            return new Price(c1.Penny - c2.Penny);
-        }
-        public static bool operator >(Price c1, Price c2)
-        {
-            return c1.Penny > c2.Penny;
-        }
-        public static bool operator <(Price c1, Price c2)
-        {
-            return c1.Penny < c2.Penny;
-        }
+        public override string ToString() => $"{Roubles} руб.";
+        public static Price operator +(Price c1, Price c2) => new Price (c1.Penny + c2.Penny);
+        public static Price operator -(Price c1, Price c2) => new Price(c1.Penny - c2.Penny);
+        public static bool operator >(Price c1, Price c2) => c1.Penny > c2.Penny;
+        public static bool operator <(Price c1, Price c2) => c1.Penny < c2.Penny;
+
         public int CompareTo(object obj)
         {
             if (obj == null) return 1;
