@@ -7,15 +7,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Warehouse.DataAccessLayer.Models;
 using Warehouse.DataAccessLayer.Data;
+using AutoMapper;
+using Warehouse.ViewModels;
 
 namespace Warehouse.Controllers
 {
     public class SupplierOrdersController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public SupplierOrdersController(ApplicationDbContext context)
+        private readonly IMapper _mapper;
+        public SupplierOrdersController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
         // GET: SupplierOrders
         public ActionResult Index()
@@ -43,7 +47,7 @@ namespace Warehouse.Controllers
             resultPrice = items.Sum(i => i.Price);
 
             l.Add(new Order { OrderDate = DateTime.Today, OrderId = 1, UserId = 1, OrderStatus = _context.OrderStatuses.Find(3), TotalPrice = resultPrice, Items = items.ToList() });
-            return View(l);
+            return View(_mapper.Map<IEnumerable<OrderViewModel>>(l));
         }
 
         // GET: SupplierOrders/Details/5
@@ -59,7 +63,7 @@ namespace Warehouse.Controllers
             var resultPrice = items.Sum(i => i.Price);
 
             Order o = new Order { OrderDate = DateTime.Now, OrderId = 2, UserId = 1, OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() };
-            return View(o);
+            return View(_mapper.Map<OrderViewModel>(o));
         }
 
         // GET: SupplierOrders/Create
