@@ -9,7 +9,7 @@ namespace Warehouse.BusinessLogicLayer
 {
     public class BusinessLogicLayerMappingProfile : Profile
     {
-        BusinessLogicLayerMappingProfile()
+        public BusinessLogicLayerMappingProfile()
         {
             CreateMap<Product, ProductDTO>().ReverseMap();
             CreateMap<Unit, UnitDTO>().ReverseMap();

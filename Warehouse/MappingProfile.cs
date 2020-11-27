@@ -26,19 +26,6 @@ namespace Warehouse
             CreateMap<UrlViewModel, UrlDTO>().ReverseMap();
 
             //TEMP
-            //bussiness - data
-            CreateMap<Product, ProductDTO>().ReverseMap();
-            CreateMap<Unit, UnitDTO>().ReverseMap();
-            CreateMap<ApplicationUser, ApplicationUserDTO>().ReverseMap();
-            CreateMap<Cart, CartDTO>().ReverseMap();
-            CreateMap<Country, CountryDTO>().ReverseMap();
-            CreateMap<Order, OrderDTO>().ReverseMap();
-            CreateMap<OrderItem, OrderItemDTO>().ReverseMap();
-            CreateMap<OrderStatus, OrderStatusDTO>().ReverseMap();
-            CreateMap<Price, PriceDTO>().ReverseMap();
-            CreateMap<Url, UrlDTO>().ReverseMap();
-
-            //TEMP
             //view - data
             CreateMap<Product, ProductViewModel>().ReverseMap();
             CreateMap<Unit, UnitViewModel>().ReverseMap();

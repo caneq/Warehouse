@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +16,8 @@ using Warehouse.BusinessLogicLayer.Interfaces;
 using Warehouse.BusinessLogicLayer.Services;
 using Warehouse.DataAccessLayer.Repositories;
 using Warehouse.DataAccessLayer.Interfaces;
+using Warehouse.ViewModels;
+using Warehouse.BusinessLogicLayer;
 
 namespace Warehouse
 {
@@ -33,15 +33,12 @@ namespace Warehouse
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IProductService, ProductService>();
-            services.AddTransient<IRepository<Product>, Repository<Product>>();
+            services.AddBusinessServices(Configuration.GetConnectionString("DefaultConnection"));
 
-            services.AddAutoMapper(typeof(Startup));
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            services.AddAutoMapper(typeof(Startup));
             services.AddRazorPages();
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
