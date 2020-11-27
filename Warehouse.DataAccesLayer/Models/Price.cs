@@ -31,13 +31,11 @@ namespace Warehouse.DataAccessLayer.Models
         {
             if (obj == null) return 1;
             Price otherPrice = obj as Price;
-            if (otherPrice != null)
+            if (otherPrice == null)
             {
-                return Math.Sign(Penny - otherPrice.Penny);
-            }
-            else
                 throw new ArgumentException($"Object is not a {this.GetType().FullName}");
-            
+            }
+            return Math.Sign(Penny - otherPrice.Penny);
         }
     }
 }
