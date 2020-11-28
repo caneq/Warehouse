@@ -8,7 +8,7 @@ using Warehouse.DataAccessLayer.Interfaces;
 
 namespace Warehouse.BusinessLogicLayer.Services.Generic
 {
-    class GenericService<DTO, DAL> : IGenericService<DTO> 
+    public class GenericService<DTO, DAL> : IGenericService<DTO> 
         where DTO : class
         where DAL : class
     {
