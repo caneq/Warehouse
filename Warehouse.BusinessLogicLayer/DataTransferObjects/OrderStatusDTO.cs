@@ -7,7 +7,7 @@ namespace Warehouse.BusinessLogicLayer.DataTransferObjects
 {
     public class OrderStatusDTO
     {
-        public int OrderStatusId { get; set; }
+        public int Id { get; set; }
         public string OrderStatusString { get; set; }
 
         public override string ToString()

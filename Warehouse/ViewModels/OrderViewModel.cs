@@ -8,7 +8,7 @@ namespace Warehouse.ViewModels
 {
     public class OrderViewModel
     {
-        public int OrderId { get; set; }
+        public int Id { get; set; }
         public DateTime OrderDate { get; set; }
         public int UserId { get; set; }
         public IdentityUser User { get; set; }

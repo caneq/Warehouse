@@ -7,7 +7,7 @@ namespace Warehouse.ViewModels
 {
     public class OrderStatusViewModel
     {
-        public int OrderStatusId { get; set; }
+        public int Id { get; set; }
         public string OrderStatusString { get; set; }
 
         public override string ToString()

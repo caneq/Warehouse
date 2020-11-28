@@ -7,7 +7,7 @@ namespace Warehouse.BusinessLogicLayer.DataTransferObjects
 {
     public class UnitDTO
     {
-        public int UnitId { get; set; }
+        public int Id { get; set; }
         public string UnitString { get; set; }
 
         public override string ToString()

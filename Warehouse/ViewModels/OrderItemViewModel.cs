@@ -7,7 +7,7 @@ namespace Warehouse.ViewModels
 {
     public class OrderItemViewModel
     {
-        public int OrderItemId { get; set; }
+        public int Id { get; set; }
         public ProductViewModel Product { get; set; }
         public int ProductId { get; set; }
         public float Price { get; set; }

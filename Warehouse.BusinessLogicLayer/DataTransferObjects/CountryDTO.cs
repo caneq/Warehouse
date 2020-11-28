@@ -7,7 +7,7 @@ namespace Warehouse.BusinessLogicLayer.DataTransferObjects
 {
     public class CountryDTO
     {
-        public int CountryId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
 
         public override string ToString()

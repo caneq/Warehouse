@@ -7,7 +7,7 @@ namespace Warehouse.BusinessLogicLayer.DataTransferObjects
 {
     public class CartProductDTO
     {
-        public int CartProductId { get; set; }
+        public int Id { get; set; }
         public int CartId { get; set; }
         public int ProductId { get; set; }
         public ProductDTO Product { get; set; }

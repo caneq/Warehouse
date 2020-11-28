@@ -7,7 +7,7 @@ namespace Warehouse.ViewModels
 {
     public class CartViewModel
     {
-        public int CartId { get; set; }
+        public int Id { get; set; }
         public int ApplicationUserViewModelId { get; set; }
         public List<CartProductViewModel> CartProducts { get; set; }
     }

@@ -6,8 +6,8 @@
 
 @if (Model != null)
 {
-    ViewData["Title"] = $"Детали заказа {Model?.OrderId}";
-    <h3>Заказ №@Model.OrderId <small class="text-muted">@Model.OrderDate.ToString("HH:mm dd MMMM yyyy")</small></h3>
+    ViewData["Title"] = $"Детали заказа {Model?.Id}";
+    <h3>Заказ №@Model.Id <small class="text-muted">@Model.OrderDate.ToString("HH:mm dd MMMM yyyy")</small></h3>
 
     <div class="card margin-bottom-15px col-lg-9">
         <div class="card-body">
@@ -22,7 +22,7 @@
                             </div>
                             <div class="col-lg-8">
                                 <div class="card-body">
-                                    <h6 class="card-title"><a asp-controller="Products" asp-action="Details" asp-route-id="@orderItem.Product.ProductId">@orderItem.Product.Name</a></h6>
+                                    <h6 class="card-title"><a asp-controller="Products" asp-action="Details" asp-route-id="@orderItem.Product.Id">@orderItem.Product.Name</a></h6>
                                     <p class="card-text" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">@orderItem.Product.Description</p>
                                 </div>
                             </div>

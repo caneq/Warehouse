@@ -90,7 +90,7 @@ namespace Warehouse.Controllers
 
             Order o = new Order { OrderDate = DateTime.Now, UserId = "123", OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() };
             //TODO: add insertion logic
-            return View(_mapper.Map<IEnumerable<OrderViewModel>>(o));
+            return View(_mapper.Map<OrderViewModel>(o));
         }
 
         public ActionResult Unprocessed()

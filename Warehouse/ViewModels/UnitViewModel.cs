@@ -7,7 +7,7 @@ namespace Warehouse.ViewModels
 {
     public class UnitViewModel
     {
-        public int UnitId { get; set; }
+        public int Id { get; set; }
         public string UnitString { get; set; }
 
         public override string ToString()

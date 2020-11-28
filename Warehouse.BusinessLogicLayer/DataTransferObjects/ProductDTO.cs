@@ -7,7 +7,7 @@ namespace Warehouse.BusinessLogicLayer.DataTransferObjects
 {
     public class ProductDTO
     {
-        public int ProductId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public int UnitId { get; set; }
         public UnitDTO Unit { get; set; }

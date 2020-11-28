@@ -10,7 +10,7 @@
 @foreach (var o in Model)
 {
     <div class="card margin-bottom-15px">
-        <a asp-action="Details" asp-route-id="@o.OrderId" class="card-title" style="margin-left:30px;">Заказ №@o.OrderId <small class="text-muted">@o.OrderDate.ToString("HH:mm dd MMMM yyyy")</small></a>
+        <a asp-action="Details" asp-route-id="@o.Id" class="card-title" style="margin-left:30px;">Заказ №@o.Id <small class="text-muted">@o.OrderDate.ToString("HH:mm dd MMMM yyyy")</small></a>
         <div class="card-body">
             <div class="row">
                 <div class="col-lg-8">
@@ -23,7 +23,7 @@
                                 </div>
                                 <div class="col-lg-8">
                                     <div class="card-body">
-                                        <h6 class="card-title"><a asp-controller="Products" asp-action="Details" asp-route-id="@orderItem.Product.ProductId">@orderItem.Product.Name</a></h6>
+                                        <h6 class="card-title"><a asp-controller="Products" asp-action="Details" asp-route-id="@orderItem.Product.Id">@orderItem.Product.Name</a></h6>
                                         <p class="card-text" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">@orderItem.Product.Description</p>
                                     </div>
                                 </div>

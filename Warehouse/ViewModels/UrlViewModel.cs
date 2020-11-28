@@ -7,7 +7,7 @@ namespace Warehouse.ViewModels
 {
     public class UrlViewModel
     {
-        public int UrlId { get; set; }
+        public int Id { get; set; }
         public int ProductId { get; set; }
         public string UrlString { get; set; }
 
