@@ -18,28 +18,16 @@ namespace Warehouse.BusinessLogicLayer.Services
             : base(repo, mapper)
         {
         }
-        private Func<Cart, bool> _predicateFromFilterParams(CartFilterParams f)
-        {
-            throw new NotImplementedException();
-            //return (Product p) => p.CountInStock > (f.MinCount ?? int.MinValue) &&
-            //p.CountInStock < (f.MaxCount ?? int.MaxValue) &&
-            //p.Weight < (f.MaxWeight ?? float.MaxValue);
-        }
-        public IEnumerable<CartDTO> ReadMany(CartFilterParams filterParams)
-        {
-            var filterPredicate = _predicateFromFilterParams(filterParams);
-            return _mapper.Map<IEnumerable<CartDTO>>(_repo.ReadMany(filterPredicate));
-        }
-
-        public IEnumerable<CartDTO> ReadManyWithInclude(CartFilterParams filterParams)
-        {
-            var filterPredicate = _predicateFromFilterParams(filterParams);
-            return _mapper.Map<IEnumerable<CartDTO>>(_repo.ReadManyWithInclude(filterPredicate));
-        }
 
         public async Task<CartDTO> ReadWithIncludeAsync(int id)
         {
             return _mapper.Map<CartDTO>(await _repo.ReadFirstWithIncludeAsync(p => p.Id == id));
+        }
+
+        public async Task<CartDTO> ReadByUserIdWithIncludeAsync(string id)
+        {
+            var a = await _repo.ReadFirstWithIncludeAsync(p => p.ApplicationUserId == id);
+            return _mapper.Map<CartDTO>(await _repo.ReadFirstWithIncludeAsync(p => p.ApplicationUserId == id));
         }
     }
 }

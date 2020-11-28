@@ -15,6 +15,7 @@ namespace Warehouse.BusinessLogicLayer
             CreateMap<Unit, UnitDTO>().ReverseMap();
             CreateMap<ApplicationUser, ApplicationUserDTO>().ReverseMap();
             CreateMap<Cart, CartDTO>().ReverseMap();
+            CreateMap<CartProduct, CartProductDTO>().ReverseMap();
             CreateMap<Country, CountryDTO>().ReverseMap();
             CreateMap<Order, OrderDTO>().ReverseMap();
             CreateMap<OrderItem, OrderItemDTO>().ReverseMap();

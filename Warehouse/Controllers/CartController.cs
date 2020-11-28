@@ -7,26 +7,40 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Warehouse.BusinessLogicLayer.Interfaces;
 using Warehouse.BusinessLogicLayer.DataTransferObjects;
-using Warehouse.DataAccessLayer.Data;
 using Warehouse.ViewModels;
 using AutoMapper;
+using System.Security.Claims;
 
 namespace Warehouse.Controllers
 {
     public class CartController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ICartService _cartService;
         private readonly IMapper _mapper;
-        public CartController(ApplicationDbContext context, IMapper mapper)
+        public CartController(ICartService cartService, IMapper mapper)
         {
             _mapper = mapper;
-            _context = context;
+            _cartService = cartService;
         }
 
         // GET: Cart
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View(_mapper.Map<IEnumerable<ProductViewModel>>(_context.Products.Skip(3).Include(p => p.Pictures).Include(p => p.Unit).Include(p => p.ManufactureCountry).AsEnumerable()));
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            if (claimsIdentity != null)
+            {
+                // the principal identity is a claims identity.
+                // now we need to find the NameIdentifier claim
+                var userIdClaim = claimsIdentity.Claims
+                    .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
+
+                if (userIdClaim != null)
+                {
+                    var userIdValue = userIdClaim.Value;
+                    return View(_mapper.Map<CartViewModel>(await _cartService.ReadByUserIdWithIncludeAsync(userIdValue)));
+                }
+            }
+            return NotFound();
         }
 
         // GET: Cart/Details/5

@@ -10,7 +10,6 @@ namespace Warehouse.BusinessLogicLayer.Interfaces.Generic
     {
         Task CreateAsync(T item);
         Task<T> ReadAsync(int id);
-
         Task UpdateAsync(T item);
         Task DeleteAsync(T item);
     }

@@ -18,9 +18,9 @@ namespace Warehouse.BusinessLogicLayer
         public static void AddBusinessServices(this IServiceCollection services, string connectionString)
         {
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICartService, CartService>();
 
             services.AddScoped<IGenericService<CountryDTO>, GenericService<CountryDTO, Country>>();
-            services.AddScoped<IGenericService<CartDTO>, GenericService<CartDTO, Cart>>();
             services.AddScoped<IGenericService<OrderStatus>, GenericService<OrderStatus, OrderStatus>>();
             services.AddScoped<IGenericService<UnitDTO>, GenericService<UnitDTO, Unit>>();
 

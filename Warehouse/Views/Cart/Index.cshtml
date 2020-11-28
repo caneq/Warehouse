@@ -1,5 +1,5 @@
 ﻿@using Warehouse.ViewModels
-@model IEnumerable<ProductViewModel>
+@model CartViewModel
 
 @{
     ViewData["Title"] = "Мои корзина";
@@ -20,7 +20,7 @@
 </div>
 
 
-@foreach (var p in Model)
+@foreach (var p in Model.CartProducts)
 {
     @await Html.PartialAsync("_ProductCardPartial", p)
 }

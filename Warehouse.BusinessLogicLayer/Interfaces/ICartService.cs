@@ -12,8 +12,6 @@ namespace Warehouse.BusinessLogicLayer.Interfaces
     {
 
         Task<CartDTO> ReadWithIncludeAsync(int id);
-        IEnumerable<CartDTO> ReadMany(CartFilterParams filterParams);
-        IEnumerable<CartDTO> ReadManyWithInclude(CartFilterParams filterParams);
-
+        Task<CartDTO> ReadByUserIdWithIncludeAsync(string id);
     }
 }

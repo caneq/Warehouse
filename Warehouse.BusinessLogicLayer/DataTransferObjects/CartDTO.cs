@@ -8,7 +8,7 @@ namespace Warehouse.BusinessLogicLayer.DataTransferObjects
     public class CartDTO
     {
         public int Id { get; set; }
-        public int ApplicationUserId { get; set; }
+        public string ApplicationUserId { get; set; }
         public List<CartProductDTO> CartProducts { get; set; }
     }
 }
