@@ -14,7 +14,7 @@ namespace Warehouse.BusinessLogicLayer.Services
     public class ProductService : IProductService
     {
         private readonly IRepository<Product> _repo;
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
         public ProductService(IRepository<Product> repo, IMapper mapper)
         {
             _repo = repo;

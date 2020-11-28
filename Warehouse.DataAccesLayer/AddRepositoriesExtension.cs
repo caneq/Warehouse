@@ -23,6 +23,7 @@ namespace Warehouse.DataAccessLayer
             services.AddScoped<IRepository<Country>, Repository<Country>>();
             services.AddScoped<IRepository<Order>, Repository<Order>>();
             services.AddScoped<IRepository<OrderStatus>, Repository<OrderStatus>>();
+            services.AddScoped<IRepository<Unit>, Repository<Unit>>();
 
 
         }
