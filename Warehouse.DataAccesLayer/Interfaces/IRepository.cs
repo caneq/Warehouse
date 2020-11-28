@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Warehouse.DataAccessLayer.Interfaces
 {
-    public interface IRepository<T> where T : IDataModel
+    public interface IRepository<T> where T : class
     {
         Task CreateAsync(T item);
         Task<T> ReadAsync(int id);
