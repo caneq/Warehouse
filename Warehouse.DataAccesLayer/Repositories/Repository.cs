@@ -10,7 +10,7 @@ using Warehouse.DataAccessLayer.Interfaces;
 
 namespace Warehouse.DataAccessLayer.Repositories
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class, IDataModel
     {
         private readonly ApplicationDbContext _context;
         private readonly DbSet<T> _dbSet;

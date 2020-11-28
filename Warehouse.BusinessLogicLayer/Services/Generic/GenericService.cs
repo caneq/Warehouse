@@ -10,7 +10,7 @@ namespace Warehouse.BusinessLogicLayer.Services.Generic
 {
     public class GenericService<DTO, DAL> : IGenericService<DTO> 
         where DTO : class
-        where DAL : class
+        where DAL : class, IDataModel
     {
         protected readonly IRepository<DAL> _repo;
         protected readonly IMapper _mapper;
