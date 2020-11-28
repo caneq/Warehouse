@@ -32,6 +32,7 @@ namespace Warehouse.DataAccessLayer.Data
                     new Country{ CountryId = 1, Name = "Китай"},
                     new Country{ CountryId = 2, Name = "Беларусь"},
                     new Country{ CountryId = 3, Name = "Россия"},
+                    new Country{ CountryId = 4, Name = "Индия"},
                 }
             );
 
@@ -88,6 +89,21 @@ namespace Warehouse.DataAccessLayer.Data
                         UnitId = 1, ManufactureCountryId = 1 },
                 }
            );
+
+            builder.Entity<Cart>().HasData(
+                new Cart[]
+                {
+                    new Cart{ CartId = 1, ApplicationUserId = "4214922f-e90b-4100-9481-d70c81f5f843" },
+                }
+            );
+            builder.Entity<CartProduct>().HasData(
+                new CartProduct[]
+                {
+                    new CartProduct{ CartProductId = 1, CartId = 1, ProductId = 2},
+                    new CartProduct{ CartProductId = 2, CartId = 1, ProductId = 3},
+                    new CartProduct{ CartProductId = 3, CartId = 1, ProductId = 5},
+                }
+            );
         }
     }
 }

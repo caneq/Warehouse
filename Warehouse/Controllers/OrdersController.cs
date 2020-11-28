@@ -40,7 +40,7 @@ namespace Warehouse.Controllers
 
 
             var l = new List<Order>();
-            l.Add(new Order { OrderDate = DateTime.Now, OrderId = 2, UserId = 1, OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() });
+            l.Add(new Order { OrderDate = DateTime.Now, OrderId = 2, UserId = "123", OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() });
             
             items = new OrderItem[]{
                 new OrderItem{ OrderItemId = 3, Price = 3999.99f, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
@@ -51,7 +51,7 @@ namespace Warehouse.Controllers
             };
             resultPrice = items.Sum(i => i.Price);
 
-            l.Add(new Order { OrderDate = DateTime.Today, OrderId = 1, UserId = 1, OrderStatus = _context.OrderStatuses.Find(3), TotalPrice = resultPrice, Items = items.ToList() });
+            l.Add(new Order { OrderDate = DateTime.Today, OrderId = 1, UserId = "123", OrderStatus = _context.OrderStatuses.Find(3), TotalPrice = resultPrice, Items = items.ToList() });
             if(User.Identity.Name == "Accountant1@gmail.com")
             {
                 l.Remove(l.ElementAt(1));
@@ -71,7 +71,7 @@ namespace Warehouse.Controllers
             };
             var resultPrice = items.Sum(i => i.Price);
 
-            Order o = new Order { OrderDate = DateTime.Now, OrderId = 2, UserId = 1, OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() };
+            Order o = new Order { OrderDate = DateTime.Now, OrderId = 2, UserId = "123", OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() };
             return View(_mapper.Map<OrderViewModel>(o));
         }
 
@@ -88,7 +88,7 @@ namespace Warehouse.Controllers
             }
             var resultPrice = items.Sum(i => i.Price);
 
-            Order o = new Order { OrderDate = DateTime.Now, UserId = 1, OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() };
+            Order o = new Order { OrderDate = DateTime.Now, UserId = "123", OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() };
             //TODO: add insertion logic
             return View(_mapper.Map<IEnumerable<OrderViewModel>>(o));
         }

@@ -10,8 +10,8 @@ namespace Warehouse.DataAccessLayer.Models
     {
         public int OrderId { get; set; }
         public DateTime OrderDate { get; set; }
-        public int UserId { get; set; }
-        public IdentityUser User { get; set; }
+        public string UserId { get; set; }
+        public ApplicationUser User { get; set; }
         public List<OrderItem> Items { get; set; }
         public float TotalPrice { get; set; }
         public OrderStatus OrderStatus { get; set; }

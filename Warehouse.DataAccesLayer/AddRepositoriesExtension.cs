@@ -16,7 +16,14 @@ namespace Warehouse.DataAccessLayer
         public static void AddDataRepositories(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+
             services.AddScoped<IRepository<Product>, Repository<Product>>();
+            services.AddScoped<IRepository<ApplicationUser>, Repository<ApplicationUser>>();
+            services.AddScoped<IRepository<Cart>, Repository<Cart>>();
+            services.AddScoped<IRepository<Country>, Repository<Country>>();
+            services.AddScoped<IRepository<Order>, Repository<Order>>();
+            services.AddScoped<IRepository<OrderStatus>, Repository<OrderStatus>>();
+
 
         }
     }
