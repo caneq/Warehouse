@@ -21,7 +21,7 @@ namespace Warehouse.BusinessLogicLayer.Services
 
         public async Task<ProductDTO> ReadWithIncludeAsync(int id)
         {
-            return _mapper.Map<ProductDTO>(await _repo.ReadFirstWithIncludeAsync(p=>p.ProductId == id));
+            return _mapper.Map<ProductDTO>(await _repo.ReadFirstWithIncludeAsync(p=>p.Id == id));
         }
         private Func<Product, bool> _predicateFromFilterParams(ProductFilterParams f)
         {

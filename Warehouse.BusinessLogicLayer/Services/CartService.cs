@@ -39,7 +39,7 @@ namespace Warehouse.BusinessLogicLayer.Services
 
         public async Task<CartDTO> ReadWithIncludeAsync(int id)
         {
-            return _mapper.Map<CartDTO>(await _repo.ReadFirstWithIncludeAsync(p => p.CartId == id));
+            return _mapper.Map<CartDTO>(await _repo.ReadFirstWithIncludeAsync(p => p.Id == id));
         }
     }
 }

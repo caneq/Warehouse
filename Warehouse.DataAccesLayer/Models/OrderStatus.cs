@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Warehouse.DataAccessLayer.Interfaces;
 
 namespace Warehouse.DataAccessLayer.Models
 {
-    public class OrderStatus
+    public class OrderStatus : IDataModel
     {
-        public int OrderStatusId { get; set; }
+        public int Id { get; set; }
         public string OrderStatusString { get; set; }
 
         public override string ToString()

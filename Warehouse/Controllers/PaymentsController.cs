@@ -27,28 +27,28 @@ namespace Warehouse.Controllers
         public ActionResult UserOrders()
         {
             var items = new OrderItem[]{
-                new OrderItem{ OrderItemId = 1, Price = 100, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
-                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.ProductId == 1)},
-                new OrderItem{ OrderItemId = 2, Price = 102, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
-                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.ProductId == 2)},
+                new OrderItem{ Id = 1, Price = 100, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.Id == 1)},
+                new OrderItem{ Id = 2, Price = 102, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.Id == 2)},
 
             };
             var resultPrice = items.Sum(i => i.Price);
 
 
             var l = new List<Order>();
-            l.Add(new Order { OrderDate = DateTime.Now, OrderId = 2, UserId = "123", OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() });
+            l.Add(new Order { OrderDate = DateTime.Now, Id = 2, UserId = "123", OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() });
 
             items = new OrderItem[]{
-                new OrderItem{ OrderItemId = 3, Price = 3999.99f, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
-                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.ProductId == 5)},
-                new OrderItem{ OrderItemId = 4, Price = 260.99f, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
-                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.ProductId == 3)},
+                new OrderItem{ Id = 3, Price = 3999.99f, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.Id == 5)},
+                new OrderItem{ Id = 4, Price = 260.99f, Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.Id == 3)},
 
             };
             resultPrice = items.Sum(i => i.Price);
 
-            l.Add(new Order { OrderDate = DateTime.Today, OrderId = 1, UserId = "123", OrderStatus = _context.OrderStatuses.Find(3), TotalPrice = resultPrice, Items = items.ToList() });
+            l.Add(new Order { OrderDate = DateTime.Today, Id = 1, UserId = "123", OrderStatus = _context.OrderStatuses.Find(3), TotalPrice = resultPrice, Items = items.ToList() });
             return View(l);
         }
 

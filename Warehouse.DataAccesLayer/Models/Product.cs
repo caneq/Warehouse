@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Warehouse.DataAccessLayer.Interfaces;
 
 namespace Warehouse.DataAccessLayer.Models
 {
-    public class Product
+    public class Product : IDataModel
     {
-        public int ProductId { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public int UnitId { get; set; }
         public Unit Unit { get; set; }
