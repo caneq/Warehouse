@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Warehouse.DataAccessLayer.Data;
 
-namespace Warehouse.DataAccessLayer.Data.Migrations
+namespace Warehouse.DataAccessLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201105125334_add application user")]
-    partial class addapplicationuser
+    [Migration("20201128132435_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -229,22 +229,48 @@ namespace Warehouse.DataAccessLayer.Data.Migrations
 
             modelBuilder.Entity("Warehouse.DataAccessLayer.Models.Cart", b =>
                 {
-                    b.Property<int>("CartId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ApplicationUserId")
-                        .HasColumnType("int");
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("CartId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId")
+                        .IsUnique()
+                        .HasFilter("[ApplicationUserId] IS NOT NULL");
 
                     b.ToTable("Carts");
                 });
 
+            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.CartProduct", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("CartProduct");
+                });
+
             modelBuilder.Entity("Warehouse.DataAccessLayer.Models.Country", b =>
                 {
-                    b.Property<int>("CountryId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -252,37 +278,17 @@ namespace Warehouse.DataAccessLayer.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CountryId");
+                    b.HasKey("Id");
 
                     b.ToTable("Countries");
-
-                    b.HasData(
-                        new
-                        {
-                            CountryId = 1,
-                            Name = "Китай"
-                        },
-                        new
-                        {
-                            CountryId = 2,
-                            Name = "Беларусь"
-                        },
-                        new
-                        {
-                            CountryId = 3,
-                            Name = "Россия"
-                        });
                 });
 
             modelBuilder.Entity("Warehouse.DataAccessLayer.Models.Order", b =>
                 {
-                    b.Property<int>("OrderId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
@@ -293,26 +299,21 @@ namespace Warehouse.DataAccessLayer.Data.Migrations
                     b.Property<float>("TotalPrice")
                         .HasColumnType("real");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("OrderId");
-
-                    b.HasIndex("ApplicationUserId");
+                    b.HasKey("Id");
 
                     b.HasIndex("OrderStatusId");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("Warehouse.DataAccessLayer.Models.OrderItem", b =>
                 {
-                    b.Property<int>("OrderItemId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -326,7 +327,7 @@ namespace Warehouse.DataAccessLayer.Data.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderItemId");
+                    b.HasKey("Id");
 
                     b.HasIndex("OrderId");
 
@@ -337,7 +338,7 @@ namespace Warehouse.DataAccessLayer.Data.Migrations
 
             modelBuilder.Entity("Warehouse.DataAccessLayer.Models.OrderStatus", b =>
                 {
-                    b.Property<int>("OrderStatusId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -345,37 +346,17 @@ namespace Warehouse.DataAccessLayer.Data.Migrations
                     b.Property<string>("OrderStatusString")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("OrderStatusId");
+                    b.HasKey("Id");
 
                     b.ToTable("OrderStatuses");
-
-                    b.HasData(
-                        new
-                        {
-                            OrderStatusId = 1,
-                            OrderStatusString = "Ожидание оплаты"
-                        },
-                        new
-                        {
-                            OrderStatusId = 2,
-                            OrderStatusString = "Ожидание доставки"
-                        },
-                        new
-                        {
-                            OrderStatusId = 3,
-                            OrderStatusString = "Завершен"
-                        });
                 });
 
             modelBuilder.Entity("Warehouse.DataAccessLayer.Models.Product", b =>
                 {
-                    b.Property<int>("ProductId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CartId")
-                        .HasColumnType("int");
 
                     b.Property<int>("CountInStock")
                         .HasColumnType("int");
@@ -401,58 +382,18 @@ namespace Warehouse.DataAccessLayer.Data.Migrations
                     b.Property<float>("Weight")
                         .HasColumnType("real");
 
-                    b.HasKey("ProductId");
-
-                    b.HasIndex("CartId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ManufactureCountryId");
 
                     b.HasIndex("UnitId");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductId = 1,
-                            CountInStock = 10,
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                            ManufactureCountryId = 1,
-                            Name = "Материнская плата ASRock X370 Pro4",
-                            Price = 300f,
-                            ShelfLife = 2147483647,
-                            UnitId = 1,
-                            Weight = 0.2f
-                        },
-                        new
-                        {
-                            ProductId = 2,
-                            CountInStock = 14,
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                            ManufactureCountryId = 1,
-                            Name = "Процессор AMD Ryzen 7 2700",
-                            Price = 210f,
-                            ShelfLife = 2147483647,
-                            UnitId = 1,
-                            Weight = 0.4f
-                        },
-                        new
-                        {
-                            ProductId = 3,
-                            CountInStock = 30,
-                            Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                            ManufactureCountryId = 1,
-                            Name = "Твердотельный накопитель Samsung 970 EVO Plus 500 GB",
-                            Price = 270f,
-                            ShelfLife = 2147483647,
-                            UnitId = 1,
-                            Weight = 0.3f
-                        });
                 });
 
             modelBuilder.Entity("Warehouse.DataAccessLayer.Models.Unit", b =>
                 {
-                    b.Property<int>("UnitId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -460,31 +401,14 @@ namespace Warehouse.DataAccessLayer.Data.Migrations
                     b.Property<string>("UnitString")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UnitId");
+                    b.HasKey("Id");
 
                     b.ToTable("Units");
-
-                    b.HasData(
-                        new
-                        {
-                            UnitId = 1,
-                            UnitString = "шт"
-                        },
-                        new
-                        {
-                            UnitId = 2,
-                            UnitString = "л."
-                        },
-                        new
-                        {
-                            UnitId = 3,
-                            UnitString = "кг"
-                        });
                 });
 
             modelBuilder.Entity("Warehouse.DataAccessLayer.Models.Url", b =>
                 {
-                    b.Property<int>("UrlId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -495,47 +419,16 @@ namespace Warehouse.DataAccessLayer.Data.Migrations
                     b.Property<string>("UrlString")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UrlId");
+                    b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Uris");
-
-                    b.HasData(
-                        new
-                        {
-                            UrlId = 1,
-                            ProductId = 1,
-                            UrlString = "https://avatars.mds.yandex.net/get-mpic/1365202/img_id7828880432754619849.png/orig"
-                        },
-                        new
-                        {
-                            UrlId = 2,
-                            ProductId = 1,
-                            UrlString = "https://avatars.mds.yandex.net/get-mpic/1056698/img_id5528712325692372091.png/orig"
-                        },
-                        new
-                        {
-                            UrlId = 3,
-                            ProductId = 2,
-                            UrlString = "https://avatars.mds.yandex.net/get-mpic/1332324/img_id4552048093897868354.jpeg/orig"
-                        },
-                        new
-                        {
-                            UrlId = 4,
-                            ProductId = 3,
-                            UrlString = "https://avatars.mds.yandex.net/get-mpic/1614201/img_id580048981333677263.jpeg/orig"
-                        });
+                    b.ToTable("Urls");
                 });
 
-            modelBuilder.Entity("Warehouse.DataAccessLayer.Data.ApplicationUser", b =>
+            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
-
-                    b.Property<int?>("CartId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("CartId");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
@@ -591,19 +484,37 @@ namespace Warehouse.DataAccessLayer.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.Cart", b =>
+                {
+                    b.HasOne("Warehouse.DataAccessLayer.Models.ApplicationUser", null)
+                        .WithOne("Cart")
+                        .HasForeignKey("Warehouse.DataAccessLayer.Models.Cart", "ApplicationUserId");
+                });
+
+            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.CartProduct", b =>
+                {
+                    b.HasOne("Warehouse.DataAccessLayer.Models.Cart", null)
+                        .WithMany("CartProducts")
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Warehouse.DataAccessLayer.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Warehouse.DataAccessLayer.Models.Order", b =>
                 {
-                    b.HasOne("Warehouse.DataAccessLayer.Data.ApplicationUser", null)
-                        .WithMany("Orders")
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("Warehouse.DataAccessLayer.Models.OrderStatus", "OrderStatus")
                         .WithMany()
                         .HasForeignKey("OrderStatusId");
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId1");
+                    b.HasOne("Warehouse.DataAccessLayer.Models.ApplicationUser", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Warehouse.DataAccessLayer.Models.OrderItem", b =>
@@ -621,10 +532,6 @@ namespace Warehouse.DataAccessLayer.Data.Migrations
 
             modelBuilder.Entity("Warehouse.DataAccessLayer.Models.Product", b =>
                 {
-                    b.HasOne("Warehouse.DataAccessLayer.Models.Cart", null)
-                        .WithMany("Products")
-                        .HasForeignKey("CartId");
-
                     b.HasOne("Warehouse.DataAccessLayer.Models.Country", "ManufactureCountry")
                         .WithMany()
                         .HasForeignKey("ManufactureCountryId")
@@ -645,13 +552,6 @@ namespace Warehouse.DataAccessLayer.Data.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Warehouse.DataAccessLayer.Data.ApplicationUser", b =>
-                {
-                    b.HasOne("Warehouse.DataAccessLayer.Models.Cart", "Cart")
-                        .WithMany()
-                        .HasForeignKey("CartId");
                 });
 #pragma warning restore 612, 618
         }

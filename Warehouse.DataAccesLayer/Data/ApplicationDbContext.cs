@@ -16,7 +16,7 @@ namespace Warehouse.DataAccessLayer.Data
         public DbSet<OrderStatus> OrderStatuses { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Unit> Units { get; set; }
-        public DbSet<Url> Uris { get; set; }
+        public DbSet<Url> Urls { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -93,7 +93,7 @@ namespace Warehouse.DataAccessLayer.Data
             builder.Entity<Cart>().HasData(
                 new Cart[]
                 {
-                    new Cart{ Id = 1, ApplicationUserId = "4214922f-e90b-4100-9481-d70c81f5f843" },
+                    new Cart{ Id = 1, ApplicationUserId = "647be7d4-a30f-405d-989a-ec098de565b0" },
                 }
             );
             builder.Entity<CartProduct>().HasData(
