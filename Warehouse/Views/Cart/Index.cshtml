@@ -7,20 +7,27 @@
 }
 
 <style>
-    button{
+    button {
         margin-left: 20px;
     }
 </style>
 <h1 class="text-center">Моя корзина</h1>
 
-<div class="row" style="margin: 30px 30px 30px 15px">
-    @Html.ActionLink("Заказать все", "Create", "Orders", new { ids = 1 }, new { @class = "btn btn-primary btn-md active" })
-    @Html.ActionLink("Заказать выбранные", "Create", "Orders", new { ids = 1 }, new { @class = "btn btn-primary btn-md active" })
-    @Html.ActionLink("Удалить выбранные", "Create", "Orders", new { ids = 1 }, new { @class = "btn btn-danger btn-md active" })
-</div>
-
-
-@foreach (var p in Model.CartProducts)
+@if (Model != null)
 {
-    @await Html.PartialAsync("_ProductCardPartial", p.Product)
+    <div class="row" style="margin: 30px 30px 30px 15px">
+        @Html.ActionLink("Заказать все", "Create", "Orders", new { ids = 1 }, new { @class = "btn btn-primary btn-md active" })
+        @Html.ActionLink("Заказать выбранные", "Create", "Orders", new { ids = 1 }, new { @class = "btn btn-primary btn-md active" })
+        @Html.ActionLink("Удалить выбранные", "Create", "Orders", new { ids = 1 }, new { @class = "btn btn-danger btn-md active" })
+    </div>
+
+
+    @foreach (var p in Model.CartProducts)
+    {
+        @await Html.PartialAsync("_ProductCardPartial", p.Product)
+    }
+}
+else
+{
+    <h3>Корзина пуста. Посетите <a asp-controller="Products" asp-action="Index">каталог</a>, чтобы выбрать товар</h3>
 }

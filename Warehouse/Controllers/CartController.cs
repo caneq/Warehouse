@@ -11,9 +11,11 @@ using Warehouse.ViewModels;
 using AutoMapper;
 using System.Security.Claims;
 using Warehouse.BusinessLogicLayer.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Warehouse.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private readonly ICartService _cartService;
