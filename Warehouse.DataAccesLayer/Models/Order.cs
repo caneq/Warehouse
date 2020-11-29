@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Warehouse.ClassLibrary;
 using Warehouse.DataAccessLayer.Interfaces;
 
 namespace Warehouse.DataAccessLayer.Models
@@ -14,7 +15,7 @@ namespace Warehouse.DataAccessLayer.Models
         public string UserId { get; set; }
         public ApplicationUser User { get; set; }
         public List<OrderItem> Items { get; set; }
-        public float TotalPrice { get; set; }
+        public Price TotalPrice { get; set; }
         public OrderStatus OrderStatus { get; set; }
     }
 }

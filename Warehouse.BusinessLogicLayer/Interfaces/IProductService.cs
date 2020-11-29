@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Warehouse.BusinessLogicLayer.DataTransferObjects;
-using Warehouse.BusinessLogicLayer.Interfaces.Generic;
 using Warehouse.BusinessLogicLayer.Models;
 
 namespace Warehouse.BusinessLogicLayer.Interfaces
 {
-    public interface IProductService : IGenericService<ProductDTO>
+    public interface IProductService
     {
-
-        Task<ProductDTO> ReadWithIncludeAsync(int id);
+        Task<ProductDTO> ReadAsync(int id);
+        Task<ProductDTO> ReadAsync(ProductFilterParams filterParams);
         IEnumerable<ProductDTO> ReadMany(ProductFilterParams filterParams);
-        IEnumerable<ProductDTO> ReadManyWithInclude(ProductFilterParams filterParams);
+        Task CreateAsync(ProductDTO item);
+        Task DeleteAsync(ProductDTO item);
+        Task UpdateAsync(ProductDTO item);
 
     }
 }
