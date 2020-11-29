@@ -14,9 +14,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\Warehouse\\ClassLibrary\\ClassLibrary.csproj",
-      "projectName": "ClassLibrary",
-      "projectPath": "D:\\Projects\\Warehouse\\ClassLibrary\\ClassLibrary.csproj",
+      "projectUniqueName": "D:\\Projects\\Warehouse\\ClassLibrary\\Warehouse.ClassLibrary.csproj",
+      "projectName": "Warehouse.ClassLibrary",
+      "projectPath": "D:\\Projects\\Warehouse\\ClassLibrary\\Warehouse.ClassLibrary.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
       "outputPath": "D:\\Projects\\Warehouse\\ClassLibrary\\obj\\",
       "projectStyle": "PackageReference",
