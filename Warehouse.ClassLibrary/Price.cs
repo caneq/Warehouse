@@ -15,9 +15,12 @@ namespace Warehouse.ClassLibrary
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder(Penny.ToString());
-            if(sb.Length > 2)
+            if (sb.Length > 2)
             {
-                sb.Insert(sb.Length - 2, ".");
+                if (sb.ToString(sb.Length - 2, 2) == "00")
+                    sb.Remove(sb.Length - 2, 2);
+
+                else sb.Insert(sb.Length - 2, ".");
             }
             else if (sb.Length == 2)
             {
@@ -30,7 +33,7 @@ namespace Warehouse.ClassLibrary
             sb.Append(" Руб");
             return sb.ToString(); ;
         }
-        public static Price operator +(Price c1, Price c2) => new Price (c1.Penny + c2.Penny);
+        public static Price operator +(Price c1, Price c2) => new Price(c1.Penny + c2.Penny);
         public static Price operator -(Price c1, Price c2) => new Price(c1.Penny - c2.Penny);
         public static bool operator >(Price c1, Price c2) => c1.Penny > c2.Penny;
         public static bool operator <(Price c1, Price c2) => c1.Penny < c2.Penny;
