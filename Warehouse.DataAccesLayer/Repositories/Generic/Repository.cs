@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Warehouse.DataAccessLayer.Data;
 using Warehouse.DataAccessLayer.Interfaces;
 
-namespace Warehouse.DataAccessLayer.Repositories
+namespace Warehouse.DataAccessLayer.Repositories.Generic
 {
     public class Repository<T> : IRepository<T> where T : class
     {
@@ -40,9 +40,9 @@ namespace Warehouse.DataAccessLayer.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<T> ReadAsync(int id)
+        public async Task<T> ReadAsync(Expression<Func<T, bool>> p)
         {
-            return await _dbSet.FindAsync(id);
+            return await _dbSet.FirstOrDefaultAsync(p);
         }
         public async Task<T> ReadFirstWithIncludeAsync(Expression<Func<T, bool>> predicate)
         {

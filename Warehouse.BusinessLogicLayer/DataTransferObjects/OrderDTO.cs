@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Warehouse.ClassLibrary;
 
 namespace Warehouse.BusinessLogicLayer.DataTransferObjects
 {
@@ -12,7 +13,7 @@ namespace Warehouse.BusinessLogicLayer.DataTransferObjects
         public int UserId { get; set; }
         public ApplicationUserDTO User { get; set; }
         public List<OrderItemDTO> Items { get; set; }
-        public float TotalPrice { get; set; }
+        public Price TotalPrice { get; set; }
         public OrderStatusDTO OrderStatus { get; set; }
     }
 }

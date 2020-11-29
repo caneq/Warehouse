@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Warehouse.ClassLibrary;
 
 namespace Warehouse.ViewModels
 {
@@ -13,7 +14,7 @@ namespace Warehouse.ViewModels
         public UnitViewModel Unit { get; set; }
         public string Description { get; set; }
         public float Weight { get; set; }
-        public float Price { get; set; }
+        public Price Price { get; set; }
         public int ShelfLife { get; set; }
         public int ManufactureCountryId { get; set; }
         public CountryViewModel ManufactureCountry { get; set; }

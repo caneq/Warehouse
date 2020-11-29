@@ -10,9 +10,12 @@ using Warehouse.BusinessLogicLayer.DataTransferObjects;
 using Warehouse.ViewModels;
 using AutoMapper;
 using System.Security.Claims;
+using Warehouse.BusinessLogicLayer.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Warehouse.Controllers
 {
+    [Authorize]
     public class CartController : Controller
     {
         private readonly ICartService _cartService;
@@ -37,7 +40,7 @@ namespace Warehouse.Controllers
                 if (userIdClaim != null)
                 {
                     var userIdValue = userIdClaim.Value;
-                    return View(_mapper.Map<CartViewModel>(await _cartService.ReadByUserIdWithIncludeAsync(userIdValue)));
+                    return View(_mapper.Map<CartViewModel>(await _cartService.ReadAsync(new CartFilterParams { ApplicationUserId = userIdValue })));
                 }
             }
             return NotFound();

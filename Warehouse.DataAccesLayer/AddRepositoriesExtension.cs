@@ -8,6 +8,7 @@ using Warehouse.DataAccessLayer.Data;
 using Warehouse.DataAccessLayer.Interfaces;
 using Warehouse.DataAccessLayer.Models;
 using Warehouse.DataAccessLayer.Repositories;
+using Warehouse.DataAccessLayer.Repositories.Generic;
 
 namespace Warehouse.DataAccessLayer
 {
@@ -17,9 +18,10 @@ namespace Warehouse.DataAccessLayer
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 
-            services.AddScoped<IRepository<Product>, Repository<Product>>();
+            services.AddScoped<IRepository<Product>, ProductRepository>();
+            services.AddScoped<IRepository<Cart>, CartRepository>();
+
             services.AddScoped<IRepository<ApplicationUser>, Repository<ApplicationUser>>();
-            services.AddScoped<IRepository<Cart>, Repository<Cart>>();
             services.AddScoped<IRepository<Country>, Repository<Country>>();
             services.AddScoped<IRepository<Order>, Repository<Order>>();
             services.AddScoped<IRepository<OrderStatus>, Repository<OrderStatus>>();

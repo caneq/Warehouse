@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Warehouse.ClassLibrary;
 
 namespace Warehouse.ViewModels
 {
@@ -13,7 +14,7 @@ namespace Warehouse.ViewModels
         public int UserId { get; set; }
         public IdentityUser User { get; set; }
         public List<OrderItemViewModel> Items { get; set; }
-        public float TotalPrice { get; set; }
+        public Price TotalPrice { get; set; }
         public OrderStatusViewModel OrderStatus { get; set; }
     }
 }
