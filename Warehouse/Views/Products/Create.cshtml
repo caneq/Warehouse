@@ -32,8 +32,7 @@
 
                         <div class="col-3">
                             <label class="order-form-label">Единица измерения</label>
-                            @Html.EditorFor(m => m.UnitId, new { htmlAttributes = new { @class = "order-form-input" } })
-                            @Html.DropDownListFor(m => m.UnitId, ViewBag.Units as IEnumerable<SelectListItem>)
+                            @Html.DropDownListFor(m => m.UnitId, ViewBag.Units as IEnumerable<SelectListItem>, new { @class = "form-control" })
                             @Html.ValidationMessageFor(m => m.UnitId)
                         </div>
 
@@ -55,7 +54,7 @@
 
                         <div class="col-3">
                             <label class="order-form-label">Страна происхождения</label>
-                            @Html.EditorFor(m => m.ManufactureCountryId, new { htmlAttributes = new { @class = "order-form-input" } })
+                            @Html.DropDownListFor(m => m.ManufactureCountryId, ViewBag.Countries as IEnumerable<SelectListItem>, new { @class = "form-control" })
                             @Html.ValidationMessageFor(m => m.ManufactureCountryId)
                         </div>
                     </div>

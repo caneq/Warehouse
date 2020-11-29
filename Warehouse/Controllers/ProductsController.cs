@@ -10,6 +10,7 @@ using Warehouse.BusinessLogicLayer.DataTransferObjects;
 using AutoMapper;
 using Warehouse.ViewModels;
 using Warehouse.BusinessLogicLayer.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Warehouse.Controllers
 {
@@ -17,12 +18,15 @@ namespace Warehouse.Controllers
     {
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
+        private readonly IUnitService _unitService;
+        private readonly ICountriesService _countriesService;
 
-        public ProductsController(IProductService productService, IMapper mapper)
+        public ProductsController(IProductService productService, IUnitService unitService, IMapper mapper, ICountriesService countriesService)
         {
             _productService = productService;
             _mapper = mapper;
-
+            _unitService = unitService;
+            _countriesService = countriesService;
         }
 
         // GET: Products
@@ -49,6 +53,8 @@ namespace Warehouse.Controllers
         // GET: Products/Create
         public ActionResult Create()
         {
+            ViewBag.Units = new SelectList(_unitService.ReadAll(), "Id", "UnitString");
+            ViewBag.Countries = new SelectList(_countriesService.ReadAll(), "Id", "Name");
             return View();
         }
 
