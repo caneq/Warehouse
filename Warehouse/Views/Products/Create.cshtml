@@ -6,66 +6,75 @@
 }
 
 <section class="order-form my-4 mx-4 col-lg-9">
-    <div class="container pt-4">
+    <form>
+        <div class="container pt-4">
 
-        <div class="row">
-            <div class="col-12">
-                <h3>Новый товар</h3>
-                <hr class="mt-1">
-            </div>
-            <div class="col-12">
-
-                <div class="row mt-7 mx-4">
-                    <div class="col-12 col-sm-11">
-                        <label class="order-form-label">Название</label>
-                        <input class="order-form-input" placeholder="" required>
-                    </div>
+            <div class="row">
+                <div class="col-12">
+                    <h3>Новый товар</h3>
+                    <hr class="mt-1">
                 </div>
-                <div class="row mt-3 mx-4">
-                    <div class="col-3">
-                        <label class="order-form-label">Количество</label>
-                        <input type="number" min="0" class="order-form-input" placeholder=" " required>
+                <div class="col-12">
+
+                    <div class="row mt-7 mx-4">
+                        <div class="col-12 col-sm-11">
+                            <label class="order-form-label">Название</label>
+                            @Html.EditorFor(m => m.Name, new { htmlAttributes = new { @class = "order-form-input" } })
+                            @Html.ValidationMessageFor(m => m.Name)
+                        </div>
+                    </div>
+                    <div class="row mt-3 mx-4">
+                        <div class="col-3">
+                            <label class="order-form-label">Количество</label>
+                            @Html.EditorFor(m => m.CountInStock, new { htmlAttributes = new { @class = "order-form-input" } })
+                            @Html.ValidationMessageFor(m => m.CountInStock)
+                        </div>
+
+                        <div class="col-3">
+                            <label class="order-form-label">Единица измерения</label>
+                            @Html.EditorFor(m => m.UnitId, new { htmlAttributes = new { @class = "order-form-input" } })
+                            @Html.DropDownListFor(m => m.UnitId, ViewBag.Units as IEnumerable<SelectListItem>)
+                            @Html.ValidationMessageFor(m => m.UnitId)
+                        </div>
+
+                        <div class="col-3">
+                            <label class="order-form-label">Срок хранения (дни)</label>
+                            @Html.EditorFor(m => m.ShelfLife, new { htmlAttributes = new { @class = "order-form-input" } })
+                            @Html.ValidationMessageFor(m => m.ShelfLife)
+                        </div>
+                        <div class="col-3">
+                            <label class="order-form-label">Вес (кг)</label>
+                            @Html.EditorFor(m => m.Weight, new { htmlAttributes = new { @class = "order-form-input" } })
+                            @Html.ValidationMessageFor(m => m.Weight)
+                        </div>
+                        <div class="col-3">
+                            <label class="order-form-label">Цена (руб)</label>
+                            @Html.EditorFor(m => m.Price, new { htmlAttributes = new { @class = "order-form-input" } })
+                            @Html.ValidationMessageFor(m => m.Price)
+                        </div>
+
+                        <div class="col-3">
+                            <label class="order-form-label">Страна происхождения</label>
+                            @Html.EditorFor(m => m.ManufactureCountryId, new { htmlAttributes = new { @class = "order-form-input" } })
+                            @Html.ValidationMessageFor(m => m.ManufactureCountryId)
+                        </div>
+                    </div>
+                    <div class="row mt-3 mx-4">
+                        <label class="order-form-label">Описание</label>
+                        @Html.EditorFor(m => m.Description, new { htmlAttributes = new { @class = "order-form-input" } })
+                        @Html.ValidationMessageFor(m => m.Description)
+                    </div>
+                    <div class="row mt-3 justify-content-center">
+                        <div class="col-auto">
+                            <button type="button" id="btnSubmit" class="btn btn-primary d-block mx-auto btn-submit">Добавить фотографии</button>
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" id="btnSubmit" class="btn btn-primary d-block mx-auto btn-submit">Оформить</button>
+                        </div>
                     </div>
 
-                    <div class="col-3">
-                        <label class="order-form-label">Единица измерения</label>
-                        <input class="order-form-input" placeholder=" " required>
-                    </div>
-
-                    <div class="col-3">
-                        <label class="order-form-label">Срок хранения (дни)</label>
-                        <input type="number" min="0" class="order-form-input" placeholder=" " required>
-                    </div>
-                    <div class="col-3">
-                        <label class="order-form-label">Вес (кг)</label>
-                        <input class="order-form-input" placeholder=" " required>
-                    </div>
-                    <div class="col-3">
-                        <label class="order-form-label">Цена (руб)</label>
-                        <input class="order-form-input" placeholder=" " required>
-                    </div>
-
-                    <div class="col-3">
-                        <label class="order-form-label">Страна происхождения</label>
-                        <input class="order-form-input" placeholder=" " required>
-                    </div>
                 </div>
-                <div class="row mt-3 mx-4">
-                    <label class="order-form-label">Описание</label>
-                    <textarea class="order-form-input">
-
-                    </textarea>
-                </div>
-                <div class="row mt-3 justify-content-center">
-                    <div class="col-auto">
-                        <button type="button" id="btnSubmit" class="btn btn-primary d-block mx-auto btn-submit">Добавить фотографии</button>
-                    </div>
-                    <div class="col-auto">
-                        <button type="button" id="btnSubmit" class="btn btn-primary d-block mx-auto btn-submit">Оформить</button>
-                    </div>
-                </div>
-
             </div>
         </div>
-    </div>
+    </form>
 </section>

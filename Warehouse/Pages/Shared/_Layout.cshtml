@@ -59,5 +59,6 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/lib/font-awesome/js/all.min.js"></script>
     @RenderSection("Scripts", required: false)
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 </body>
 </html>
