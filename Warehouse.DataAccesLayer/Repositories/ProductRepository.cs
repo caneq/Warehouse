@@ -33,7 +33,7 @@ namespace Warehouse.DataAccessLayer.Repositories
             return await _dbSet.AsNoTracking()
                 .Include(p => p.Pictures)
                 .Include(p => p.Unit)
-                .Include(p => p.Unit)
+                .Include(p => p.ManufactureCountry)
                 .FirstOrDefaultAsync(predicate);
         }
         public IEnumerable<Product> ReadMany(Func<Product, bool> predicate)
