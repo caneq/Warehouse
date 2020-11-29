@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Warehouse.DataAccessLayer.Models
+namespace Warehouse.ClassLibrary
 {
     public class Price : IComparable
     {
@@ -17,7 +17,7 @@ namespace Warehouse.DataAccessLayer.Models
                 Penny = (int)(value * 100);
             }
         }
-        Price(long penny)
+        public Price(long penny)
         {
             this.Penny = penny;
         }
