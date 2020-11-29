@@ -28,7 +28,7 @@ namespace Warehouse.Controllers
         // GET: Products
         public ActionResult Index(int? maxCount)
         {
-            var a = _mapper.Map<IEnumerable<ProductViewModel>>(_productService.ReadManyWithInclude(new ProductFilterParams {MaxCount = maxCount}));
+            var a = _mapper.Map<IEnumerable<ProductViewModel>>(_productService.ReadMany(new ProductFilterParams {MaxCount = maxCount}));
             return View(a);
         }
 
@@ -37,7 +37,7 @@ namespace Warehouse.Controllers
         {
             try
             {
-                ProductViewModel p = _mapper.Map<ProductViewModel>(await _productService.ReadWithIncludeAsync(id));
+                ProductViewModel p = _mapper.Map<ProductViewModel>(await _productService.ReadAsync(id));
                 return View(p);
             }
             catch

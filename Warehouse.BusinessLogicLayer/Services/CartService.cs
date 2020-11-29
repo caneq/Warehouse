@@ -6,28 +6,44 @@ using System.Threading.Tasks;
 using Warehouse.BusinessLogicLayer.DataTransferObjects;
 using Warehouse.BusinessLogicLayer.Interfaces;
 using Warehouse.BusinessLogicLayer.Models;
-using Warehouse.BusinessLogicLayer.Services.Generic;
 using Warehouse.DataAccessLayer.Interfaces;
 using Warehouse.DataAccessLayer.Models;
 
 namespace Warehouse.BusinessLogicLayer.Services
 {
-    class CartService : GenericService<CartDTO, Cart>, ICartService
+    class CartService : ICartService
     {
+        protected readonly IRepository<Cart> _repo;
+        protected readonly IMapper _mapper;
         public CartService(IRepository<Cart> repo, IMapper mapper)
-            : base(repo, mapper)
         {
+            _repo = repo;
+            _mapper = mapper;
         }
-
-        public async Task<CartDTO> ReadWithIncludeAsync(int id)
+        public async Task<CartDTO> ReadAsync(int id)
         {
-            return _mapper.Map<CartDTO>(await _repo.ReadFirstWithIncludeAsync(p => p.Id == id));
+            return _mapper.Map<CartDTO>(await _repo.ReadAsync(c => c.Id == id));
         }
-
-        public async Task<CartDTO> ReadByUserIdWithIncludeAsync(string id)
+        public async Task<CartDTO> ReadAsync(CartFilterParams filterParams)
         {
-            var a = await _repo.ReadFirstWithIncludeAsync(p => p.ApplicationUserId == id);
-            return _mapper.Map<CartDTO>(await _repo.ReadFirstWithIncludeAsync(p => p.ApplicationUserId == id));
+            return _mapper.Map<CartDTO>(await _repo.ReadAsync(filterParams.GetLinqExpression()));
+        }
+        public IEnumerable<CartDTO> ReadMany(CartFilterParams filterParams)
+        {
+            return _mapper.Map<IEnumerable<CartDTO>>(_repo.ReadMany(filterParams.GetFuncPredicate()));
+        }
+        public async Task CreateAsync(CartDTO item)
+        {
+            await _repo.CreateAsync(_mapper.Map<Cart>(item));
+        }
+        public async Task DeleteAsync(CartDTO item)
+        {
+            await _repo.DeleteAsync(_mapper.Map<Cart>(item));
+        }
+        public async Task UpdateAsync(CartDTO item)
+        {
+            var mappedItem = _mapper.Map<Cart>(item);
+            await _repo.UpdateAsync(mappedItem);
         }
     }
 }

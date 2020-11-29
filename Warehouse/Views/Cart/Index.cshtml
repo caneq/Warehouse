@@ -22,5 +22,5 @@
 
 @foreach (var p in Model.CartProducts)
 {
-    @await Html.PartialAsync("_ProductCardPartial", p)
+    @await Html.PartialAsync("_ProductCardPartial", p.Product)
 }

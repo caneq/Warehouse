@@ -10,6 +10,7 @@ using Warehouse.BusinessLogicLayer.DataTransferObjects;
 using Warehouse.ViewModels;
 using AutoMapper;
 using System.Security.Claims;
+using Warehouse.BusinessLogicLayer.Models;
 
 namespace Warehouse.Controllers
 {
@@ -37,7 +38,7 @@ namespace Warehouse.Controllers
                 if (userIdClaim != null)
                 {
                     var userIdValue = userIdClaim.Value;
-                    return View(_mapper.Map<CartViewModel>(await _cartService.ReadByUserIdWithIncludeAsync(userIdValue)));
+                    return View(_mapper.Map<CartViewModel>(await _cartService.ReadAsync(new CartFilterParams { ApplicationUserId = userIdValue })));
                 }
             }
             return NotFound();
