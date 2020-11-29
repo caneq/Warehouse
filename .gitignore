@@ -7,5 +7,5 @@ Warehouse.DataAccesLayer/bin/*
 Warehouse.DataAccesLayer/obj/*
 Warehouse.BusinessLogicLayer/bin/*
 Warehouse.BusinessLogicLayer/obj/*
-ClassLibrary/bin/*
-ClassLibrary/obj/*
+Warehouse.ClassLibrary/bin/*
+Warehouse.ClassLibrary/obj/*
