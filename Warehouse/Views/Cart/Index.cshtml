@@ -10,17 +10,20 @@
 
 <script>
     function deleteCartProduct(id) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("DELETE", 'cart/delete', true);
+        var request = $.ajax({
+            url: "cart/delete",
+            type: "DELETE",
+            data: { cartProductid: id },
+            dataType: "html"
+        });
 
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        request.done(function (msg) {
+            $("#cartProduct-" + id).remove();
+        });
 
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-                $("#cartProduct-" + id).remove();
-            }
-        }
-        xhr.send("cartProductid=" + id);
+        request.fail(function (jqXHR, textStatus) {
+            alert("Request failed: " + textStatus);
+        });
     }
 </script>
 
