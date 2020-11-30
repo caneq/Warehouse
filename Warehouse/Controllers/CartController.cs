@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Warehouse.BusinessLogicLayer.Exceptions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +12,7 @@ using AutoMapper;
 using System.Security.Claims;
 using Warehouse.BusinessLogicLayer.Models;
 using Microsoft.AspNetCore.Authorization;
+using Warehouse.BusinessLogicLayer.Extensions;
 
 namespace Warehouse.Controllers
 {
@@ -29,21 +30,14 @@ namespace Warehouse.Controllers
         // GET: Cart
         public async Task<ActionResult> Index()
         {
-            var claimsIdentity = User.Identity as ClaimsIdentity;
-            if (claimsIdentity != null)
+            try
             {
-                // the principal identity is a claims identity.
-                // now we need to find the NameIdentifier claim
-                var userIdClaim = claimsIdentity.Claims
-                    .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier);
-
-                if (userIdClaim != null)
-                {
-                    var userIdValue = userIdClaim.Value;
-                    return View(_mapper.Map<CartViewModel>(await _cartService.ReadAsync(new CartFilterParams { ApplicationUserId = userIdValue })));
-                }
+                return View(_mapper.Map<CartViewModel>(await _cartService.GetCartAsync(User)));
             }
-            return NotFound();
+            catch
+            {
+                return Unauthorized();
+            }
         }
 
         // GET: Cart/Details/5

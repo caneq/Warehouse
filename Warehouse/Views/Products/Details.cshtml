@@ -17,10 +17,10 @@
         <p>@Model.Description</p>
 
         <ul>
-            <li>На складе: @Model.CountInStock @Model.Unit</li>
-            <li>Срок хранения: @(Model.ShelfLife != int.MaxValue ? @Model.ShelfLife + "дней" : "неограничен")</li>
+            <li>На складе: @Model.GetCountString()</li>
+            <li>Срок хранения: @Model.GetShelfLifeString()</li>
             <li>Страна происхождения: @Model.ManufactureCountry</li>
-            <li>Вес: @(@Model.Weight > 0.9 ? @Model.Weight + " кг" : @Model.Weight * 1000 + " г")</li>
+            <li>Вес: @Model.GetWeightString()</li>
         </ul>
         <div class="row">
             @Html.ActionLink("Заказать","Create", "Orders", new {ids = Model.Id }, new {@class = "btn btn-primary btn-md active" })
