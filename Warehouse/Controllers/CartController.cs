@@ -98,7 +98,7 @@ namespace Warehouse.Controllers
             try
             {
                 await _cartService.AddCartProductAsync(new CartProductDTO { ProductId = Productid }, User);
-                return RedirectToAction(nameof(Index));
+                return Ok();
             }
             catch (UnauthorizeAccessException)
             {
@@ -110,7 +110,7 @@ namespace Warehouse.Controllers
             }
             catch
             {
-                return Ok();
+                return BadRequest();
             }
         }
 
@@ -127,7 +127,7 @@ namespace Warehouse.Controllers
             try
             {
                 await _cartService.DeleteCartProductAsync(cartProductid, User);
-                return RedirectToAction(nameof(Index));
+                return Ok();
             }
             catch (UnauthorizeAccessException)
             {
