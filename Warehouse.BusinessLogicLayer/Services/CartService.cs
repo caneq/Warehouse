@@ -74,8 +74,11 @@ namespace Warehouse.BusinessLogicLayer.Services
         public async Task DeleteCartProductAsync(int CartProductId, ClaimsPrincipal User, string userId = null)
         {
             Cart cp = await _getCartAsync(User, userId);
-            cp.CartProducts.Remove(cp.CartProducts.Find(c => c.Id == CartProductId));
-            await _repo.UpdateAsync(cp);
+            if (cp == null)
+            {
+                throw new NotFoundException();
+            }
+            await _cartProductRepo.DeleteCartProductAsync(cp.CartProducts.Find(c => c.Id == CartProductId));
         }
     }
 }
