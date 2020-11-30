@@ -110,7 +110,7 @@ namespace Warehouse.Controllers
             }
             catch
             {
-                return BadRequest();
+                return Ok();
             }
         }
 
