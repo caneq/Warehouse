@@ -92,26 +92,29 @@ namespace Warehouse.Controllers
             }
         }
 
-        // GET: Cart/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+        //// GET: Cart/Delete/5
+        //public ActionResult Delete(int id)
+        //{
+        //    return View();
+        //}
 
         // POST: Cart/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(int cartProductid)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                await _cartService.DeleteCartProductAsync(cartProductid, User);
                 return RedirectToAction(nameof(Index));
+            }
+            catch (UnauthorizeAccessException)
+            {
+                return StatusCode(403);
             }
             catch
             {
-                return View();
+                return BadRequest();
             }
         }
     }

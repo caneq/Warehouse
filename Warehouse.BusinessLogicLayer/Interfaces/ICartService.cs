@@ -14,7 +14,7 @@ namespace Warehouse.BusinessLogicLayer.Interfaces
         Task<CartDTO> ReadAsync(CartFilterParams filterParams);
         Task AddCartProductAsync(CartProductDTO p, ClaimsPrincipal User, string userId = null);
         Task<CartDTO> GetCartAsync(ClaimsPrincipal User, string userId = null);
-        Task DeleteCartProductAsync(ClaimsPrincipal User, string userId = null);
+        Task DeleteCartProductAsync(int CartProductId, ClaimsPrincipal User, string userId = null);
 
     }
 }

@@ -64,9 +64,11 @@ namespace Warehouse.BusinessLogicLayer.Services
             return _mapper.Map<CartDTO>(await _repo.ReadAsync(filterParams.GetLinqExpression()));
         }
 
-        public async Task DeleteCartProductAsync(ClaimsPrincipal User, string userId = null)
+        public async Task DeleteCartProductAsync(int CartProductId, ClaimsPrincipal User, string userId = null)
         {
-            await _repo.DeleteAsync(await _getCartAsync(User, userId));
+            Cart cp = await _getCartAsync(User, userId);
+            cp.CartProducts.Remove(cp.CartProducts.Find(c => c.Id == CartProductId));
+            await _repo.UpdateAsync(cp);
         }
     }
 }
