@@ -92,6 +92,24 @@ namespace Warehouse.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<ActionResult> Add(int Productid)
+        {
+            try
+            {
+                await _cartService.AddCartProductAsync(new CartProductDTO { ProductId = Productid }, User);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (UnauthorizeAccessException)
+            {
+                return StatusCode(403);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
         //// GET: Cart/Delete/5
         //public ActionResult Delete(int id)
         //{
@@ -99,8 +117,7 @@ namespace Warehouse.Controllers
         //}
 
         // POST: Cart/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpDelete]
         public async Task<ActionResult> Delete(int cartProductid)
         {
             try

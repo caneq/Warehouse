@@ -60,6 +60,7 @@ namespace Warehouse.DataAccessLayer.Repositories
         public async Task UpdateAsync(Cart item)
         {
             _context.Entry(item).State = EntityState.Modified;
+            _context.Update(item);
             await _context.SaveChangesAsync();
         }
 

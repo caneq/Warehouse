@@ -17,10 +17,12 @@ namespace Warehouse.BusinessLogicLayer.Services
     class CartService : ICartService
     {
         protected readonly IRepository<Cart> _repo;
+        protected readonly ICartProductRepository _cartProductRepo;
         protected readonly IMapper _mapper;
-        public CartService(IRepository<Cart> repo, IMapper mapper)
+        public CartService(IRepository<Cart> repo, ICartProductRepository cartProductRepo, IMapper mapper)
         {
             _repo = repo;
+            _cartProductRepo = cartProductRepo;
             _mapper = mapper;
         }
         private async Task<Cart> _getCartAsync(ClaimsPrincipal User, string userId = null)
@@ -38,17 +40,22 @@ namespace Warehouse.BusinessLogicLayer.Services
         public async Task AddCartProductAsync(CartProductDTO p, ClaimsPrincipal User, string userId = null)
         {
             Cart cart = await _getCartAsync(User, userId);
-
             CartProduct mappedCartProduct = _mapper.Map<CartProduct>(p);
+            
+
             if (cart == null)
             {
-                cart = new Cart { ApplicationUserId = userId, CartProducts = new List<CartProduct> { mappedCartProduct } };
+                cart = new Cart { ApplicationUserId = userId ?? User.GetUserId(), CartProducts = new List<CartProduct> { mappedCartProduct } };
                 await _repo.CreateAsync(cart);
             }
             else
             {
-                cart.CartProducts.Add(mappedCartProduct);
-                await _repo.UpdateAsync(cart);
+                mappedCartProduct.CartId = cart.Id;
+                if (cart.CartProducts.Find(c => c.ProductId == mappedCartProduct.ProductId) == null)
+                {
+                    await _cartProductRepo.AddCartProductAsync(mappedCartProduct);
+                }
+
             }
         }
         public async Task<CartDTO> GetCartAsync(ClaimsPrincipal User, string userId = null)

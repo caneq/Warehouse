@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Warehouse.DataAccessLayer.Data;
 
 namespace Warehouse.DataAccessLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201130122141_add_cartProduct_dbset")]
+    partial class add_cartProduct_dbset
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -233,9 +235,13 @@ namespace Warehouse.DataAccessLayer.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId")
+                        .IsUnique()
+                        .HasFilter("[ApplicationUserId] IS NOT NULL");
 
                     b.ToTable("Carts");
 
@@ -619,14 +625,6 @@ namespace Warehouse.DataAccessLayer.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<int>("CartId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("CartId1")
-                        .HasColumnType("int");
-
-                    b.HasIndex("CartId1");
-
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
@@ -679,6 +677,13 @@ namespace Warehouse.DataAccessLayer.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.Cart", b =>
+                {
+                    b.HasOne("Warehouse.DataAccessLayer.Models.ApplicationUser", null)
+                        .WithOne("Cart")
+                        .HasForeignKey("Warehouse.DataAccessLayer.Models.Cart", "ApplicationUserId");
                 });
 
             modelBuilder.Entity("Warehouse.DataAccessLayer.Models.CartProduct", b =>
@@ -742,13 +747,6 @@ namespace Warehouse.DataAccessLayer.Migrations
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("Warehouse.DataAccessLayer.Models.Cart", "Cart")
-                        .WithMany()
-                        .HasForeignKey("CartId1");
                 });
 #pragma warning restore 612, 618
         }

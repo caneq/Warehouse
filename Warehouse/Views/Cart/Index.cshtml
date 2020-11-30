@@ -13,6 +13,22 @@
 </style>
 <h1 class="text-center">Моя корзина</h1>
 
+<script>
+    function deleteCartProduct(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("DELETE", 'cart/delete', true);
+
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                
+            }
+        }
+        xhr.send("cartProductid=" + id);
+    }
+</script>
+
 @if (Model != null)
 {
     <div class="row" style="margin: 30px 30px 30px 15px">
@@ -25,6 +41,7 @@
     @foreach (var p in Model.CartProducts)
     {
         @await Html.PartialAsync("_ProductCardPartial", p.Product)
+        <button onclick="deleteCartProduct(@p.Id)">Удалить</button>
     }
 }
 else
