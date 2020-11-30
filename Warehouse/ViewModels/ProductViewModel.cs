@@ -41,5 +41,9 @@ namespace Warehouse.ViewModels
         [Range(0,int.MaxValue, ErrorMessage = "Некорректное число")]
         public int CountInStock { get; set; }
         public List<UrlViewModel> Pictures { get; set; }
+
+        public string GetCountString() => $"{CountInStock} {Unit}";
+        public string GetShelfLifeString() => (ShelfLife != int.MaxValue ? $"{ShelfLife} дней" : "неограничен");
+        public string GetWeightString() => (Weight > 1 ? Weight + " кг" : Weight * 1000 + " г");
     }
 }

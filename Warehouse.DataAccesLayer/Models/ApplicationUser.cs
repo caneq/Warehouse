@@ -10,6 +10,7 @@ namespace Warehouse.DataAccessLayer.Models
 {
     public class ApplicationUser : IdentityUser
     {
+        public int CartId { get; set; }
         public Cart Cart { get; set; }
         public List<Order> Orders { get; set; }
     }

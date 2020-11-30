@@ -8,6 +8,22 @@
 
 <h2 class="text-center">@Model.Name</h2>
 
+<script>
+    function addToCart(id) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", '/cart/add', true);
+
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+
+            }
+        }
+        xhr.send("Productid=" + id);
+    }
+</script>
+
 <div class="lg-12 row">
     <div class="col-lg-7">
         @await Html.PartialAsync("_CarouselPartial", Model.Pictures)
@@ -17,14 +33,14 @@
         <p>@Model.Description</p>
 
         <ul>
-            <li>На складе: @Model.CountInStock @Model.Unit</li>
-            <li>Срок хранения: @(Model.ShelfLife != int.MaxValue ? @Model.ShelfLife + "дней" : "неограничен")</li>
+            <li>На складе: @Model.GetCountString()</li>
+            <li>Срок хранения: @Model.GetShelfLifeString()</li>
             <li>Страна происхождения: @Model.ManufactureCountry</li>
-            <li>Вес: @(@Model.Weight > 0.9 ? @Model.Weight + " кг" : @Model.Weight * 1000 + " г")</li>
+            <li>Вес: @Model.GetWeightString()</li>
         </ul>
         <div class="row">
-            @Html.ActionLink("Заказать","Create", "Orders", new {ids = Model.Id }, new {@class = "btn btn-primary btn-md active" })
-            <a class="btn btn-primary btn-md active"  style="margin-left: 10px">Добавить в корзину</a>
+            @Html.ActionLink("Заказать", "Create", "Orders", new { ids = Model.Id }, new { @class = "btn btn-primary btn-md active" })
+            <button class="btn btn-primary btn-md active" style="margin-left: 10px" onclick="addToCart(@Model.Id)">Добавить в корзину</button>
         </div>
     </div>
 </div>

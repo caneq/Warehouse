@@ -6,25 +6,44 @@
     Layout = "_Layout";
 }
 
-<style>
-    button {
-        margin-left: 20px;
-    }
-</style>
 <h1 class="text-center">Моя корзина</h1>
 
-@if (Model != null)
+<script>
+    function deleteCartProduct(id) {
+        var request = $.ajax({
+            url: "cart/delete",
+            type: "DELETE",
+            data: { cartProductid: id },
+            dataType: "html"
+        });
+
+        request.done(function (msg) {
+            $("#cartProduct-" + id).remove();
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            alert("Request failed: " + textStatus);
+        });
+    }
+</script>
+
+@if (Model != null && Model.CartProducts != null && Model.CartProducts.FirstOrDefault() != null)
 {
     <div class="row" style="margin: 30px 30px 30px 15px">
-        @Html.ActionLink("Заказать все", "Create", "Orders", new { ids = 1 }, new { @class = "btn btn-primary btn-md active" })
-        @Html.ActionLink("Заказать выбранные", "Create", "Orders", new { ids = 1 }, new { @class = "btn btn-primary btn-md active" })
-        @Html.ActionLink("Удалить выбранные", "Create", "Orders", new { ids = 1 }, new { @class = "btn btn-danger btn-md active" })
+        @Html.ActionLink("Заказать все", "Create", "Orders", new { ids = 1 }, new { @class = "btn btn-primary btn-md active m-r-5" })
+        @Html.ActionLink("Заказать выбранные", "Create", "Orders", new { ids = 1 }, new { @class = "btn btn-primary btn-md active m-r-5" })
+        @Html.ActionLink("Удалить выбранные", "Create", "Orders", new { ids = 1 }, new { @class = "btn btn-danger btn-md active m-r-5" })
     </div>
 
 
     @foreach (var p in Model.CartProducts)
     {
-        @await Html.PartialAsync("_ProductCardPartial", p.Product)
+        <div id="cartProduct-@p.Id" class="row">
+            @await Html.PartialAsync("_ProductCardPartial", p.Product)
+            <div class="col-sm-1">
+                <button onclick="deleteCartProduct(@p.Id)" class="btn btn-danger"><i class="fa fa-times"></i></button>
+            </div>
+        </div>
     }
 }
 else
