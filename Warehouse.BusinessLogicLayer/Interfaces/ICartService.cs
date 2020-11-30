@@ -12,11 +12,9 @@ namespace Warehouse.BusinessLogicLayer.Interfaces
     {
         Task<CartDTO> ReadAsync(int id);
         Task<CartDTO> ReadAsync(CartFilterParams filterParams);
-        IEnumerable<CartDTO> ReadMany(CartFilterParams filterParams);
         Task AddCartProductAsync(CartProductDTO p, ClaimsPrincipal User, string userId = null);
         Task<CartDTO> GetCartAsync(ClaimsPrincipal User, string userId = null);
-        Task CreateAsync(CartDTO item);
-        Task DeleteAsync(CartDTO item);
-        Task UpdateAsync(CartDTO item);
+        Task DeleteCartProductAsync(ClaimsPrincipal User, string userId = null);
+
     }
 }
