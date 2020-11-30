@@ -9,6 +9,7 @@ using Warehouse.BusinessLogicLayer.Exceptions;
 using Warehouse.BusinessLogicLayer.Extensions;
 using Warehouse.BusinessLogicLayer.Interfaces;
 using Warehouse.BusinessLogicLayer.Models;
+using Warehouse.DataAccessLayer.Exceptions;
 using Warehouse.DataAccessLayer.Interfaces;
 using Warehouse.DataAccessLayer.Models;
 
@@ -55,7 +56,6 @@ namespace Warehouse.BusinessLogicLayer.Services
                 {
                     await _cartProductRepo.AddCartProductAsync(mappedCartProduct);
                 }
-
             }
         }
         public async Task<CartDTO> GetCartAsync(ClaimsPrincipal User, string userId = null)
@@ -73,12 +73,15 @@ namespace Warehouse.BusinessLogicLayer.Services
 
         public async Task DeleteCartProductAsync(int CartProductId, ClaimsPrincipal User, string userId = null)
         {
-            Cart cp = await _getCartAsync(User, userId);
-            if (cp == null)
+            try
+            {
+                Cart cp = await _getCartAsync(User, userId);
+                await _cartProductRepo.DeleteCartProductAsync(cp.CartProducts.Find(c => c.Id == CartProductId));
+            }
+            catch (EntityNotFoundException)
             {
                 throw new NotFoundException();
             }
-            await _cartProductRepo.DeleteCartProductAsync(cp.CartProducts.Find(c => c.Id == CartProductId));
         }
     }
 }
