@@ -52,18 +52,27 @@ namespace Warehouse.Controllers
 
         // POST: Orders/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        //[ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(IFormCollection collection)
         {
+            IEnumerable<ProductDTO> products = null; 
             try
             {
-                // TODO: Add insert logic here
-
+                var ids = collection["ids[]"];
+                products = _productService.ReadMany(new ProductFilterParams { Ids = ids.Select(int.Parse) });
+                await _orderService.Create(User, products);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                try
+                {
+                    return View(_mapper.Map<ProductViewModel>(products));
+                }
+                catch
+                {
+                    return View(null);
+                }
             }
         }
 

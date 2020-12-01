@@ -10,7 +10,7 @@ namespace Warehouse.BusinessLogicLayer.Interfaces
 {
     public interface IOrderService
     {
-        public Task Create(ClaimsPrincipal User, OrderDTO order);
+        public Task Create(ClaimsPrincipal User, IEnumerable<ProductDTO> products, string userId = null);
         public IEnumerable<OrderDTO> ReadMany(ClaimsPrincipal User, string userId = null);
         public Task<OrderDTO> ReadAsync(ClaimsPrincipal User, int id);
     }

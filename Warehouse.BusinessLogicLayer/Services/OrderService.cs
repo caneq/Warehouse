@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,9 +32,20 @@ namespace Warehouse.BusinessLogicLayer.Services
                 throw new UnauthorizedAccessException();
             }
         }
-        public async Task Create(ClaimsPrincipal User, OrderDTO order)
+        public async Task Create(ClaimsPrincipal User, IEnumerable<ProductDTO> products, string userId = null)
         {
-            _checkAccess(User, order.UserId);
+            userId = userId ?? User.GetUserId();
+            _checkAccess(User, userId);
+
+            Order order = new Order
+            {
+                UserId = userId,
+                Items = products.Select(p => new OrderItem { Price = p.Price, ProductId = p.Id }).ToList(),
+                OrderDate = DateTime.Now,
+                TotalPrice = new ClassLibrary.Price(products.Sum(p => p.Price.Penny)),
+                OrderStatus = new OrderStatus { OrderStatusString = "Ожидание оплаты" },
+            };
+
             await _repo.CreateAsync(_mapper.Map<Order>(order));
         }
 
