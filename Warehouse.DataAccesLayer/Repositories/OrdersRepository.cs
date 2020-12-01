@@ -31,7 +31,7 @@ namespace Warehouse.DataAccessLayer.Repositories
         public async Task<Order> ReadAsync(Expression<Func<Order, bool>> predicate)
         {
             Order c = await _dbSet.AsNoTracking()
-                .Include(o => o.OrderStatus)
+                .Include(o => o.OrderStatuses)
                 .Include(o => o.Items)
                     .ThenInclude(oi => oi.Product)
                         .ThenInclude(p => p.ManufactureCountry)
@@ -48,7 +48,7 @@ namespace Warehouse.DataAccessLayer.Repositories
         public IEnumerable<Order> ReadMany(Func<Order, bool> predicate)
         {
             return _dbSet.AsNoTracking()
-                .Include(o => o.OrderStatus)
+                .Include(o => o.OrderStatuses)
                 .Include(o => o.Items)
                     .ThenInclude(oi => oi.Product)
                         .ThenInclude(p => p.ManufactureCountry)

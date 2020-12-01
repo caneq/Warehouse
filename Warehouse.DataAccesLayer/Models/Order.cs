@@ -16,6 +16,6 @@ namespace Warehouse.DataAccessLayer.Models
         public ApplicationUser User { get; set; }
         public List<OrderItem> Items { get; set; }
         public Price TotalPrice { get; set; }
-        public OrderStatus OrderStatus { get; set; }
+        public List<OrderOrderStatus> OrderStatuses { get; set; }
     }
 }

@@ -9,6 +9,8 @@
     <Compile Remove="Migrations\20201128132307_init.Designer.cs" />
     <Compile Remove="Migrations\20201201142637_change_userId_type_to_string.cs" />
     <Compile Remove="Migrations\20201201142637_change_userId_type_to_string.Designer.cs" />
+    <Compile Remove="Migrations\20201201182802_add_many_to_many_order_orderStatus_1.cs" />
+    <Compile Remove="Migrations\20201201182802_add_many_to_many_order_orderStatus_1.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

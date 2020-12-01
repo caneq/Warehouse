@@ -43,7 +43,10 @@ namespace Warehouse.BusinessLogicLayer.Services
                 Items = products.Select(p => new OrderItem { Price = p.Price, ProductId = p.Id }).ToList(),
                 OrderDate = DateTime.Now,
                 TotalPrice = new ClassLibrary.Price(products.Sum(p => p.Price.Penny)),
-                OrderStatus = new OrderStatus { OrderStatusString = "Ожидание оплаты" },
+                OrderStatuses = new List<OrderOrderStatus>
+                {
+                    new OrderOrderStatus { DateTime = DateTime.Now, OrderStatusId = 1 },
+                }
             };
 
             await _repo.CreateAsync(_mapper.Map<Order>(order));

@@ -14,6 +14,6 @@ namespace Warehouse.BusinessLogicLayer.DataTransferObjects
         public ApplicationUserDTO User { get; set; }
         public List<OrderItemDTO> Items { get; set; }
         public Price TotalPrice { get; set; }
-        public OrderStatusDTO OrderStatus { get; set; }
+        public List<OrderOrderStatusDTO> OrderStatuses { get; set; }
     }
 }
