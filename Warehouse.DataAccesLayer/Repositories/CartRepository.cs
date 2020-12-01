@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Warehouse.DataAccessLayer.Data;
 using Warehouse.DataAccessLayer.Interfaces;
 using Warehouse.DataAccessLayer.Models;
-using Warehouse.DataAccessLayer.Exceptions;
 
 namespace Warehouse.DataAccessLayer.Repositories
 {
@@ -43,15 +42,11 @@ namespace Warehouse.DataAccessLayer.Repositories
                     .ThenInclude(p => p.Unit)
                 .FirstOrDefaultAsync(predicate);
 
-            if(c == null)
-            {
-                throw new EntityNotFoundException();
-            }
             return c;
         }
         public IEnumerable<Cart> ReadMany(Func<Cart, bool> predicate)
         {
-            return _dbSet.AsNoTracking().AsNoTracking()
+            return _dbSet.AsNoTracking()
                  .Include(c => c.CartProducts)
                     .ThenInclude(c => c.Product)
                         .ThenInclude(p => p.Pictures)

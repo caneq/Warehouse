@@ -10,7 +10,7 @@ namespace Warehouse.DataAccessLayer.Models
     {
         public int Id { get; set; }
         public string OrderStatusString { get; set; }
-
+        public List<OrderOrderStatus> Orders { get; set; }
         public override string ToString()
         {
             return OrderStatusString;

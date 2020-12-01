@@ -48,8 +48,8 @@
                         </div>
                         <div class="col-3">
                             <label class="order-form-label">Цена (руб)</label>
-                            @Html.EditorFor(m => m.Price, new { htmlAttributes = new { @class = "order-form-input" } })
-                            @Html.ValidationMessageFor(m => m.Price)
+                            @Html.EditorFor(m => m.PriceString, new { htmlAttributes = new { @class = "order-form-input" } })
+                            @Html.ValidationMessageFor(m => m.PriceString)
                         </div>
 
                         <div class="col-3">

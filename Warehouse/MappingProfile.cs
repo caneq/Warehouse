@@ -23,6 +23,7 @@ namespace Warehouse
             CreateMap<OrderViewModel, OrderDTO>().ReverseMap();
             CreateMap<OrderItemViewModel, OrderItemDTO>().ReverseMap();
             CreateMap<OrderStatusViewModel, OrderStatusDTO>().ReverseMap();
+            CreateMap<OrderOrderStatusViewModel, OrderOrderStatusDTO>().ReverseMap();
             //CreateMap<PriceViewModel, PriceDTO>().ReverseMap();
             CreateMap<UrlViewModel, UrlDTO>().ReverseMap();
 

@@ -9,7 +9,6 @@ using Warehouse.BusinessLogicLayer.Exceptions;
 using Warehouse.BusinessLogicLayer.Extensions;
 using Warehouse.BusinessLogicLayer.Interfaces;
 using Warehouse.BusinessLogicLayer.Models;
-using Warehouse.DataAccessLayer.Exceptions;
 using Warehouse.DataAccessLayer.Interfaces;
 using Warehouse.DataAccessLayer.Models;
 
@@ -40,10 +39,9 @@ namespace Warehouse.BusinessLogicLayer.Services
         }
         public async Task AddCartProductAsync(CartProductDTO p, ClaimsPrincipal User, string userId = null)
         {
-            Cart cart = await _getCartAsync(User, userId);
             CartProduct mappedCartProduct = _mapper.Map<CartProduct>(p);
-            
 
+            Cart cart = await _getCartAsync(User, userId);
             if (cart == null)
             {
                 cart = new Cart { ApplicationUserId = userId ?? User.GetUserId(), CartProducts = new List<CartProduct> { mappedCartProduct } };
@@ -73,15 +71,12 @@ namespace Warehouse.BusinessLogicLayer.Services
 
         public async Task DeleteCartProductAsync(int CartProductId, ClaimsPrincipal User, string userId = null)
         {
-            try
-            {
-                Cart cp = await _getCartAsync(User, userId);
-                await _cartProductRepo.DeleteCartProductAsync(cp.CartProducts.Find(c => c.Id == CartProductId));
-            }
-            catch (EntityNotFoundException)
+            Cart cp = await _getCartAsync(User, userId);
+            if (cp.CartProducts.Find(c => c.Id == CartProductId) == null)
             {
                 throw new NotFoundException();
             }
+            await _cartProductRepo.DeleteCartProductAsync(cp.CartProducts.Find(c => c.Id == CartProductId));
         }
     }
 }

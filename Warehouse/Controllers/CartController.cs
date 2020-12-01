@@ -104,10 +104,6 @@ namespace Warehouse.Controllers
             {
                 return StatusCode(403);
             }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
             catch
             {
                 return BadRequest();

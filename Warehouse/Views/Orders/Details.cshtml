@@ -44,46 +44,17 @@
                 <div class="card">
                     <div class="card-title">История состояний заказа:</div>
                     <table class="card-body">
-                        <tr>
-                            <td>
-                                <p class="card-text"><small>20:51 13 ноября 2020</small></p>
-                            </td>
-                            <td>
-                                <p class="card-text"> Доставлено</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p class="card-text"><small>12:30 9 ноября 2020</small></p>
-                            </td>
-                            <td>
-                                <p class="card-text"> Ожидание доставки</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p class="card-text"><small>11:51 9 ноября 2020</small></p>
-                            </td>
-                            <td>
-                                <p class="card-text"> Неудачная попытка доставки</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p class="card-text"><small>12:45 7 ноября 2020</small></p>
-                            </td>
-                            <td>
-                                <p> Ожидание доставки</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <p class="card-text"><small>19:10 8 ноября 2020</small></p>
-                            </td>
-                            <td>
-                                <p class="card-text"> Ожидание оплаты</p>
-                            </td>
-                        </tr>
+                        @foreach (var os in Model?.OrderStatuses)
+                        {
+                            <tr>
+                                <td>
+                                    <p class="card-text"><small>@os.DateTime.ToString("dd.MM.yyyy HH:mm")</small></p>
+                                </td>
+                                <td>
+                                    <p class="card-text">@os.OrderStatus</p>
+                                </td>
+                            </tr>
+                        }
                     </table>
                 </div>
             </div>

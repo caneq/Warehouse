@@ -12,107 +12,67 @@ using AutoMapper;
 using Warehouse.ViewModels;
 using Warehouse.BusinessLogicLayer.DataTransferObjects;
 using Warehouse.ClassLibrary;
+using Warehouse.BusinessLogicLayer.Interfaces;
+using Warehouse.BusinessLogicLayer.Models;
 
 namespace Warehouse.Controllers
 {
     [Authorize]
     public class OrdersController : Controller
     {
-        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
-        public OrdersController(ApplicationDbContext context, IMapper mapper)
+        private readonly IOrderService _orderService;
+        private readonly IProductService _productService;
+        public OrdersController(IOrderService orderService, IProductService productService, IMapper mapper)
         {
             _mapper = mapper;
-            _context = context;
+            _orderService = orderService;
+            _productService = productService;
         }
 
         // GET: Orders
         [Authorize]
         public ActionResult Index()
         {
-            var items = new OrderItem[]{
-                new OrderItem{ Id = 1, Price = new Price(100), Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
-                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.Id == 1)},
-                new OrderItem{ Id = 2, Price = new Price(102), Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
-                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.Id == 2)},
-
-            };
-            var resultPrice = new Price(items.Sum(i => i.Price.Penny));
-
-
-            var l = new List<Order>();
-            l.Add(new Order { OrderDate = DateTime.Now, Id = 2, UserId = "123", OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() });
-            
-            items = new OrderItem[]{
-                new OrderItem{ Id = 3, Price = new Price(399999), Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
-                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.Id == 5)},
-                new OrderItem{ Id = 4, Price = new Price(26099), Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
-                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.Id == 3)},
-
-            };
-            resultPrice = new Price(items.Sum(i => i.Price.Penny));
-
-            l.Add(new Order { OrderDate = DateTime.Today, Id = 1, UserId = "123", OrderStatus = _context.OrderStatuses.Find(3), TotalPrice = resultPrice, Items = items.ToList() });
-            if(User.Identity.Name == "Accountant1@gmail.com")
-            {
-                l.Remove(l.ElementAt(1));
-            }
-            return View(_mapper.Map<IEnumerable<OrderViewModel>>(_mapper.Map<IEnumerable<OrderDTO>>(l)));
+            return View(_mapper.Map<IEnumerable<OrderViewModel>>(_orderService.ReadMany(User)));
         }
 
         // GET: Orders/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var items = new OrderItem[]{
-                new OrderItem{ Id = 1, Price = new Price(10000), Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
-                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.Id == 1)},
-                new OrderItem{ Id = 2, Price = new Price(10200), Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
-                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.Id == 2)},
-
-            };
-            var resultPrice = new Price(items.Sum(i => i.Price.Penny));
-
-            Order o = new Order { OrderDate = DateTime.Now, Id = 2, UserId = "123", OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() };
-            return View(_mapper.Map<OrderViewModel>(o));
+            return View(_mapper.Map<OrderViewModel>(await _orderService.ReadAsync(User, id)));
         }
 
         // GET: Orders/Create
         public ActionResult Create([FromQuery] int[] ids)
         {
-            IQueryable<Product> products = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
-                    .Include(p => p.ManufactureCountry).Where(i => ids.Contains(i.Id));
-            var items = new OrderItem[ids.Length];
-            int i = 0;
-            foreach(Product p in products)
-            {
-                items[i++] = new OrderItem {Product = p, ProductId = p.Id, Price = p.Price };
-            }
-            var resultPrice = new Price(items.Sum(i => i.Price.Penny));
-
-            Order o = new Order { OrderDate = DateTime.Now, UserId = "123", OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() };
-            //TODO: add insertion logic
-            return View(_mapper.Map<OrderViewModel>(o));
-        }
-
-        public ActionResult Unprocessed()
-        {
-            return View();
+            IEnumerable<ProductViewModel> products = _mapper.Map<IEnumerable<ProductViewModel>>(_productService.ReadMany(new ProductFilterParams { Ids = ids }));
+            return View(products);
         }
 
         // POST: Orders/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        //[ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(IFormCollection collection)
         {
+            IEnumerable<ProductDTO> products = null; 
             try
             {
-                // TODO: Add insert logic here
-
+                var ids = collection["ids[]"];
+                products = _productService.ReadMany(new ProductFilterParams { Ids = ids.Select(int.Parse) });
+                await _orderService.Create(User, products);
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                try
+                {
+                    return View(_mapper.Map<ProductViewModel>(products));
+                }
+                catch
+                {
+                    return View(null);
+                }
             }
         }
 

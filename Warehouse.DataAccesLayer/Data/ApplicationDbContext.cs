@@ -69,6 +69,7 @@ namespace Warehouse.DataAccessLayer.Data
                     new OrderStatus  { Id = 1, OrderStatusString = "Ожидание оплаты" },
                     new OrderStatus  { Id = 2, OrderStatusString = "Ожидание доставки" },
                     new OrderStatus  { Id = 3, OrderStatusString = "Завершен" },
+                    new OrderStatus  { Id = 4, OrderStatusString = "Неудачная попытка доставки" },
                 }
            );
 
@@ -106,21 +107,6 @@ namespace Warehouse.DataAccessLayer.Data
                         UnitId = 1, ManufactureCountryId = 1 },
                 }
            );
-
-            builder.Entity<Cart>().HasData(
-                new Cart[]
-                {
-                    new Cart{ Id = 1, ApplicationUserId = "647be7d4-a30f-405d-989a-ec098de565b0" },
-                }
-            );
-            builder.Entity<CartProduct>().HasData(
-                new CartProduct[]
-                {
-                    new CartProduct{ Id = 1, CartId = 1, ProductId = 2},
-                    new CartProduct{ Id = 2, CartId = 1, ProductId = 3},
-                    new CartProduct{ Id = 3, CartId = 1, ProductId = 5},
-                }
-            );
         }
     }
 }

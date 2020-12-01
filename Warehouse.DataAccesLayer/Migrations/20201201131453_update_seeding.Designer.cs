@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Warehouse.DataAccessLayer.Data;
 
 namespace Warehouse.DataAccessLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201201131453_update_seeding")]
+    partial class update_seeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -309,6 +311,9 @@ namespace Warehouse.DataAccessLayer.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("OrderStatusId")
+                        .HasColumnType("int");
+
                     b.Property<long?>("TotalPrice")
                         .HasColumnType("bigint");
 
@@ -316,6 +321,8 @@ namespace Warehouse.DataAccessLayer.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OrderStatusId");
 
                     b.HasIndex("UserId");
 
@@ -345,31 +352,6 @@ namespace Warehouse.DataAccessLayer.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("OrderItem");
-                });
-
-            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.OrderOrderStatus", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("OrderStatusId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("OrderStatusId");
-
-                    b.ToTable("OrderOrderStatus");
                 });
 
             modelBuilder.Entity("Warehouse.DataAccessLayer.Models.OrderStatus", b =>
@@ -696,6 +678,10 @@ namespace Warehouse.DataAccessLayer.Migrations
 
             modelBuilder.Entity("Warehouse.DataAccessLayer.Models.Order", b =>
                 {
+                    b.HasOne("Warehouse.DataAccessLayer.Models.OrderStatus", "OrderStatus")
+                        .WithMany()
+                        .HasForeignKey("OrderStatusId");
+
                     b.HasOne("Warehouse.DataAccessLayer.Models.ApplicationUser", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId");
@@ -710,21 +696,6 @@ namespace Warehouse.DataAccessLayer.Migrations
                     b.HasOne("Warehouse.DataAccessLayer.Models.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.OrderOrderStatus", b =>
-                {
-                    b.HasOne("Warehouse.DataAccessLayer.Models.Order", "Order")
-                        .WithMany("OrderStatus")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Warehouse.DataAccessLayer.Models.OrderStatus", "OrderStatus")
-                        .WithMany("Orders")
-                        .HasForeignKey("OrderStatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

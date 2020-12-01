@@ -1,7 +1,8 @@
 ﻿@using Warehouse.ViewModels
-@model OrderViewModel
+@using Warehouse.ClassLibrary
+@model IEnumerable<ProductViewModel>
 @{
-    ViewData["Title"] = $"Заказать {Model.Items.First().Product.Name}";
+    ViewData["Title"] = $"Заказать {Model.First().Name}";
     Layout = "_Layout";
 }
 
@@ -10,17 +11,17 @@
 <div class="card margin-bottom-15px col-lg-9">
     <div class="card-body">
         <div>
-            @foreach (var orderItem in Model.Items)
+            @foreach (var orderItem in Model)
             {
                 <div class="card card-secondary lg-12">
                     <div class="row no-gutters">
                         <div class="col-lg-2">
-                            <img src="@orderItem.Product.Pictures.FirstOrDefault()" class="card-img" alt="...">
+                            <img src="@orderItem.Pictures.FirstOrDefault()" class="card-img" alt="...">
                         </div>
                         <div class="col-lg-8">
                             <div class="card-body">
-                                <h6 class="card-title"><a asp-controller="Products" asp-action="Details" asp-route-id="@orderItem.Product.Id">@orderItem.Product.Name</a></h6>
-                                <p class="card-text" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">@orderItem.Product.Description</p>
+                                <h6 class="card-title"><a asp-controller="Products" asp-action="Details" asp-route-id="@orderItem.Id">@orderItem.Name</a></h6>
+                                <p class="card-text" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">@orderItem.Description</p>
                             </div>
                         </div>
                         <div class="col-sm-2">
@@ -31,68 +32,76 @@
 
             }
         </div>
-        <p>Итоговая стоимость: <b>@Model.TotalPrice</b></p>
+        @{ 
+            Price resPrice = new Price(Model.Sum(p => p.Price.Penny));
+        }
+        <p>Итоговая стоимость: <b>@resPrice</b></p>
     </div>
 </div>
 
 
 <section class="order-form my-4 mx-4 col-lg-9">
     <div class="container pt-4">
+        <form action="/orders/create" method="post">
+            @foreach(var p in Model)
+            {
+                <input type="hidden" name="ids[]" value="@p.Id" />
+            }
+            <div class="row">
+                <div class="col-12">
+                    <h3>Данные доставки</h3>
+                    <hr class="mt-1">
+                </div>
+                <div class="col-12">
 
-        <div class="row">
-            <div class="col-12">
-                <h3>Данные доставки</h3>
-                <hr class="mt-1">
+                    <div class="row mx-4">
+                        <div class="col-12 mb-2">
+                            <label class="order-form-label">Имя</label>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <input name="name" class="order-form-input" placeholder="Иван" required>
+                        </div>
+                        <div class="col-12 col-sm-6 mt-2 mt-sm-0">
+                            <input name="surname" class="order-form-input" placeholder="Иванов" required>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 mx-4">
+                        <div class="col-12">
+                            <label class="order-form-label">Номер телефона</label>
+                        </div>
+                        <div class="col-12">
+                            <input name="phoneNumber" class="order-form-input" placeholder=" " required>
+                        </div>
+                    </div>
+
+                    <div class="row mt-3 mx-4">
+                        <div class="col-12">
+                            <label class="order-form-label">Адрес доставки</label>
+                        </div>
+                        <div class="col-12">
+                            <input name="street" class="order-form-input" placeholder="Улица" required>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <input name="house" class="order-form-input" placeholder="Дом" required>
+                        </div>
+                        <div class="col-12 col-sm-6 mt-2 pr-sm-2">
+                            <input name="city" class="order-form-input" placeholder="Город" required>
+                        </div>
+                        <div class="col-12 col-sm-6 mt-2 pr-sm-2">
+                            <input name="zipCode" class="order-form-input" placeholder="Индекс" required>
+                        </div>
+                    </div>
+
+
+                    <div class="row mt-3">
+                        <div class="col-12">
+                            <button type="submit" id="btnSubmit" class="btn btn-primary d-block mx-auto btn-submit">Заказать</button>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-            <div class="col-12">
-
-                <div class="row mx-4">
-                    <div class="col-12 mb-2">
-                        <label class="order-form-label">Имя</label>
-                    </div>
-                    <div class="col-12 col-sm-6">
-                        <input class="order-form-input" placeholder="Иван" required>
-                    </div>
-                    <div class="col-12 col-sm-6 mt-2 mt-sm-0">
-                        <input class="order-form-input" placeholder="Иванов" required>
-                    </div>
-                </div>
-
-                <div class="row mt-3 mx-4">
-                    <div class="col-12">
-                        <label class="order-form-label">Номер телефона</label>
-                    </div>
-                    <div class="col-12">
-                        <input class="order-form-input" placeholder=" " required>
-                    </div>
-                </div>
-
-                <div class="row mt-3 mx-4">
-                    <div class="col-12">
-                        <label class="order-form-label">Адрес доставки</label>
-                    </div>
-                    <div class="col-12">
-                        <input class="order-form-input" placeholder="Улица" required>
-                    </div>
-                    <div class="col-12 mt-2">
-                        <input class="order-form-input" placeholder="Дом" required>
-                    </div>
-                    <div class="col-12 col-sm-6 mt-2 pr-sm-2">
-                        <input class="order-form-input" placeholder="Город" required>
-                    </div>
-                    <div class="col-12 col-sm-6 mt-2 pr-sm-2">
-                        <input class="order-form-input" placeholder="Индекс" required>
-                    </div>
-                </div>
-
-
-                <div class="row mt-3">
-                    <div class="col-12">
-                        <button type="button" id="btnSubmit" class="btn btn-primary d-block mx-auto btn-submit">Заказать</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
+        </form>
     </div>
 </section>

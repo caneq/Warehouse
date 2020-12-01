@@ -24,10 +24,15 @@ namespace Warehouse.ViewModels
 
         [Required(ErrorMessage = "Введите вес")]
         public float Weight { get; set; }
-
+        public Price Price { get; set; }
         [Required(ErrorMessage = "Введите цену")]
         [RegularExpression("^[0-9]+(\\.[0-9]{1,2})?$", ErrorMessage ="Некорректная цена")]
-        public string Price { get; set; }
+        public string PriceString { 
+            get 
+            {
+                return Price.GetRoublesValue();
+            } 
+        }
 
         [Required(ErrorMessage = "Введите срок годности")]
         [Range(0, int.MaxValue, ErrorMessage = "Некорректное число")]

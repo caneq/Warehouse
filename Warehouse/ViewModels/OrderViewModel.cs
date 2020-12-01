@@ -11,10 +11,10 @@ namespace Warehouse.ViewModels
     {
         public int Id { get; set; }
         public DateTime OrderDate { get; set; }
-        public int UserId { get; set; }
-        public IdentityUser User { get; set; }
+        public string UserId { get; set; }
+        public ApplicationUserViewModel User { get; set; }
         public List<OrderItemViewModel> Items { get; set; }
         public Price TotalPrice { get; set; }
-        public OrderStatusViewModel OrderStatus { get; set; }
+        public List<OrderOrderStatusViewModel> OrderStatuses { get; set; }
     }
 }

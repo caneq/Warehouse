@@ -25,46 +25,48 @@ namespace Warehouse.Controllers
         // GET: SupplierOrders
         public ActionResult Index()
         {
-            var items = new OrderItem[]{
-                new OrderItem{ Id = 1, Price = new Price(100), Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
-                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.Id == 3)},
-                new OrderItem{ Id = 2, Price = new Price(102), Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
-                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.Id == 4)},
+            //var items = new OrderItem[]{
+            //    new OrderItem{ Id = 1, Price = new Price(100), Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+            //        .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.Id == 3)},
+            //    new OrderItem{ Id = 2, Price = new Price(102), Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+            //        .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.Id == 4)},
 
-            };
-            var resultPrice = new Price(items.Sum(i => i.Price.Penny));
+            //};
+            //var resultPrice = new Price(items.Sum(i => i.Price.Penny));
 
 
-            var l = new List<Order>();
-            l.Add(new Order { OrderDate = DateTime.Now, Id = 2, UserId = "123", OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() });
+            //var l = new List<Order>();
+            //l.Add(new Order { OrderDate = DateTime.Now, Id = 2, UserId = "123", OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() });
 
-            items = new OrderItem[]{
-                new OrderItem{ Id = 3, Price = new Price(399999), Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
-                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.Id == 5)},
-                new OrderItem{ Id = 4, Price = new Price(26099), Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
-                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.Id == 1)},
+            //items = new OrderItem[]{
+            //    new OrderItem{ Id = 3, Price = new Price(399999), Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+            //        .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.Id == 5)},
+            //    new OrderItem{ Id = 4, Price = new Price(26099), Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+            //        .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.Id == 1)},
 
-            };
-            resultPrice = new Price(items.Sum(i => i.Price.Penny));
+            //};
+            //resultPrice = new Price(items.Sum(i => i.Price.Penny));
 
-            l.Add(new Order { OrderDate = DateTime.Today, Id = 1, UserId = "123", OrderStatus = _context.OrderStatuses.Find(3), TotalPrice = resultPrice, Items = items.ToList() });
-            return View(_mapper.Map<IEnumerable<OrderViewModel>>(l));
+            //l.Add(new Order { OrderDate = DateTime.Today, Id = 1, UserId = "123", OrderStatus = _context.OrderStatuses.Find(3), TotalPrice = resultPrice, Items = items.ToList() });
+            //return View(_mapper.Map<IEnumerable<OrderViewModel>>(l));
+            return null;
         }
 
         // GET: SupplierOrders/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var items = new OrderItem[]{
-                new OrderItem{ Id = 1, Price = new Price(10000), Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
-                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.Id == 3)},
-                new OrderItem{ Id = 2, Price = new Price(10200), Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
-                    .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.Id == 4)},
+            //var items = new OrderItem[]{
+            //    new OrderItem{ Id = 1, Price = new Price(10000), Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+            //        .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.Id == 3)},
+            //    new OrderItem{ Id = 2, Price = new Price(10200), Product = _context.Products.Include(p => p.Pictures).Include(p => p.Unit)
+            //        .Include(p => p.ManufactureCountry).FirstOrDefault(i=>i.Id == 4)},
 
-            };
-            var resultPrice = new Price(items.Sum(i => i.Price.Penny));
+            //};
+            //var resultPrice = new Price(items.Sum(i => i.Price.Penny));
 
-            Order o = new Order { OrderDate = DateTime.Now, Id = 2, UserId = "123", OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() };
-            return View(_mapper.Map<OrderViewModel>(o));
+            //Order o = new Order { OrderDate = DateTime.Now, Id = 2, UserId = "123", OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() };
+            //return View(_mapper.Map<OrderViewModel>(o));
+            return null;
         }
 
         // GET: SupplierOrders/Create

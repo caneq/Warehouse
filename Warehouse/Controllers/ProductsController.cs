@@ -30,9 +30,9 @@ namespace Warehouse.Controllers
         }
 
         // GET: Products
-        public ActionResult Index(int? maxCount)
+        public ActionResult Index(ProductFilterParams f)
         {
-            var a = _mapper.Map<IEnumerable<ProductViewModel>>(_productService.ReadMany(new ProductFilterParams {MaxCount = maxCount}));
+            var a = _mapper.Map<IEnumerable<ProductViewModel>>(_productService.ReadMany(f));
             return View(a);
         }
 
