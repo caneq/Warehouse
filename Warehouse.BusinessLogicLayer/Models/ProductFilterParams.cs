@@ -24,7 +24,7 @@ namespace Warehouse.BusinessLogicLayer.Models
             return (Product p) => p.CountInStock > (MinCount ?? int.MinValue) &&
                 p.CountInStock < (MaxCount ?? int.MaxValue) &&
                 p.Weight < (MaxWeight ?? float.MaxValue) &&
-                Ids != null ? Ids.Contains(p.Id) : true;
+                (Ids != null ? Ids.Contains(p.Id) : true);
         }
 
         internal Func<Product, bool> GetFuncPredicate()
@@ -32,7 +32,7 @@ namespace Warehouse.BusinessLogicLayer.Models
             return (Product p) => p.CountInStock > (MinCount ?? int.MinValue) &&
                 p.CountInStock < (MaxCount ?? int.MaxValue) &&
                 p.Weight < (MaxWeight ?? float.MaxValue) &&
-                Ids != null ? Ids.Contains(p.Id) : true;
+                (Ids != null ? Ids.Contains(p.Id) : true);
         }
     }
 }
