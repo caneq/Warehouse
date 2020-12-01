@@ -69,6 +69,7 @@ namespace Warehouse.DataAccessLayer.Data
                     new OrderStatus  { Id = 1, OrderStatusString = "Ожидание оплаты" },
                     new OrderStatus  { Id = 2, OrderStatusString = "Ожидание доставки" },
                     new OrderStatus  { Id = 3, OrderStatusString = "Завершен" },
+                    new OrderStatus  { Id = 3, OrderStatusString = "Неудачная попытка доставки" },
                 }
            );
 
