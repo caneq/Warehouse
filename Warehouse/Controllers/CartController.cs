@@ -34,6 +34,10 @@ namespace Warehouse.Controllers
             {
                 return View(_mapper.Map<CartViewModel>(await _cartService.GetCartAsync(User)));
             }
+            catch (NotFoundException)
+            {
+                return View(null);
+            }
             catch
             {
                 return Unauthorized();

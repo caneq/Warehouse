@@ -40,27 +40,34 @@ namespace Warehouse.BusinessLogicLayer.Services
         }
         public async Task AddCartProductAsync(CartProductDTO p, ClaimsPrincipal User, string userId = null)
         {
-            Cart cart = await _getCartAsync(User, userId);
             CartProduct mappedCartProduct = _mapper.Map<CartProduct>(p);
-            
-
-            if (cart == null)
+            try
             {
-                cart = new Cart { ApplicationUserId = userId ?? User.GetUserId(), CartProducts = new List<CartProduct> { mappedCartProduct } };
-                await _repo.CreateAsync(cart);
-            }
-            else
-            {
+                Cart cart = await _getCartAsync(User, userId);
+               
                 mappedCartProduct.CartId = cart.Id;
                 if (cart.CartProducts.Find(c => c.ProductId == mappedCartProduct.ProductId) == null)
                 {
                     await _cartProductRepo.AddCartProductAsync(mappedCartProduct);
                 }
             }
+            catch(EntityNotFoundException)
+            {
+                Cart cart = new Cart { ApplicationUserId = userId ?? User.GetUserId(), CartProducts = new List<CartProduct> { mappedCartProduct } };
+                await _repo.CreateAsync(cart);
+            }
+
         }
         public async Task<CartDTO> GetCartAsync(ClaimsPrincipal User, string userId = null)
         {
-            return _mapper.Map<CartDTO>(await _getCartAsync(User, userId));
+            try
+            {
+                return _mapper.Map<CartDTO>(await _getCartAsync(User, userId));
+            }
+            catch(EntityNotFoundException)
+            {
+                throw new NotFoundException();
+            }
         }
         public async Task<CartDTO> ReadAsync(int id)
         {

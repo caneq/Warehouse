@@ -8,22 +8,6 @@
 
 <h2 class="text-center">@Model.Name</h2>
 
-<script>
-    function addToCart(id) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", '/cart/add', true);
-
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-
-            }
-        }
-        xhr.send("Productid=" + id);
-    }
-</script>
-
 <div class="lg-12 row">
     <div class="col-lg-7">
         @await Html.PartialAsync("_CarouselPartial", Model.Pictures)
@@ -41,6 +25,65 @@
         <div class="row">
             @Html.ActionLink("Заказать", "Create", "Orders", new { ids = Model.Id }, new { @class = "btn btn-primary btn-md active" })
             <button class="btn btn-primary btn-md active" style="margin-left: 10px" onclick="addToCart(@Model.Id)">Добавить в корзину</button>
+
         </div>
     </div>
 </div>
+
+<!--Modal-->
+<div class="modal fade" id="ModalMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3 id="ModalMessageText"></h3>
+            </div>
+            <div class="modal-footer">
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <a class="btn btn-primary" href="/Identity/Account/Login" visibility="hidden">Авторизоваться</a>
+                }
+                else
+                {
+                    <a class="btn btn-primary" href="/cart" visibility="hidden">Корзина</a>
+                }
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function addToCart(id) {
+        var request = $.ajax({
+            url: "/cart/add",
+            type: "POST",
+            data: { Productid: id },
+            dataType: "html"
+        });
+
+        request.done(function (msg) {
+
+            $('#ModalMessage').modal('show');
+            $('#ModalMessageText').text("Товар успешно добавлен");
+            $('.modal-title').text("Успех");
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            $('#ModalMessage').modal('show');
+            $('.modal-title').text("Товар не был добавлен");
+            if (jqXHR.status == 401) {
+                $('#ModalMessageText').text("Необходимо авторизоваться");
+            }
+            else {
+                $('#ModalMessageText').text("Произошла ошибка");
+            }
+            //$('#ModalMessageText').innerHTML = "Произошла ошибка";
+        });
+    }
+</script>
