@@ -34,10 +34,6 @@ namespace Warehouse.Controllers
             {
                 return View(_mapper.Map<CartViewModel>(await _cartService.GetCartAsync(User)));
             }
-            catch (NotFoundException)
-            {
-                return View(null);
-            }
             catch
             {
                 return Unauthorized();
@@ -107,10 +103,6 @@ namespace Warehouse.Controllers
             catch (UnauthorizeAccessException)
             {
                 return StatusCode(403);
-            }
-            catch (NotFoundException)
-            {
-                return NotFound();
             }
             catch
             {

@@ -6,7 +6,6 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Warehouse.DataAccessLayer.Data;
-using Warehouse.DataAccessLayer.Exceptions;
 using Warehouse.DataAccessLayer.Interfaces;
 using Warehouse.DataAccessLayer.Models;
 
@@ -44,10 +43,6 @@ namespace Warehouse.DataAccessLayer.Repositories
                         .ThenInclude(p => p.Unit)
                 .FirstOrDefaultAsync(predicate);
 
-            if (c == null)
-            {
-                throw new EntityNotFoundException();
-            }
             return c;
         }
         public IEnumerable<Order> ReadMany(Func<Order, bool> predicate)

@@ -37,7 +37,7 @@ namespace Warehouse.BusinessLogicLayer.Services
             await _repo.CreateAsync(_mapper.Map<Order>(order));
         }
 
-        public IEnumerable<OrderDTO> ReadManyAsync(ClaimsPrincipal User, string userId = null)
+        public IEnumerable<OrderDTO> ReadMany(ClaimsPrincipal User, string userId = null)
         {
             if(userId == null)
             {

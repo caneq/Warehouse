@@ -12,7 +12,7 @@ namespace Warehouse.ClassLibrary
         {
             this.Penny = penny;
         }
-        public override string ToString()
+        public string GetRoublesValue()
         {
             StringBuilder sb = new StringBuilder(Penny.ToString());
             if (sb.Length > 2)
@@ -30,8 +30,12 @@ namespace Warehouse.ClassLibrary
             {
                 sb.Insert(0, "0.0");
             }
-            sb.Append(" Руб");
-            return sb.ToString(); ;
+
+            return sb.ToString();
+        }
+        public override string ToString()
+        {
+            return $"{GetRoublesValue()} Руб";
         }
         public static Price operator +(Price c1, Price c2) => new Price(c1.Penny + c2.Penny);
         public static Price operator -(Price c1, Price c2) => new Price(c1.Penny - c2.Penny);

@@ -8,10 +8,10 @@ using Warehouse.BusinessLogicLayer.Models;
 
 namespace Warehouse.BusinessLogicLayer.Interfaces
 {
-    interface IOrderService
+    public interface IOrderService
     {
         public Task Create(ClaimsPrincipal User, OrderDTO order);
-        public IEnumerable<OrderDTO> ReadManyAsync(ClaimsPrincipal User, string userId = null);
+        public IEnumerable<OrderDTO> ReadMany(ClaimsPrincipal User, string userId = null);
         public Task<OrderDTO> ReadAsync(ClaimsPrincipal User, int id);
     }
 }
