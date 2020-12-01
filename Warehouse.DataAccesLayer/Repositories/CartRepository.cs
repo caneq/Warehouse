@@ -51,7 +51,7 @@ namespace Warehouse.DataAccessLayer.Repositories
         }
         public IEnumerable<Cart> ReadMany(Func<Cart, bool> predicate)
         {
-            return _dbSet.AsNoTracking().AsNoTracking()
+            return _dbSet.AsNoTracking()
                  .Include(c => c.CartProducts)
                     .ThenInclude(c => c.Product)
                         .ThenInclude(p => p.Pictures)
