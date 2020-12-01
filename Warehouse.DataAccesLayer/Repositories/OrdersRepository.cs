@@ -12,7 +12,7 @@ using Warehouse.DataAccessLayer.Models;
 
 namespace Warehouse.DataAccessLayer.Repositories
 {
-    class OrderRepository : IOrderRepository
+    public class OrderRepository : IOrderRepository
     {
         private readonly ApplicationDbContext _context;
         private readonly DbSet<Order> _dbSet;
