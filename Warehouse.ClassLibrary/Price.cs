@@ -117,5 +117,20 @@ namespace Warehouse.ClassLibrary
             }
             return Math.Sign(Penny - otherPrice.Penny);
         }
+        public override bool Equals(object obj)
+        {
+            try
+            {
+                return CompareTo(obj) == 0;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public override int GetHashCode()
+        {
+            return Penny.GetHashCode();
+        }
     }
 }

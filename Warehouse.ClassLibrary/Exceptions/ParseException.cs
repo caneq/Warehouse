@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Warehouse.ClassLibrary.Exceptions
 {
-    class ParseException : Exception
+    public class ParseException : Exception
     {
     }
 }
