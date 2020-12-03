@@ -27,7 +27,7 @@
     }
 </script>
 
-@if (Model != null && Model.CartProducts != null && Model.CartProducts.FirstOrDefault() != null)
+@if (Model?.CartProducts?.FirstOrDefault() != null)
 {
     <div class="row" style="margin: 30px 30px 30px 15px">
         @Html.ActionLink("Заказать все", "Create", "Orders", new { ids = 1 }, new { @class = "btn btn-primary btn-md active m-r-5" })

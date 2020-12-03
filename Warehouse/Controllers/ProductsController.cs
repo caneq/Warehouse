@@ -61,7 +61,7 @@ namespace Warehouse.Controllers
         // POST: Products/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(ProductViewModel p)
         {
             try
             {

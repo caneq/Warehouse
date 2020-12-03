@@ -23,6 +23,7 @@ namespace Warehouse.ViewModels
         public string? Description { get; set; }
 
         [Required(ErrorMessage = "Введите вес")]
+        [Range(0.0f, float.MaxValue, ErrorMessage = "Некорректное число")]
         public float Weight { get; set; }
         public Price Price { get; set; }
         [Required(ErrorMessage = "Введите цену")]
@@ -30,13 +31,16 @@ namespace Warehouse.ViewModels
         public string PriceString { 
             get 
             {
-                return Price.GetRoublesValue();
-            } 
+                return Price?.RoublesString;
+            }
+            set
+            {
+                Price = Price.Parse(value);
+            }
         }
 
-        [Required(ErrorMessage = "Введите срок годности")]
         [Range(0, int.MaxValue, ErrorMessage = "Некорректное число")]
-        public int ShelfLife { get; set; }
+        public int? ShelfLife { get; set; }
 
         [Required(ErrorMessage = "Выберите страну происхождения")]
         public int ManufactureCountryId { get; set; }
