@@ -61,12 +61,11 @@ namespace Warehouse.Controllers
         // POST: Products/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ProductViewModel p)
+        public ActionResult Create(ProductViewModel p, IFormFileCollection Images)
         {
             try
             {
                 // TODO: Add insert logic here
-
                 return RedirectToAction(nameof(Index));
             }
             catch

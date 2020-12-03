@@ -9,7 +9,7 @@ using Warehouse.BusinessLogicLayer.Services;
 using Warehouse.DataAccessLayer;
 using Warehouse.DataAccessLayer.Models;
 
-namespace Warehouse.BusinessLogicLayer
+namespace Warehouse.BusinessLogicLayer.Extensions
 {
     public static class AddServicesExtensions
     {

@@ -1,23 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using AutoMapper;
 using Warehouse.DataAccessLayer.Models;
 using Warehouse.DataAccessLayer.Data;
-using Warehouse.BusinessLogicLayer.Interfaces;
-using Warehouse.BusinessLogicLayer.Services;
-using Warehouse.DataAccessLayer.Repositories;
-using Warehouse.DataAccessLayer.Interfaces;
-using Warehouse.ViewModels;
-using Warehouse.BusinessLogicLayer;
+using Warehouse.BusinessLogicLayer.Extensions;
 
 namespace Warehouse
 {
