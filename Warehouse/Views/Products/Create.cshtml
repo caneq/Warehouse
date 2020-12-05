@@ -5,8 +5,11 @@
     Layout = "_Layout";
 }
 
+<script src="~/lib/dropzone/dropzone.js"></script>
+<link href="~/lib/dropzone/dropzone.css" rel="stylesheet" />
+
 <section class="order-form my-4 mx-4 col-lg-9">
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" id="form">
         <div class="container pt-4">
 
             <div class="row">
@@ -58,19 +61,13 @@
                             @Html.ValidationMessageFor(m => m.ManufactureCountryId)
                         </div>
                     </div>
-                    <div class="row mt-3 mx-4">
+                    <div class="row mt-3 mx-4 mb-4">
                         <label class="order-form-label">Описание</label>
                         @Html.EditorFor(m => m.Description, new { htmlAttributes = new { @class = "order-form-input" } })
                         @Html.ValidationMessageFor(m => m.Description)
                     </div>
 
-                    <div class="row mt-3 mx-4">
-                        <div class="col-3">
-                            <label class="order-form-label">Фотографии:</label>
-                            <input type="file" id="files" name="Images" accept=".jpg, .jpeg, .png" multiple>
-                        </div>
-                    </div>
-
+                    <div class="dropzone" id="mydropzone"></div>
 
                     <div class="row mt-3 justify-content-center">
                         <div class="col-auto">
@@ -83,3 +80,30 @@
         </div>
     </form>
 </section>
+
+<script>
+    function addLinkToForm(link) {
+        var inp = document.createElement("input");
+        inp.value = link;
+        inp.hidden = true;
+        inp.name = "Pictures";
+        document.getElementById('form').appendChild(inp);
+    }
+
+    Dropzone.options.mydropzone = {
+        url: "https://api.imgur.com/3/image",
+        timeout: 120000,
+        paramName: "image",
+        dictDefaultMessage: "Нажмите или перетащите сюда фотографии",
+        acceptedFiles: ".jpg, .jpeg, .png, .gif",
+        success: function (file, responce) {
+            console.log(responce.data.link);
+            addLinkToForm(responce.data.link);
+        },
+        headers: {
+            'Authorization': 'Client-ID bb79ca08c6611e1',
+            'Cache-Control': null,
+            'X-Requested-With': null,
+        }
+    };
+</script>

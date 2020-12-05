@@ -61,11 +61,12 @@ namespace Warehouse.Controllers
         // POST: Products/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ProductViewModel p, IFormFileCollection Images)
+        public async Task<ActionResult> Create(ProductViewModel p, IFormCollection collection)
         {
             try
             {
-                // TODO: Add insert logic here
+                p.Pictures = collection["pictures"].Select(s => new UrlViewModel { UrlString = s }).ToList();
+                await _productService.CreateAsync(_mapper.Map<ProductDTO>(p));
                 return RedirectToAction(nameof(Index));
             }
             catch
