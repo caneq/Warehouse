@@ -77,19 +77,23 @@ namespace Warehouse.Controllers
         }
 
         // GET: Products/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            ViewBag.Units = new SelectList(_unitService.ReadAll(), "Id", "UnitString");
+            ViewBag.Countries = new SelectList(_countriesService.ReadAll(), "Id", "Name");
+            return View(_mapper.Map<ProductViewModel>(await _productService.ReadAsync(id)));
         }
 
         // POST: Products/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(ProductViewModel p, IFormCollection collection)
         {
             try
             {
                 // TODO: Add update logic here
+                p.Pictures = collection["pictures"].Select(s => new UrlViewModel { UrlString = s }).ToList();
+                await _productService.UpdateAsync(_mapper.Map<ProductDTO>(p));
 
                 return RedirectToAction(nameof(Index));
             }

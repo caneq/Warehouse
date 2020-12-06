@@ -48,7 +48,19 @@ namespace Warehouse.DataAccessLayer.Repositories
 
         public async Task UpdateAsync(Product item)
         {
-            _context.Entry(item).State = EntityState.Modified;
+            var newList = new List<Url>(item.Pictures);
+            var dbEnt = await _context.Products.Include(p => p.Pictures).FirstOrDefaultAsync(p => p.Id == item.Id);
+
+            dbEnt.CountInStock = item.CountInStock;
+            dbEnt.Description = item.Description;
+            dbEnt.ManufactureCountryId = item.ManufactureCountryId;
+            dbEnt.Name = item.Name;
+            dbEnt.Price = item.Price;
+            dbEnt.ShelfLife = item.ShelfLife;
+            dbEnt.UnitId = item.UnitId;
+            dbEnt.Weight = item.Weight;
+            dbEnt.Pictures = item.Pictures;
+
             await _context.SaveChangesAsync();
         }
 
