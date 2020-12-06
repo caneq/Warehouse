@@ -27,7 +27,19 @@ namespace Warehouse.BusinessLogicLayer.Services
 
         private void _checkAccess(ClaimsPrincipal User, string userId)
         {
-            if (userId != User.GetUserId() && !User.IsInRole("admin"))
+            _checkAccess(User, new OrderFilterParams { UserId = userId });
+        }
+        private void _checkAccess(ClaimsPrincipal User, OrderFilterParams filterParams)
+        {
+            if (User.IsInRole("admin") || User.Identity.Name == "Accountant1@gmail.com")
+            {
+                return;
+            }
+            if (filterParams.UserId == null)
+            {
+                filterParams.UserId = User.GetUserId();
+            }
+            else if (filterParams.UserId != User.GetUserId() && !User.IsInRole("admin"))
             {
                 throw new UnauthorizedAccessException();
             }
@@ -52,17 +64,13 @@ namespace Warehouse.BusinessLogicLayer.Services
             await _repo.CreateAsync(_mapper.Map<Order>(order));
         }
 
-        public IEnumerable<OrderDTO> ReadMany(ClaimsPrincipal User, string userId = null)
+        public IEnumerable<OrderDTO> ReadMany(ClaimsPrincipal User, OrderFilterParams filterParams = null)
         {
-            if(userId == null)
-            {
-                userId = User.GetUserId();
-            }
-            else
-            {
-                _checkAccess(User, userId);
-            }
-            var orders = _repo.ReadMany(o => o.UserId == userId);
+            if (filterParams == null) filterParams = new OrderFilterParams { UserId = User.GetUserId() };
+            else _checkAccess(User, filterParams);
+
+            var orders = _repo.ReadMany(filterParams.GetFuncPredicate());
+            //var orders = _repo.ReadMany(p => true);
 
             return _mapper.Map<IEnumerable<OrderDTO>>(orders);
         }

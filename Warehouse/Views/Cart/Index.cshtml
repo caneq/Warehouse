@@ -30,7 +30,7 @@
 @if (Model?.CartProducts?.FirstOrDefault() != null)
 {
     <div class="row" style="margin: 30px 30px 30px 15px">
-        @Html.ActionLink("Заказать все", "Create", "Orders", new { ids = 1 }, new { @class = "btn btn-primary btn-md active m-r-5" })
+        @Html.ActionLink("Заказать все", "Create", "Orders", new { ids = Model.CartProducts.Select(p => p.ProductId) }, new { @class = "btn btn-primary btn-md active m-r-5" })
         @Html.ActionLink("Заказать выбранные", "Create", "Orders", new { ids = 1 }, new { @class = "btn btn-primary btn-md active m-r-5" })
         @Html.ActionLink("Удалить выбранные", "Create", "Orders", new { ids = 1 }, new { @class = "btn btn-danger btn-md active m-r-5" })
     </div>
@@ -38,16 +38,15 @@
 
     @foreach (var p in Model.CartProducts)
     {
-
-            <div id="cartProduct-@p.Id" class="row">
-                <div class="col-lg-8">
-                    @await Html.PartialAsync("_ProductCardPartial", p.Product)
-                </div>
-                <div class="col-1">
-                    <button onclick="deleteCartProduct(@p.Id)" class="btn btn-danger"><i class="fa fa-times"></i></button>
-                </div>
+        <div id="cartProduct-@p.Id" class="row">
+            <div class="col-sm-1">
+                <button onclick="deleteCartProduct(@p.Id)" class="btn btn-danger"><i class="fa fa-times"></i></button>
+                <input type="checkbox" class="custom-control form-control-lg custom-checkbox">
             </div>
-
+            <div class="col-lg-9">
+                @await Html.PartialAsync("_ProductCardPartial", p.Product)
+            </div>
+        </div>
     }
 
 }
