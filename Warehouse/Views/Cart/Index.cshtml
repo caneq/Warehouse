@@ -38,13 +38,18 @@
 
     @foreach (var p in Model.CartProducts)
     {
-        <div id="cartProduct-@p.Id" class="row">
-            @await Html.PartialAsync("_ProductCardPartial", p.Product)
-            <div class="col-sm-1">
-                <button onclick="deleteCartProduct(@p.Id)" class="btn btn-danger"><i class="fa fa-times"></i></button>
+
+            <div id="cartProduct-@p.Id" class="row">
+                <div class="col-lg-8">
+                    @await Html.PartialAsync("_ProductCardPartial", p.Product)
+                </div>
+                <div class="col-1">
+                    <button onclick="deleteCartProduct(@p.Id)" class="btn btn-danger"><i class="fa fa-times"></i></button>
+                </div>
             </div>
-        </div>
+
     }
+
 }
 else
 {

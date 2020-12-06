@@ -12,7 +12,7 @@ namespace Warehouse.BusinessLogicLayer.Interfaces
         Task<ProductDTO> ReadAsync(int id);
         Task<ProductDTO> ReadAsync(ProductFilterParams filterParams);
         IEnumerable<ProductDTO> ReadMany(ProductFilterParams filterParams);
-        Task CreateAsync(ProductDTO item);
+        Task<int> CreateAsync(ProductDTO item);
         Task DeleteAsync(ProductDTO item);
         Task UpdateAsync(ProductDTO item);
 

@@ -42,6 +42,7 @@ namespace Warehouse.Controllers
             try
             {
                 ProductViewModel p = _mapper.Map<ProductViewModel>(await _productService.ReadAsync(id));
+                if (p == null) Response.StatusCode = 404;
                 return View(p);
             }
             catch
@@ -66,12 +67,12 @@ namespace Warehouse.Controllers
             try
             {
                 p.Pictures = collection["pictures"].Select(s => new UrlViewModel { UrlString = s }).ToList();
-                await _productService.CreateAsync(_mapper.Map<ProductDTO>(p));
-                return RedirectToAction(nameof(Index));
+                var id = await _productService.CreateAsync(_mapper.Map<ProductDTO>(p));
+                return RedirectToAction(nameof(Details), new { Id = id });
             }
             catch
             {
-                return View();
+                return Create();
             }
         }
 

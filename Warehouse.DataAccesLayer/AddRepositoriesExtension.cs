@@ -18,8 +18,8 @@ namespace Warehouse.DataAccessLayer
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
 
-            services.AddScoped<IRepository<Product>, ProductRepository>();
-            services.AddScoped<IRepository<Cart>, CartRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<ICartProductRepository, CartProductRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
 

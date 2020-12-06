@@ -22,10 +22,11 @@ namespace Warehouse.DataAccessLayer.Repositories
             _dbSet = context.Set<Product>();
         }
 
-        public async Task CreateAsync(Product item)
+        public async Task<int> CreateAsync(Product item)
         {
             await _dbSet.AddAsync(item);
             await _context.SaveChangesAsync();
+            return item.Id;
         }
 
         public async Task<Product> ReadAsync(Expression<Func<Product, bool>> predicate)

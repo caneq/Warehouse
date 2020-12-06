@@ -2,8 +2,14 @@
 @model ProductViewModel;
 
 @{
-    ViewData["Title"] = Model.Name;
+    ViewData["Title"] = Model?.Name ?? "Продукт не найден";
     Layout = "_Layout";
+}
+
+@if(Model == null)
+{
+    <h1>Продукт удален, или еще не создан</h1>
+    return;
 }
 
 <h2 class="text-center">@Model.Name</h2>

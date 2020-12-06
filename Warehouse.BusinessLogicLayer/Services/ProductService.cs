@@ -13,9 +13,9 @@ namespace Warehouse.BusinessLogicLayer.Services
 {
     public class ProductService : IProductService
     {
-        protected readonly IRepository<Product> _repo;
+        protected readonly IProductRepository _repo;
         protected readonly IMapper _mapper;
-        public ProductService(IRepository<Product> repo, IMapper mapper)
+        public ProductService(IProductRepository repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
@@ -32,9 +32,10 @@ namespace Warehouse.BusinessLogicLayer.Services
         {
             return _mapper.Map<IEnumerable<ProductDTO>>(_repo.ReadMany(filterParams.GetFuncPredicate()));
         }
-        public async Task CreateAsync(ProductDTO item)
+        public async Task<int> CreateAsync(ProductDTO item)
         {
-            await _repo.CreateAsync(_mapper.Map<Product>(item));
+            if (item.ShelfLife == null) item.ShelfLife = int.MaxValue;
+            return await _repo.CreateAsync(_mapper.Map<Product>(item));
         }
         public async Task DeleteAsync(ProductDTO item)
         {

@@ -15,7 +15,7 @@ namespace Warehouse.BusinessLogicLayer.DataTransferObjects
         public string Description { get; set; }
         public float Weight { get; set; }
         public Price Price { get; set; }
-        public int ShelfLife { get; set; }
+        public int? ShelfLife { get; set; }
         public int ManufactureCountryId { get; set; }
         public CountryDTO ManufactureCountry { get; set; }
         public int CountInStock { get; set; }

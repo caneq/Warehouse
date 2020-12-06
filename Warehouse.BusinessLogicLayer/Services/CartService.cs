@@ -16,10 +16,10 @@ namespace Warehouse.BusinessLogicLayer.Services
 {
     class CartService : ICartService
     {
-        protected readonly IRepository<Cart> _repo;
+        protected readonly ICartRepository _repo;
         protected readonly ICartProductRepository _cartProductRepo;
         protected readonly IMapper _mapper;
-        public CartService(IRepository<Cart> repo, ICartProductRepository cartProductRepo, IMapper mapper)
+        public CartService(ICartRepository repo, ICartProductRepository cartProductRepo, IMapper mapper)
         {
             _repo = repo;
             _cartProductRepo = cartProductRepo;
