@@ -99,26 +99,20 @@ namespace Warehouse.Controllers
             }
         }
 
-        // GET: Products/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Products/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [HttpDelete]
+        public async Task<ActionResult> Delete(int id)
         {
             try
             {
-                // TODO: Add delete logic here
+                var product = await _productService.ReadAsync(id);
+                if (product == null) return NotFound();
+                await _productService.DeleteAsync(product);
 
-                return RedirectToAction(nameof(Index));
+                return Ok();
             }
             catch
             {
-                return View();
+                return BadRequest();
             }
         }
     }

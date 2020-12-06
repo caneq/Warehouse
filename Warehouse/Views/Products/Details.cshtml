@@ -6,7 +6,7 @@
     Layout = "_Layout";
 }
 
-@if(Model == null)
+@if (Model == null)
 {
     <h1>Продукт удален, или еще не создан</h1>
     return;
@@ -35,15 +35,14 @@
     </div>
 </div>
 
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#ModalDelete">Удалить</button>
+
 <!--Modal-->
-<div class="modal fade" id="ModalMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="ModalMessage" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
             <div class="modal-body">
                 <h3 id="ModalMessageText"></h3>
@@ -56,7 +55,25 @@
                 else
                 {
                     <a class="btn btn-primary" href="/cart" visibility="hidden">Корзина</a>
+                    <a class="btn btn-primary" href="/products" visibility="hidden">Каталог</a>
                 }
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalDelete" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Удалить @Model.Name</h5>
+            </div>
+            <div class="modal-body">
+                <p>Вы уверены, что хотите удалить @Model.Name?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" onclick="deleteProduct(@Model.Id);" data-dismiss="modal">Удалить</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
             </div>
         </div>
@@ -88,7 +105,33 @@
             else {
                 $('#ModalMessageText').text("Произошла ошибка");
             }
-            //$('#ModalMessageText').innerHTML = "Произошла ошибка";
+        });
+    }
+
+        function deleteProduct(id) {
+        var request = $.ajax({
+            url: "/products/delete",
+            type: "DELETE",
+            data: { id: id },
+            dataType: "html"
+        });
+
+        request.done(function (msg) {
+
+            $('#ModalMessage').modal('show');
+            $('#ModalMessageText').text("Продукт успешно удален");
+            $('.modal-title').text("Успех");
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            $('#ModalMessage').modal('show');
+            $('.modal-title').text("Продукт не был удален");
+            if (jqXHR.status == 401) {
+                $('#ModalMessageText').text("Необходимо авторизоваться");
+            }
+            else {
+                $('#ModalMessageText').text("Произошла ошибка");
+            }
         });
     }
 </script>
