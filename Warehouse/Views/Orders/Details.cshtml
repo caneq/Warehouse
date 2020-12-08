@@ -59,7 +59,8 @@
                 </div>
             </div>
         </div>
-        @if (User.Identity.Name == "Accountant1@gmail.com")
+        @if (User.Identity.Name == "Accountant1@gmail.com" && 
+            Model?.OrderStatuses?.First().OrderStatus.OrderStatusString == "Ожидание оплаты")
         {
             <form method="post" action="/orders/setPayed" >
                 <input name="id" value="@Model.Id" hidden />
