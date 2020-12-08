@@ -137,9 +137,10 @@ namespace Warehouse.Controllers
             return View();
         }
 
-        public ActionResult Deliver(int id)
+        public async Task<ActionResult> Deliver(int id)
         {
-            return View();
+            return View(_mapper.Map<IEnumerable<OrderViewModel>>(
+                _orderService.ReadMany(User, new OrderFilterParams { OrderStatus = await _orderStatusesService.GetByStatusStringAsync("Ожидание доставки") })));
         }
 
         // POST: Orders/Delete/5

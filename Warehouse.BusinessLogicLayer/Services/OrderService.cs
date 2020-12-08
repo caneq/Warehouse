@@ -34,7 +34,7 @@ namespace Warehouse.BusinessLogicLayer.Services
         }
         private void _checkAccess(ClaimsPrincipal User, OrderFilterParams filterParams)
         {
-            if (User.IsInRole("admin") || User.Identity.Name == "Accountant1@gmail.com")
+            if (User.IsInRole("admin") || User.Identity.Name != "User1@gmail.com")
             {
                 return;
             }

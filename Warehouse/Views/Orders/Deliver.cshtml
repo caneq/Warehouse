@@ -1,5 +1,5 @@
 ﻿@using Warehouse.ViewModels
-@model OrderViewModel
+@model IEnumerable<OrderViewModel>
 @{
     ViewData["Title"] = "Оформить новый товар";
     Layout = "_Layout";
@@ -7,12 +7,12 @@
 
 <h2>Ожидают доставку:</h2>
 <ul class="list-group">
-    <li class="list-group-item"><a asp-controller="Orders" asp-action="Details" asp-route-id="1">Заказ №1. 4 кг. улица пушкина, дом колотушкина</a></li>
-    <li class="list-group-item"><a asp-controller="Orders" asp-action="Details" asp-route-id="1">Заказ №1. 4 кг. улица пушкина, дом колотушкина</a></li>
-    <li class="list-group-item"><a asp-controller="Orders" asp-action="Details" asp-route-id="1">Заказ №1. 4 кг. улица пушкина, дом колотушкина</a></li>
-    <li class="list-group-item"><a asp-controller="Orders" asp-action="Details" asp-route-id="1">Заказ №1. 4 кг. улица пушкина, дом колотушкина</a></li>
-    <li class="list-group-item"><a asp-controller="Orders" asp-action="Details" asp-route-id="1">Заказ №1. 4 кг. улица пушкина, дом колотушкина</a></li>
-    <li class="list-group-item"><a asp-controller="Orders" asp-action="Details" asp-route-id="1">Заказ №1. 4 кг. улица пушкина, дом колотушкина</a></li>
-    <li class="list-group-item"><a asp-controller="Orders" asp-action="Details" asp-route-id="1">Заказ №1. 4 кг. улица пушкина, дом колотушкина</a></li>
-    <li class="list-group-item"><a asp-controller="Orders" asp-action="Details" asp-route-id="1">Заказ №1. 4 кг. улица пушкина, дом колотушкина</a></li>
+    @foreach (var o in Model)
+    {
+        <li class="list-group-item">
+            <a asp-controller="Orders" asp-action="Details" asp-route-id="@o.Id">
+                Заказ №@o.Id. @o.Items.Sum(o => o.Product.Weight) кг. улица пушкина, дом колотушкина
+            </a>
+        </li>
+    }
 </ul>

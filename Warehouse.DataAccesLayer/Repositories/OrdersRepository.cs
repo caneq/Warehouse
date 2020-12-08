@@ -67,7 +67,7 @@ namespace Warehouse.DataAccessLayer.Repositories
                 .Where(predicate).AsEnumerable();
 
             return res.Select(s => {
-                s.OrderStatuses = s.OrderStatuses.OrderByDescending(s => s.DateTime).ToList();
+                s.OrderStatuses = s?.OrderStatuses.OrderByDescending(s => s?.DateTime).ToList();
                 return s;
             });
         }
