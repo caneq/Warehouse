@@ -51,7 +51,7 @@ namespace Warehouse.DataAccessLayer.Repositories
         }
         public IEnumerable<Order> ReadMany(Func<Order, bool> predicate)
         {
-            return _dbSet.AsNoTracking()
+            var res = _dbSet.AsNoTracking()
                 .Include(o => o.OrderStatuses)
                     .ThenInclude(os => os.OrderStatus)
                 .OrderByDescending(o => o.OrderDate)
@@ -65,6 +65,11 @@ namespace Warehouse.DataAccessLayer.Repositories
                     .ThenInclude(oi => oi.Product)
                         .ThenInclude(p => p.Unit)
                 .Where(predicate).AsEnumerable();
+
+            return res.Select(s => {
+                s.OrderStatuses = s.OrderStatuses.OrderByDescending(s => s.DateTime).ToList();
+                return s;
+            });
         }
 
         public async Task UpdateAsync(Order item)
