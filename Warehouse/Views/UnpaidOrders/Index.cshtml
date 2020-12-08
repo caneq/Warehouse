@@ -8,5 +8,5 @@
 
 @foreach (var o in Model)
 {
-    <a asp-controller="Orders" asp-action="Details" asp-route-id="@o.Id">@o.TotalPrice @o.OrderDate</a>
+    <p><a asp-controller="Orders" asp-action="Details" asp-route-id="@o.Id">Заказ №@o.Id. @o.OrderDate @o.TotalPrice</a></p>
 }

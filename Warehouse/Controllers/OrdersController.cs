@@ -14,6 +14,7 @@ using Warehouse.BusinessLogicLayer.DataTransferObjects;
 using Warehouse.ClassLibrary;
 using Warehouse.BusinessLogicLayer.Interfaces;
 using Warehouse.BusinessLogicLayer.Models;
+using Warehouse.BusinessLogicLayer.Exceptions;
 
 namespace Warehouse.Controllers
 {
@@ -96,6 +97,28 @@ namespace Warehouse.Controllers
             catch
             {
                 return View();
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> SetPayed(int id)
+        {
+            try
+            {
+                await _orderService.SetPayed(id, User);
+                return RedirectToAction(nameof(Details), new { id });
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
+            catch
+            {
+                return BadRequest();
             }
         }
 

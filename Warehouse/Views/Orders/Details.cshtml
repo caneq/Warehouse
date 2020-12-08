@@ -61,7 +61,10 @@
         </div>
         @if (User.Identity.Name == "Accountant1@gmail.com")
         {
-            <button class="btn btn-primary btn-md active">Оплачен</button>
+            <form method="post" action="/orders/setPayed" >
+                <input name="id" value="@Model.Id" hidden />
+                <button type="submit" class="btn btn-primary btn-md active">Оплачен</button>
+            </form>
         }
     </div>
 }

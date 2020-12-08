@@ -68,8 +68,39 @@ namespace Warehouse.DataAccessLayer.Repositories
 
         public async Task UpdateAsync(Order item)
         {
-            _context.Entry(item).State = EntityState.Modified;
-            _context.Update(item);
+            var order = await _context.Orders
+                .Include(o => o.OrderStatuses)
+                    .ThenInclude(os => os.OrderStatus)
+                .OrderByDescending(o => o.OrderDate)
+                .Include(o => o.Items)
+                    .ThenInclude(oi => oi.Product)
+                        .ThenInclude(p => p.ManufactureCountry)
+                .Include(o => o.Items)
+                    .ThenInclude(oi => oi.Product)
+                        .ThenInclude(p => p.Pictures)
+                 .Include(o => o.Items)
+                    .ThenInclude(oi => oi.Product)
+                        .ThenInclude(p => p.Unit)
+                 .FirstOrDefaultAsync(o => o.Id == item.Id);
+
+            var addedItems = item.Items.Where(s => !order.Items.Any(o => o.Id == s.Id));
+            var removedItems = order.Items.Where(s => !item.Items.Any(o => o.Id == s.Id));
+
+            order.Items.AddRange(addedItems);
+            order.Items.RemoveAll(s => removedItems.Contains(s));
+
+            order.OrderDate = item.OrderDate;
+
+            var addedStatuses = item.OrderStatuses.Where(s => !order.OrderStatuses.Any(o => o.OrderStatus.OrderStatusString == s.OrderStatus.OrderStatusString));
+            var removedStatuses = order.OrderStatuses.Where(s => !item.OrderStatuses.Any(o => o.OrderStatus.OrderStatusString == s.OrderStatus.OrderStatusString));
+
+            order.OrderStatuses.AddRange(addedStatuses);
+            order.OrderStatuses.RemoveAll(s => removedStatuses.Contains(s));
+
+            order.TotalPrice = item.TotalPrice;
+            order.User = item.User;
+            order.UserId = item.UserId;
+
             await _context.SaveChangesAsync();
         }
 
