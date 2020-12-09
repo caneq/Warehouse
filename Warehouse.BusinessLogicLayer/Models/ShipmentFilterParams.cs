@@ -21,8 +21,8 @@ namespace Warehouse.BusinessLogicLayer.Models
             return (Shipment s) => (OrderId != null ? s.OrderId == OrderId : true) &&
             (RepicientName != null ? s.RepicientName == RepicientName : true) &&
             (RepicientApplicationUserId != null ? s.RepicientApplicationUserId == RepicientApplicationUserId : true) &&
-            (СonveyedName != null ? s.СonveyedName == СonveyedName : true) &&
-            (СonveyedApplicationUserId != null ? s.СonveyedApplicationUserId == СonveyedApplicationUserId : true) &&
+            (СonveyedName != null ? s.ConveyedName == СonveyedName : true) &&
+            (СonveyedApplicationUserId != null ? s.ConveyedApplicationUserId == СonveyedApplicationUserId : true) &&
             (MinDateTime != null ? s.DateTime > MinDateTime : true) &&
             (MaxDateTime != null ? s.DateTime < MaxDateTime : true);
         }
@@ -32,8 +32,8 @@ namespace Warehouse.BusinessLogicLayer.Models
             return (Shipment s) => (OrderId != null ? s.OrderId == OrderId : true) &&
             (RepicientName != null ? s.RepicientName == RepicientName : true) &&
             (RepicientApplicationUserId != null ? s.RepicientApplicationUserId == RepicientApplicationUserId : true) &&
-            (СonveyedName != null ? s.СonveyedName == СonveyedName : true) &&
-            (СonveyedApplicationUserId != null ? s.СonveyedApplicationUserId == СonveyedApplicationUserId : true) &&
+            (СonveyedName != null ? s.ConveyedName == СonveyedName : true) &&
+            (СonveyedApplicationUserId != null ? s.ConveyedApplicationUserId == СonveyedApplicationUserId : true) &&
             (MinDateTime != null ? s.DateTime > MinDateTime : true) &&
             (MaxDateTime != null ? s.DateTime < MaxDateTime : true);
         }

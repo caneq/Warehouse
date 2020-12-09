@@ -13,5 +13,7 @@ namespace Warehouse.DataAccessLayer.Models
         public int CartId { get; set; }
         public Cart Cart { get; set; }
         public List<Order> Orders { get; set; }
+        public List<Shipment> RepicientShipments { get; set; }
+        public List<Shipment> ConveyedShipments { get; set; }
     }
 }

@@ -82,7 +82,7 @@
                             </tr>
                             @foreach (var shipment in Model?.Shipments)
                             {
-                                conveyed = shipment.Сonveyed?.UserName ?? shipment.СonveyedName;
+                                conveyed = shipment.Conveyed?.UserName ?? shipment.ConveyedName;
                                 recepient = shipment.Repicient?.UserName ?? shipment.RepicientName;
 
                                 <tr>
@@ -106,9 +106,15 @@
             {
                 <form method="post" action="/shipments/create">
                     <input name="OrderId" value="@Model.Id" hidden />
-                    <input name="СonveyedApplicationUserId" value="@User.GetUserId()" hidden />
-                    @Html.DropDownList("RepicientApplicationUserId", ViewBag.Couriers as SelectList)
-                    <button type="submit">Отдать курьеру</button>
+                    <input name="ConveyedApplicationUserId" value="@User.GetUserId()" hidden />
+                    <div class="row">
+                        <div class="col">
+                            @Html.DropDownList("RepicientApplicationUserId", ViewBag.Couriers as SelectList, new { @class = "form-control" })
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary">Отдать курьеру</button>
+                        </div>
+                    </div>
                 </form>
                 <form method="post" action="/shipments/create">
                     <input name="OrderId" value="@Model.Id" hidden />

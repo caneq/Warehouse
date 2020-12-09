@@ -12,9 +12,9 @@ namespace Warehouse.DataAccessLayer.Models
         public string RepicientApplicationUserId { get; set; }
         public ApplicationUser Repicient { get; set; }
 
-        public string СonveyedName { get; set; }
-        public string СonveyedApplicationUserId { get; set; }
-        public ApplicationUser Сonveyed { get; set; }
+        public string ConveyedName { get; set; }
+        public string ConveyedApplicationUserId { get; set; }
+        public ApplicationUser Conveyed { get; set; }
 
         public int OrderId { get; set; }
         public Order Order { get; set; }

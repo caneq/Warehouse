@@ -39,7 +39,7 @@ namespace Warehouse.DataAccessLayer.Repositories
             return await _dbSet.AsNoTracking()
                     .Include(p => p.Order)
                     .Include(p => p.Repicient)
-                    .Include(p => p.Сonveyed)
+                    .Include(p => p.Conveyed)
                     .FirstOrDefaultAsync(predicate);
         }
 
@@ -48,7 +48,7 @@ namespace Warehouse.DataAccessLayer.Repositories
             return _dbSet.AsNoTracking().AsNoTracking()
                     .Include(p => p.Order)
                     .Include(p => p.Repicient)
-                    .Include(p => p.Сonveyed)
+                    .Include(p => p.Conveyed)
                 .Where(predicate).AsEnumerable();
         }
 

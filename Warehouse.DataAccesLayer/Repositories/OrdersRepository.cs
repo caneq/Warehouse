@@ -45,6 +45,9 @@ namespace Warehouse.DataAccessLayer.Repositories
                     .ThenInclude(oi => oi.Product)
                         .ThenInclude(p => p.Unit)
                 .Include(o => o.Shipments)
+                    .ThenInclude(s => s.Repicient)
+                .Include(o => o.Shipments)
+                    .ThenInclude(s => s.Conveyed)
                 .FirstOrDefaultAsync(predicate);
 
             c.OrderStatuses = c.OrderStatuses.OrderByDescending(c => c.DateTime).ToList();

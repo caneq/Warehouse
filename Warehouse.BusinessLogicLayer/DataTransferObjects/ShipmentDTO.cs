@@ -12,9 +12,9 @@ namespace Warehouse.BusinessLogicLayer.DataTransferObjects
         public string RepicientApplicationUserId { get; set; }
         public ApplicationUserDTO Repicient { get; set; }
 
-        public string СonveyedName { get; set; }
-        public string СonveyedApplicationUserId { get; set; }
-        public ApplicationUserDTO Сonveyed { get; set; }
+        public string ConveyedName { get; set; }
+        public string ConveyedApplicationUserId { get; set; }
+        public ApplicationUserDTO Conveyed { get; set; }
 
         public int OrderId { get; set; }
         public OrderDTO Order { get; set; }

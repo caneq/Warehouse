@@ -13,9 +13,9 @@ namespace Warehouse.ViewModels
         public string RepicientApplicationUserId { get; set; }
         public ApplicationUserViewModel Repicient { get; set; }
 
-        public string СonveyedName { get; set; }
-        public string СonveyedApplicationUserId { get; set; }
-        public ApplicationUserViewModel Сonveyed { get; set; }
+        public string ConveyedName { get; set; }
+        public string ConveyedApplicationUserId { get; set; }
+        public ApplicationUserViewModel Conveyed { get; set; }
 
         public int OrderId { get; set; }
         public OrderViewModel Order { get; set; }

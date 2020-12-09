@@ -30,6 +30,18 @@ namespace Warehouse.DataAccessLayer.Data
             base.OnModelCreating(builder);
 
             builder
+                .Entity<ApplicationUser>()
+                .HasMany(u => u.RepicientShipments)
+                .WithOne(s => s.Repicient)
+                .HasForeignKey(s => s.RepicientApplicationUserId);
+
+            builder
+                .Entity<ApplicationUser>()
+                .HasMany(u => u.ConveyedShipments)
+                .WithOne(s => s.Conveyed)
+                .HasForeignKey(s => s.ConveyedApplicationUserId);
+
+            builder
                 .Entity<Product>()
                 .Property(p => p.Price)
                 .HasConversion(p => p.Penny, p => new Price(p));
