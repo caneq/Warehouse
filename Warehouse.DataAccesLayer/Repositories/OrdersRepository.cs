@@ -44,6 +44,7 @@ namespace Warehouse.DataAccessLayer.Repositories
                  .Include(o => o.Items)
                     .ThenInclude(oi => oi.Product)
                         .ThenInclude(p => p.Unit)
+                .Include(o => o.Shipments)
                 .FirstOrDefaultAsync(predicate);
 
             c.OrderStatuses = c.OrderStatuses.OrderByDescending(c => c.DateTime).ToList();
@@ -64,6 +65,7 @@ namespace Warehouse.DataAccessLayer.Repositories
                  .Include(o => o.Items)
                     .ThenInclude(oi => oi.Product)
                         .ThenInclude(p => p.Unit)
+                .Include(o => o.Shipments)
                 .Where(predicate).AsEnumerable();
 
             return res.Select(s => {
