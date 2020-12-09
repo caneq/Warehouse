@@ -68,7 +68,10 @@ namespace Warehouse.DataAccessLayer.Repositories
                  .Include(o => o.Items)
                     .ThenInclude(oi => oi.Product)
                         .ThenInclude(p => p.Unit)
-                .Include(o => o.Shipments)
+                 .Include(o => o.Shipments)
+                //    .ThenInclude(s => s.Repicient)
+                //.Include(o => o.Shipments)
+                //    .ThenInclude(s => s.Conveyed)
                 .Where(predicate).AsEnumerable();
 
             return res.Select(s => {

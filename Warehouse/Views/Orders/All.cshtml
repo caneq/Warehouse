@@ -1,0 +1,12 @@
+﻿@using ViewModels
+@model IEnumerable<OrderViewModel>
+
+@{
+    ViewData["Title"] = "Все заказы";
+    Layout = "_Layout";
+}
+
+@foreach (var o in Model)
+{
+    <p><a asp-controller="Orders" asp-action="Details" asp-route-id="@o.Id">Заказ №@o.Id. @o.OrderDate @o.TotalPrice</a></p>
+}

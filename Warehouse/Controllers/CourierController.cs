@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Warehouse.BusinessLogicLayer.Extensions;
 using Warehouse.BusinessLogicLayer.Interfaces;
 using Warehouse.BusinessLogicLayer.Models;
+using Warehouse.ViewModels;
 
 namespace Warehouse.Controllers
 {
@@ -20,12 +22,12 @@ namespace Warehouse.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            return View(_mapper.Map<IEnumerable<OrderViewModel>>(_service.ReadMany(User, new OrderFilterParams { UserId = "1" })));
         }
 
         public IActionResult Deliver()
         {
-            return View();
+            return View(_mapper.Map<IEnumerable<OrderViewModel>>(_service.ReadMany(User, new OrderFilterParams { LastShippedForUserId = User.GetUserId() })));
         }
     }
 }

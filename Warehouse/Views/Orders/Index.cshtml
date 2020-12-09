@@ -38,7 +38,7 @@
                     <div class="card">
                         <div class="text-center">
                             <div class="card-title">Состояние заказа:</div>
-                            <p class="card-text">@o.OrderStatuses?.First()?.OrderStatus?.OrderStatusString</p>
+                            <p class="card-text">@o.OrderStatuses?.FirstOrDefault()?.OrderStatus?.OrderStatusString</p>
                         </div>
                     </div>
                 </div>

@@ -62,6 +62,15 @@
                 </div>
             </div>
         </div>
+        @if (User.GetUserId() == Model.Shipments.FirstOrDefault()?.RepicientApplicationUserId)
+        {
+            <form method="post" action="/shipments/create">
+                <input name="OrderId" value="@Model.Id" hidden />
+                <input name="ConveyedApplicationUserId" value="@User.GetUserId()" hidden />
+                <input name="RepicientApplicationUserId" value="@Model.UserId" hidden />
+                <button type="submit" class="btn btn-primary">Получен клиентом</button>
+            </form>
+        }
         @if (User.Identity.Name == "StoreKeeper1@gmail.com" || User.Identity.Name == "Adm1n@gmail.com")
         {
             <div class="d-flex justify-content-center margin-bottom-15px">

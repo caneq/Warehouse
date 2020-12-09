@@ -73,7 +73,6 @@ namespace Warehouse.BusinessLogicLayer.Services
             else _checkAccess(User, filterParams);
 
             var orders = _repo.ReadMany(filterParams.GetFuncPredicate());
-            //var orders = _repo.ReadMany(p => true);
 
             return _mapper.Map<IEnumerable<OrderDTO>>(orders);
         }

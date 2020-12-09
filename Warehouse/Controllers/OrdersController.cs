@@ -48,6 +48,12 @@ namespace Warehouse.Controllers
                 _orderService.ReadMany(User, new OrderFilterParams { OrderStatus = await _orderStatusesService.GetByStatusStringAsync("Ожидание оплаты") })));
         }
 
+        public IActionResult All()
+        {
+            return View(_mapper.Map<IEnumerable<OrderViewModel>>(
+                _orderService.ReadMany(User, new OrderFilterParams {})));
+        }
+
         // GET: Orders/Details/5
         public async Task<ActionResult> Details(int id)
         {
