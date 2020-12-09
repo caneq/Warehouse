@@ -20,12 +20,10 @@ namespace Warehouse.BusinessLogicLayer.Services
     {
         private readonly IOrderRepository _repo;
         private readonly IMapper _mapper;
-        private readonly IRepository<OrderStatus> _statusesRepo;
-        public OrderService(IOrderRepository repo, IRepository<OrderStatus> statusesRepo, IMapper mapper)
+        public OrderService(IOrderRepository repo, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
-            _statusesRepo = statusesRepo;
         }
 
         private void _checkAccess(ClaimsPrincipal User, string userId)
@@ -82,34 +80,6 @@ namespace Warehouse.BusinessLogicLayer.Services
             var o = await _repo.ReadAsync(o => o.Id == id);
             _checkAccess(User, o.UserId);
             return _mapper.Map<OrderDTO>(o);
-        }
-
-        public async Task SetPayed(int orderId, ClaimsPrincipal User)
-        {
-            var order = await _repo.ReadAsync(o => o.Id == orderId);
-            if (order == null) throw new NotFoundException();
-            _checkAccess(User, order.UserId);
-            var payedStatus = await _statusesRepo.ReadAsync(s => s.OrderStatusString == "Оплачен");
-            if (payedStatus == null)
-            {
-                await _statusesRepo.CreateAsync(new OrderStatus { OrderStatusString = "Оплачен" });
-                payedStatus = await _statusesRepo.ReadAsync(s => s.OrderStatusString == "Оплачен");
-            }
-            var WaitingDeliveryStatus = await _statusesRepo.ReadAsync(s => s.OrderStatusString == "Ожидание доставки");
-
-            order.OrderStatuses.Add(new OrderOrderStatus
-            {
-                OrderId = order.Id,
-                OrderStatus = payedStatus,
-                DateTime = DateTime.Now,
-            });
-            order.OrderStatuses.Add(new OrderOrderStatus
-            {
-                OrderId = order.Id,
-                OrderStatus = WaitingDeliveryStatus,
-                DateTime = DateTime.Now,
-            });
-            await _repo.UpdateAsync(order);
         }
     }
 }

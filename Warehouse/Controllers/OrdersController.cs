@@ -125,7 +125,7 @@ namespace Warehouse.Controllers
         {
             try
             {
-                await _orderService.SetPayed(id, User);
+                await _orderStatusesService.SetPayed(id, User);
                 return RedirectToAction(nameof(Details), new { id });
             }
             catch (NotFoundException)
