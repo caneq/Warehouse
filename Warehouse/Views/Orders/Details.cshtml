@@ -1,7 +1,10 @@
 ﻿@using Warehouse.ViewModels
+@using Warehouse.BusinessLogicLayer.Extensions;
 @model OrderViewModel
 @{
     Layout = "_Layout";
+    string conveyed = null;
+    string recepient = null;
 }
 
 @if (Model != null)
@@ -59,9 +62,95 @@
                 </div>
             </div>
         </div>
+        @if (User.Identity.Name == "StoreKeeper1@gmail.com" || User.Identity.Name == "Adm1n@gmail.com")
+        {
+            <div class="d-flex justify-content-center margin-bottom-15px">
+                <div class="col-lg-9">
+                    <div class="card">
+                        <div class="card-title">История прием-передач:</div>
+                        <table class="card-body">
+                            <tr>
+                                <th>
+                                    Дата
+                                </th>
+                                <th>
+                                    Отдал
+                                </th>
+                                <th>
+                                    Получил
+                                </th>
+                            </tr>
+                            @foreach (var shipment in Model?.Shipments)
+                            {
+                                conveyed = shipment.Сonveyed?.UserName ?? shipment.СonveyedName;
+                                recepient = shipment.Repicient?.UserName ?? shipment.RepicientName;
+
+                                <tr>
+                                    <td>
+                                        <p class="card-text"><small>@shipment.DateTime.ToString("dd.MM.yyyy HH:mm")</small></p>
+                                    </td>
+                                    <td>
+                                        <p class="card-text">@conveyed</p>
+                                    </td>
+                                    <td>
+                                        <p class="card-text">@recepient</p>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            @if (Model?.OrderStatuses?.First().OrderStatus.OrderStatusString == "Ожидание доставки")
+            {
+                <form method="post" action="/shipments/create">
+                    <input name="OrderId" value="@Model.Id" hidden />
+                    <input name="СonveyedApplicationUserId" value="@User.GetUserId()" hidden />
+                    @Html.DropDownList("RepicientApplicationUserId", ViewBag.Couriers as SelectList)
+                    <button type="submit">Отдать курьеру</button>
+                </form>
+                <form method="post" action="/shipments/create">
+                    <input name="OrderId" value="@Model.Id" hidden />
+                    <input name="OrderId" value="@Model.Id" hidden />
+                    <div class="row">
+                        <div class="col-12">
+                            <h3>Добавить прием-передачу</h3>
+                            <hr class="mt-1">
+                        </div>
+                        <div class="col-12">
+
+                            <div class="row mx-4">
+                                <div class="col-12 mb-2">
+                                    <label class="order-form-label">ФИО Отдающий</label>
+                                </div>
+                                <div class="col-12 col-sm-12">
+                                    <input name="СonveyedName" class="order-form-input" placeholder="Иванов Иван Иванович" required>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3 mx-4">
+                                <div class="col-12">
+                                    <label class="order-form-label">ФИО Получатель</label>
+                                </div>
+                                <div class="col-12">
+                                    <input name="RepicientName" class="order-form-input" placeholder="Иванов Иван Иванович" required>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <button type="submit" id="btnSubmit" class="btn btn-primary d-block mx-auto btn-submit">Добавить</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            }
+        }
         @if (User.Identity.Name == "Accountant1@gmail.com" || User.Identity.Name == "Adm1n@gmail.com")
         {
-
 
             @if (Model?.OrderStatuses?.First().OrderStatus.OrderStatusString == "Ожидание оплаты")
             {
@@ -69,11 +158,6 @@
                     <input name="id" value="@Model.Id" hidden />
                     <button type="submit" class="btn btn-primary btn-md active">Оплачен</button>
                 </form>
-            }
-            else if (Model?.OrderStatuses?.First().OrderStatus.OrderStatusString == "Ожидание доставки")
-            {
-                <h2>Отгрузить</h2>
-
             }
         }
     </div>

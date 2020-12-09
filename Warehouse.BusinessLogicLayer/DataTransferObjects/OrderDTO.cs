@@ -15,5 +15,6 @@ namespace Warehouse.BusinessLogicLayer.DataTransferObjects
         public List<OrderItemDTO> Items { get; set; }
         public Price TotalPrice { get; set; }
         public List<OrderOrderStatusDTO> OrderStatuses { get; set; }
+        public List<ShipmentDTO> Shipments { get; set; }
     }
 }

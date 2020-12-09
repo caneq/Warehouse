@@ -25,11 +25,11 @@ namespace Warehouse.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(ShipmentViewModel shipment)
+        public async Task<IActionResult> Create(ShipmentViewModel shipment)
         {
             try
             {
-                _service.CreateAsync(_mapper.Map<ShipmentDTO>(shipment));
+                await _service.CreateAsync(_mapper.Map<ShipmentDTO>(shipment));
                 return Redirect($"/orders/details/{shipment.OrderId}");
             }
             catch

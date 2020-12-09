@@ -15,6 +15,7 @@ using Warehouse.ClassLibrary;
 using Warehouse.BusinessLogicLayer.Interfaces;
 using Warehouse.BusinessLogicLayer.Models;
 using Warehouse.BusinessLogicLayer.Exceptions;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Warehouse.Controllers
 {
@@ -50,6 +51,10 @@ namespace Warehouse.Controllers
         // GET: Orders/Details/5
         public async Task<ActionResult> Details(int id)
         {
+            var users = new ApplicationUserViewModel[] {
+                new ApplicationUserViewModel{ Id = "304bef4a-d060-40c0-9794-999984f304d5", UserName = "Courier1@gmail.com"},
+            };
+            ViewBag.Couriers = new SelectList(users, "Id", "UserName");
             return View(_mapper.Map<OrderViewModel>(await _orderService.ReadAsync(User, id)));
         }
 

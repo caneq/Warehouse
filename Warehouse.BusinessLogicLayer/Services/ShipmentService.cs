@@ -18,9 +18,11 @@ namespace Warehouse.BusinessLogicLayer.Services
         public ShipmentService(IShipmentRepository repo, IMapper mapper)
         {
             _repo = repo;
+            _mapper = mapper;
         }
         public async Task<int> CreateAsync(ShipmentDTO item)
         {
+            item.DateTime = DateTime.Now;
             return await _repo.CreateAsync(_mapper.Map<Shipment>(item));
         }
 

@@ -16,5 +16,6 @@ namespace Warehouse.ViewModels
         public List<OrderItemViewModel> Items { get; set; }
         public Price TotalPrice { get; set; }
         public List<OrderOrderStatusViewModel> OrderStatuses { get; set; }
+        public List<ShipmentViewModel> Shipments { get; set; }
     }
 }
