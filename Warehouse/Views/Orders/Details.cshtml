@@ -59,13 +59,22 @@
                 </div>
             </div>
         </div>
-        @if (User.Identity.Name == "Accountant1@gmail.com" && 
-            Model?.OrderStatuses?.First().OrderStatus.OrderStatusString == "Ожидание оплаты")
+        @if (User.Identity.Name == "Accountant1@gmail.com" || User.Identity.Name == "Adm1n@gmail.com")
         {
-            <form method="post" action="/orders/setPayed" >
-                <input name="id" value="@Model.Id" hidden />
-                <button type="submit" class="btn btn-primary btn-md active">Оплачен</button>
-            </form>
+
+
+            @if (Model?.OrderStatuses?.First().OrderStatus.OrderStatusString == "Ожидание оплаты")
+            {
+                <form method="post" action="/orders/setPayed">
+                    <input name="id" value="@Model.Id" hidden />
+                    <button type="submit" class="btn btn-primary btn-md active">Оплачен</button>
+                </form>
+            }
+            else if (Model?.OrderStatuses?.First().OrderStatus.OrderStatusString == "Ожидание доставки")
+            {
+                <h2>Отгрузить</h2>
+
+            }
         }
     </div>
 }
