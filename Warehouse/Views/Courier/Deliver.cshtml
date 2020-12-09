@@ -1,14 +1,17 @@
-﻿@using Warehouse.ViewModels
+﻿@using Warehouse.ViewModels;
 @model IEnumerable<OrderViewModel>
 @{
-    ViewData["Title"] = "Мои заказы";
+    ViewData["Title"] = "Index";
     Layout = "_Layout";
 }
+
+<h3>Вы доставляете</h3>
+
 
 @foreach (var o in Model)
 {
     <div class="card margin-bottom-15px">
-        <a asp-action="Details" asp-route-id="@o.Id" class="card-title" style="margin-left:30px;">Заказ №@o.Id <small class="text-muted">@o.OrderDate.ToString("HH:mm dd MMMM yyyy")</small></a>
+        <a asp-controller="Orders" asp-action="Details" asp-route-id="@o.Id" class="card-title" style="margin-left:30px;">Заказ №@o.Id <small class="text-muted">@o.OrderDate.ToString("HH:mm dd MMMM yyyy")</small></a>
         <div class="card-body">
             <div class="row">
                 <div class="col-lg-8">
@@ -38,7 +41,7 @@
                     <div class="card">
                         <div class="text-center">
                             <div class="card-title">Состояние заказа:</div>
-                            <p class="card-text">@o.OrderStatuses?.FirstOrDefault()?.OrderStatus?.OrderStatusString</p>
+                            <p class="card-text">@o.OrderStatuses?.First()?.OrderStatus?.OrderStatusString</p>
                         </div>
                     </div>
                 </div>

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Warehouse.DataAccessLayer.Data;
 
 namespace Warehouse.DataAccessLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201209123628_add_shipment_entity")]
+    partial class add_shipment_entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -518,12 +520,6 @@ namespace Warehouse.DataAccessLayer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ConveyedApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConveyedName")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("datetime2");
 
@@ -531,18 +527,30 @@ namespace Warehouse.DataAccessLayer.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("RepicientApplicationUserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RepicientId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("RepicientName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.Property<string>("СonveyedApplicationUserId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("ConveyedApplicationUserId");
+                    b.Property<string>("СonveyedId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("СonveyedName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("OrderId");
 
-                    b.HasIndex("RepicientApplicationUserId");
+                    b.HasIndex("RepicientId");
+
+                    b.HasIndex("СonveyedId");
 
                     b.ToTable("Shipments");
                 });
@@ -782,19 +790,19 @@ namespace Warehouse.DataAccessLayer.Migrations
 
             modelBuilder.Entity("Warehouse.DataAccessLayer.Models.Shipment", b =>
                 {
-                    b.HasOne("Warehouse.DataAccessLayer.Models.ApplicationUser", "Conveyed")
-                        .WithMany("ConveyedShipments")
-                        .HasForeignKey("ConveyedApplicationUserId");
-
                     b.HasOne("Warehouse.DataAccessLayer.Models.Order", "Order")
-                        .WithMany("Shipments")
+                        .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Warehouse.DataAccessLayer.Models.ApplicationUser", "Repicient")
-                        .WithMany("RepicientShipments")
-                        .HasForeignKey("RepicientApplicationUserId");
+                        .WithMany()
+                        .HasForeignKey("RepicientId");
+
+                    b.HasOne("Warehouse.DataAccessLayer.Models.ApplicationUser", "Сonveyed")
+                        .WithMany()
+                        .HasForeignKey("СonveyedId");
                 });
 
             modelBuilder.Entity("Warehouse.DataAccessLayer.Models.Url", b =>

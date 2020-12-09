@@ -44,9 +44,14 @@ namespace Warehouse.DataAccessLayer.Repositories
                  .Include(o => o.Items)
                     .ThenInclude(oi => oi.Product)
                         .ThenInclude(p => p.Unit)
+                .Include(o => o.Shipments)
+                    .ThenInclude(s => s.Repicient)
+                .Include(o => o.Shipments)
+                    .ThenInclude(s => s.Conveyed)
                 .FirstOrDefaultAsync(predicate);
 
             c.OrderStatuses = c.OrderStatuses.OrderByDescending(c => c.DateTime).ToList();
+            c.Shipments = c.Shipments.OrderByDescending(c => c.DateTime).ToList();
             return c;
         }
         public IEnumerable<Order> ReadMany(Func<Order, bool> predicate)
@@ -64,6 +69,10 @@ namespace Warehouse.DataAccessLayer.Repositories
                  .Include(o => o.Items)
                     .ThenInclude(oi => oi.Product)
                         .ThenInclude(p => p.Unit)
+                 .Include(o => o.Shipments)
+                //    .ThenInclude(s => s.Repicient)
+                //.Include(o => o.Shipments)
+                //    .ThenInclude(s => s.Conveyed)
                 .Where(predicate).AsEnumerable();
 
             return res.Select(s => {

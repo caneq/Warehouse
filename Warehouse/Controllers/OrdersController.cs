@@ -15,6 +15,7 @@ using Warehouse.ClassLibrary;
 using Warehouse.BusinessLogicLayer.Interfaces;
 using Warehouse.BusinessLogicLayer.Models;
 using Warehouse.BusinessLogicLayer.Exceptions;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Warehouse.Controllers
 {
@@ -47,9 +48,19 @@ namespace Warehouse.Controllers
                 _orderService.ReadMany(User, new OrderFilterParams { OrderStatus = await _orderStatusesService.GetByStatusStringAsync("Ожидание оплаты") })));
         }
 
+        public IActionResult All()
+        {
+            return View(_mapper.Map<IEnumerable<OrderViewModel>>(
+                _orderService.ReadMany(User, new OrderFilterParams {})));
+        }
+
         // GET: Orders/Details/5
         public async Task<ActionResult> Details(int id)
         {
+            var users = new ApplicationUserViewModel[] {
+                new ApplicationUserViewModel{ Id = "304bef4a-d060-40c0-9794-999984f304d5", UserName = "Courier1@gmail.com"},
+            };
+            ViewBag.Couriers = new SelectList(users, "Id", "UserName");
             return View(_mapper.Map<OrderViewModel>(await _orderService.ReadAsync(User, id)));
         }
 
@@ -114,7 +125,7 @@ namespace Warehouse.Controllers
         {
             try
             {
-                await _orderService.SetPayed(id, User);
+                await _orderStatusesService.SetPayed(id, User);
                 return RedirectToAction(nameof(Details), new { id });
             }
             catch (NotFoundException)

@@ -1,0 +1,22 @@
+﻿
+<ul class="list-unstyled components">
+    <li><a asp-controller="Orders" asp-action="Index">Мои заказы</a></li>
+    <li><a asp-controller="Cart" asp-action="Index">Моя корзина</a></li>
+    <li class="active">
+</ul>
+
+<p>Заказы</p>
+<ul class="list-unstyled components">
+    <li><a asp-controller="Orders" asp-action="Unpaid">Не оплаченные</a></li>
+    <li><a asp-controller="Orders" asp-action="Deliver">Ожидают доставку</a></li>
+</ul>
+
+<p>Продукты</p>
+<ul class="list-unstyled components">
+    <li><a asp-controller="Products" asp-action="Create">Оформить</a></li>
+</ul>
+
+<p>Курьер</p>
+<ul class="list-unstyled components">
+    <li><a asp-controller="Courier" asp-action="Deliver">Я доставляю</a></li>
+</ul>

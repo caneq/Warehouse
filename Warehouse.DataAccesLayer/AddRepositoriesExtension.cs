@@ -22,6 +22,8 @@ namespace Warehouse.DataAccessLayer
             services.AddScoped<ICartRepository, CartRepository>();
             services.AddScoped<ICartProductRepository, CartProductRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IShipmentRepository, ShipmentRepository>();
+            services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
 
             services.AddScoped<IRepository<ApplicationUser>, Repository<ApplicationUser>>();
             services.AddScoped<IRepository<Country>, Repository<Country>>();

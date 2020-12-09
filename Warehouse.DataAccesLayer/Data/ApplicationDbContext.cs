@@ -19,6 +19,7 @@ namespace Warehouse.DataAccessLayer.Data
         public DbSet<Country> Countries { get; set; }
         public DbSet<Unit> Units { get; set; }
         public DbSet<Url> Urls { get; set; }
+        public DbSet<Shipment> Shipments { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -27,6 +28,18 @@ namespace Warehouse.DataAccessLayer.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder
+                .Entity<ApplicationUser>()
+                .HasMany(u => u.RepicientShipments)
+                .WithOne(s => s.Repicient)
+                .HasForeignKey(s => s.RepicientApplicationUserId);
+
+            builder
+                .Entity<ApplicationUser>()
+                .HasMany(u => u.ConveyedShipments)
+                .WithOne(s => s.Conveyed)
+                .HasForeignKey(s => s.ConveyedApplicationUserId);
 
             builder
                 .Entity<Product>()

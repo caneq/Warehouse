@@ -11,6 +11,12 @@
     <Compile Remove="Migrations\20201201142637_change_userId_type_to_string.Designer.cs" />
     <Compile Remove="Migrations\20201201182802_add_many_to_many_order_orderStatus_1.cs" />
     <Compile Remove="Migrations\20201201182802_add_many_to_many_order_orderStatus_1.Designer.cs" />
+    <Compile Remove="Migrations\20201209132714_add_order_shipments_relationsheep.cs" />
+    <Compile Remove="Migrations\20201209132714_add_order_shipments_relationsheep.Designer.cs" />
+    <Compile Remove="Migrations\20201209162221_test.cs" />
+    <Compile Remove="Migrations\20201209162221_test.Designer.cs" />
+    <Compile Remove="Migrations\20201209164134_test.cs" />
+    <Compile Remove="Migrations\20201209164134_test.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,7 +31,6 @@
 
   <ItemGroup>
     <Folder Include="Exceptions\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

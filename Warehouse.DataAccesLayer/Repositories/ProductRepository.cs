@@ -48,7 +48,6 @@ namespace Warehouse.DataAccessLayer.Repositories
 
         public async Task UpdateAsync(Product item)
         {
-            var newList = new List<Url>(item.Pictures);
             var dbEnt = await _context.Products.Include(p => p.Pictures).FirstOrDefaultAsync(p => p.Id == item.Id);
 
             dbEnt.CountInStock = item.CountInStock;
