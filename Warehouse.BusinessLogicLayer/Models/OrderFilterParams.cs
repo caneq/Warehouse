@@ -11,7 +11,8 @@ namespace Warehouse.BusinessLogicLayer.Models
     public class OrderFilterParams
     {
         public string UserId { get; set; }
-        public OrderStatusDTO OrderStatus;
+        public OrderStatusDTO OrderStatus { get; set; }
+        public string CourierId { get; set; }
         internal Expression<Func<Order, bool>> GetLinqExpression()
         {
             return (Order p) => (UserId != null ? p.UserId == UserId : true) &&
