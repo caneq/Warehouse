@@ -23,6 +23,7 @@ namespace Warehouse.BusinessLogicLayer
             CreateMap<OrderOrderStatus, OrderOrderStatusDTO>().ReverseMap();
             //CreateMap<Price, PriceDTO>().ReverseMap();
             CreateMap<Url, UrlDTO>().ReverseMap();
+            CreateMap<Shipment, ShipmentDTO>().ReverseMap();
 
         }
     }
