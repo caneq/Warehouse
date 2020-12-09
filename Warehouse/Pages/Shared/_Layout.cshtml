@@ -13,6 +13,9 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
+                <button id="sidebarCollapse" class="btn mr-2">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                </button>
                 <a class="navbar-brand" asp-area="" asp-page="/Index">Warehouse</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -22,11 +25,11 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         @*<li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
-                            </li>*@
+                        <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                        </li>*@
 
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Products" asp-action="Index">Каталог</a>
@@ -42,10 +45,16 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <nav id="sidebar" class="col-md-1">
+            @await Html.PartialAsync("_SidebarPartial.cshtml")
+        </nav>
+        <div class="container">
+            <main role="main" class="pb-3 ">
+                @RenderBody()
+            </main>
+        </div>
     </div>
 
     <footer class="border-top footer text-muted">
