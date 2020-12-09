@@ -13,5 +13,6 @@ namespace Warehouse.BusinessLogicLayer.Interfaces
         Task CreateAsync(OrderStatusDTO orderStatus);
         Task SetPayed(int orderId, ClaimsPrincipal User);
         Task SetDelivered(int orderId, ClaimsPrincipal User);
+        Task SetByStatusString(int orderId, string status, ClaimsPrincipal User);
     }
 }

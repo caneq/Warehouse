@@ -15,15 +15,31 @@ namespace Warehouse.BusinessLogicLayer.Services
     {
         private readonly IShipmentRepository _repo;
         private readonly IMapper _mapper;
-        public ShipmentService(IShipmentRepository repo, IMapper mapper)
+        private readonly IOrderRepository _orderRepository;
+        private readonly IOrderStatusesService _statusesService;
+        public ShipmentService(IShipmentRepository repo, IOrderRepository orderRepository, IOrderStatusesService statusesService, IMapper mapper)
         {
             _repo = repo;
             _mapper = mapper;
+            _orderRepository = orderRepository;
+            _statusesService = statusesService;
         }
         public async Task<int> CreateAsync(ShipmentDTO item)
         {
             item.DateTime = DateTime.Now;
-            return await _repo.CreateAsync(_mapper.Map<Shipment>(item));
+            int shipmentId = await _repo.CreateAsync(_mapper.Map<Shipment>(item));
+
+            var shipment = await ReadAsync(shipmentId);
+            if(shipment.Order.UserId == item.RepicientApplicationUserId)
+            {
+                await _statusesService.SetDelivered(shipment.OrderId, null);
+            }
+            else if (shipment.Repicient.UserName.Contains("Courier", StringComparison.OrdinalIgnoreCase))
+            {
+                await _statusesService.SetByStatusString(shipment.OrderId, "Передан курьеру", null);
+            }
+
+            return shipmentId;
         }
 
         public async Task DeleteAsync(ShipmentDTO item)

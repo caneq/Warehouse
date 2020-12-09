@@ -72,5 +72,15 @@ namespace Warehouse.BusinessLogicLayer.Services
 
             await _orderRepository.UpdateAsync(order);
         }
+
+        public async Task SetByStatusString(int orderId, string status, ClaimsPrincipal User)
+        {
+            var order = await _orderRepository.ReadAsync(o => o.Id == orderId);
+            if (order == null) throw new NotFoundException();
+
+            await _addStatus(order, status);
+
+            await _orderRepository.UpdateAsync(order);
+        }
     }
 }

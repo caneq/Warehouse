@@ -49,6 +49,7 @@ namespace Warehouse.DataAccessLayer.Repositories
                     .Include(p => p.Order)
                     .Include(p => p.Repicient)
                     .Include(p => p.Conveyed)
+                    .OrderByDescending(s => s.DateTime)
                 .Where(predicate).AsEnumerable();
         }
 

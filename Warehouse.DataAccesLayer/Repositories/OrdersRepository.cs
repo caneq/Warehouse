@@ -51,6 +51,7 @@ namespace Warehouse.DataAccessLayer.Repositories
                 .FirstOrDefaultAsync(predicate);
 
             c.OrderStatuses = c.OrderStatuses.OrderByDescending(c => c.DateTime).ToList();
+            c.Shipments = c.Shipments.OrderByDescending(c => c.DateTime).ToList();
             return c;
         }
         public IEnumerable<Order> ReadMany(Func<Order, bool> predicate)

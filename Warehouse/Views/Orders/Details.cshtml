@@ -78,17 +78,7 @@
                     <div class="card">
                         <div class="card-title">История прием-передач:</div>
                         <table class="card-body">
-                            <tr>
-                                <th>
-                                    Дата
-                                </th>
-                                <th>
-                                    Отдал
-                                </th>
-                                <th>
-                                    Получил
-                                </th>
-                            </tr>
+                            <tr><th>Дата</th><th>Отдал</th><th>Получил</th></tr>
                             @foreach (var shipment in Model?.Shipments)
                             {
                                 conveyed = shipment.Conveyed?.UserName ?? shipment.ConveyedName;
