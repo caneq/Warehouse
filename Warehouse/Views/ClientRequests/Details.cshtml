@@ -21,7 +21,7 @@
                     <div class="col-auto">
                         @foreach (var m in Model.Messages)
                         {
-                            <p><b>@m.User.UserName</b>:@m.MessageText</p>
+                            <p><span class="text-muted"><small>@m.DateTime.ToString("dd.MM HH:mm")</small></span><b>@m.User.UserName</b>:@m.MessageText</p>
                         }
                     </div>
                 </div>
