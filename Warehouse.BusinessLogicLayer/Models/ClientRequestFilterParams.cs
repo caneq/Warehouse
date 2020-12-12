@@ -12,7 +12,7 @@ namespace Warehouse.BusinessLogicLayer.Models
         public string ApplicationUserId { get; set; }
         public string Title { get; set; }
         public string Body { get; set; }
-        public bool? Answered { get; set; }
+        public bool? Completed { get; set; }
 
         internal Expression<Func<ClientRequest, bool>> GetLinqExpression()
         {
@@ -20,8 +20,7 @@ namespace Warehouse.BusinessLogicLayer.Models
                 (Id != null ? c.Id == Id : true) &&
                 (ApplicationUserId != null ? c.ApplicationUserId == ApplicationUserId : true) &&
                 (Title != null ? c.Title == Title : true) &&
-                (Body != null ? c.Body == Body : true) &&
-                (Answered != null ? c.Answered == Answered : true);
+                (Completed != null ? c.Completed == Completed : true);
         }
 
         internal Func<ClientRequest, bool> GetFuncPredicate()

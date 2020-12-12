@@ -11,7 +11,7 @@ namespace Warehouse.BusinessLogicLayer.DataTransferObjects
         public ApplicationUserDTO ApplicationUser { get; set; }
         public string Title { get; set; }
         public List<ClientRequestMessageDTO> Messages { get; set; }
-        public bool Сompleted { get; set; }
+        public bool Completed { get; set; }
         public int ClientUnreadMessagesCount { get; set; }
         public int ManagersUnreadMessagesCount { get; set; }
     }
