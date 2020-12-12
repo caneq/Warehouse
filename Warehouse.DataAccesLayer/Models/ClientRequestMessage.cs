@@ -7,6 +7,7 @@ namespace Warehouse.DataAccessLayer.Models
     public class ClientRequestMessage
     {
         public int Id { get; set; }
+        public DateTime DateTime { get; set; }
         public int ClientRequestId { get; set; }
         public string ApplicationUserId { get; set; }
         public ApplicationUser User { get; set; }

@@ -7,6 +7,7 @@ namespace Warehouse.BusinessLogicLayer.DataTransferObjects
     public class ClientRequestDTO
     {
         public int Id { get; set; }
+        public DateTime DateTime { get; set; }
         public string ApplicationUserId { get; set; }
         public ApplicationUserDTO ApplicationUser { get; set; }
         public string Title { get; set; }

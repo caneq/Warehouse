@@ -22,6 +22,8 @@ namespace Warehouse.DataAccessLayer.Repositories
         }
         public async Task<int> CreateAsync(ClientRequest item)
         {
+            item.DateTime = DateTime.Now;
+            item?.Messages.ForEach(a => a.DateTime = DateTime.Now);
             await _dbSet.AddAsync(item);
             await _context.SaveChangesAsync();
             return item.Id;
@@ -67,6 +69,12 @@ namespace Warehouse.DataAccessLayer.Repositories
             req.ManagersUnreadMessagesCount = item.ManagersUnreadMessagesCount;
 
             var added = item.Messages.Where(s => !req.Messages.Any(o => o.Id == s.Id));
+
+            foreach (var c in added)
+            {
+                c.DateTime = DateTime.Now;   
+            }
+
             var removed = req.Messages.Where(s => !item.Messages.Any(o => o.Id == s.Id));
 
             req.Messages.RemoveAll(m => removed.Contains(m));

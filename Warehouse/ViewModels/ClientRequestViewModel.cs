@@ -8,6 +8,7 @@ namespace Warehouse.ViewModels
     public class ClientRequestViewModel
     {
         public int Id { get; set; }
+        public DateTime DateTime { get; set; }
         public string ApplicationUserId { get; set; }
         public ApplicationUserViewModel ApplicationUser { get; set; }
         public string Title { get; set; }
