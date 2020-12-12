@@ -1,0 +1,67 @@
+﻿@using Warehouse.ViewModels
+@model IEnumerable<ClientRequestViewModel>
+
+@{
+    ViewData["Title"] = "Запросы клиентов";
+    Layout = "_Layout";
+}
+
+<div class="row">
+    <div class="col-lg-9">
+        <h2>Необработанные вопросы:</h2>
+        <ul class="list-group">
+            @foreach (var r in Model)
+            {
+                <li class="list-group-item">
+                    <span class="text-muted"><small>@r.DateTime.ToString("dd.MM HH:mm")</small></span>
+                    <a asp-controller="ClientRequests" asp-action="Details" asp-route-id="@r.Id">Запрос №@r.Id. @r.Title</a>
+                    <span class="badge badge-primary">@r.ManagersUnreadMessagesCount</span>
+                    @if (r.Completed)
+                    {
+                        <span class="badge badge-success">Завершен</span>
+                    }
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="col-lg-3">
+        <form method="get">
+            <div class="form-group">
+                <label>Id</label>
+                <input class="form-control" name="Id" type="number" />
+            </div>
+            <div class="form-group">
+                <label>Id пользователя</label>
+                <input class="form-control" name="ApplicationUserId" />
+            </div>
+
+            <div class="form-group">
+                <label>Завершен</label>
+                <input class="form-control" name="Completed" />
+            </div>
+
+            <div class="form-group">
+                <label>Дата от</label>
+                <input class="form-control" type="datetime-local" name="DateTimeMin" />
+            </div>
+            <div class="form-group">
+                <label>Дата до</label>
+                <input class="form-control" type="datetime-local" name="DateTimeMax" />
+            </div>
+
+            <div class="form-group">
+                <label>Непрочитанных сообщ. от</label>
+                <input class="form-control" name="ManagersUnreadMessagesCountMin" type="number" />
+            </div>
+            <div class="form-group">
+                <label>Непрочитанных сообщ. до</label>
+                <input class="form-control" name="ManagersUnreadMessagesCountMax" type="number" />
+            </div>
+
+            <div class="row justify-content-center">
+                <button type="submit" class="btn btn-primary">Найти</button>
+            </div>
+        </form>
+
+    </div>
+</div>

@@ -12,6 +12,8 @@ namespace Warehouse.BusinessLogicLayer.Models
         public string ApplicationUserId { get; set; }
         public string Title { get; set; }
         public bool? Completed { get; set; }
+        public DateTime? DateTimeMin { get; set; }
+        public DateTime? DateTimeMax { get; set; }
         public int? ClientUnreadMessagesCountMin { get; set; }
         public int? ClientUnreadMessagesCountMax { get; set; }
         public int? ManagersUnreadMessagesCountMin { get; set; }
@@ -25,7 +27,9 @@ namespace Warehouse.BusinessLogicLayer.Models
                 (Title != null ? c.Title == Title : true) &&
                 (Completed != null ? c.Completed == Completed : true) &&
                 (ClientUnreadMessagesCountMin != null ? c.ClientUnreadMessagesCount < ClientUnreadMessagesCountMin : true) &&
-                (ClientUnreadMessagesCountMax != null ? c.ClientUnreadMessagesCount > ClientUnreadMessagesCountMax : true);
+                (ClientUnreadMessagesCountMax != null ? c.ClientUnreadMessagesCount > ClientUnreadMessagesCountMax : true) &&
+                (DateTimeMin != null ? c.DateTime > DateTimeMin : true) &&
+                (DateTimeMax != null ? c.DateTime < DateTimeMax : true);
         }
 
         internal Func<ClientRequest, bool> GetFuncPredicate()
@@ -36,7 +40,9 @@ namespace Warehouse.BusinessLogicLayer.Models
                 (Title != null ? c.Title == Title : true) &&
                 (Completed != null ? c.Completed == Completed : true) &&
                 (ClientUnreadMessagesCountMin != null ? c.ClientUnreadMessagesCount < ClientUnreadMessagesCountMin : true) &&
-                (ClientUnreadMessagesCountMax != null ? c.ClientUnreadMessagesCount > ClientUnreadMessagesCountMax : true);
+                (ClientUnreadMessagesCountMax != null ? c.ClientUnreadMessagesCount > ClientUnreadMessagesCountMax : true) &&
+                (DateTimeMin != null ? c.DateTime > DateTimeMin : true) &&
+                (DateTimeMax != null ? c.DateTime < DateTimeMax : true);
         }
     }
 }
