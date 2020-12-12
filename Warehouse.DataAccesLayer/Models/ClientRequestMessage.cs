@@ -9,7 +9,7 @@ namespace Warehouse.DataAccessLayer.Models
         public int Id { get; set; }
         public int ClientRequestId { get; set; }
         public string ApplicationUserId { get; set; }
-        public ApplicationUser User{ get; set; }
+        public ApplicationUser User { get; set; }
         public string MessageText { get; set; }
     }
 }
