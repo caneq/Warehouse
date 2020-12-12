@@ -25,6 +25,9 @@ namespace Warehouse.BusinessLogicLayer.Services
 
         public async Task<int> CreateAsync(ClientRequestDTO item)
         {
+            item.DateTime = DateTime.Now;
+            item.Messages?.ForEach(a => a.DateTime = DateTime.Now);
+            item.ManagersUnreadMessagesCount = 1;
             var c = await _repo.CreateAsync(_mapper.Map<ClientRequest>(item));
             return c;
         }
@@ -48,7 +51,13 @@ namespace Warehouse.BusinessLogicLayer.Services
         {
             var request = await _repo.ReadAsync(r => r.Id == requestId);
             if (request.Messages == null) request.Messages = new List<ClientRequestMessage>();
-            request.Messages.Add(new ClientRequestMessage { MessageText = messageText, ApplicationUserId = User.GetUserId(), ClientRequestId = requestId });
+            request.Messages.Add(new ClientRequestMessage 
+            { 
+                MessageText = messageText,
+                ApplicationUserId = User.GetUserId(),
+                ClientRequestId = requestId,
+                DateTime = DateTime.Now 
+            });
 
             if(User.Identity.Name.Contains("User", StringComparison.OrdinalIgnoreCase))
             {
