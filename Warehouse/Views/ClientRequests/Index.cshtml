@@ -14,6 +14,13 @@
             <span class="text-muted"><small>@r.DateTime.ToString("dd.MM HH:mm")</small></span>
             <a asp-controller="ClientRequests" asp-action="Details" asp-route-id="@r.Id">Запрос №@r.Id. @r.Title</a>
             <span class="badge badge-primary">@r.ClientUnreadMessagesCount</span>
+            @if (r.Completed)
+            {
+                <span class="badge badge-success">Завершен</span>
+            }
         </li>
     }
 </ul>
+<div class="row justify-content-center">
+    <a class="btn btn-primary mt-4" asp-action="Create" asp-controller="ClientRequests">Создать</a>
+</div>

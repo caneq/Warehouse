@@ -48,6 +48,20 @@ namespace Warehouse.Controllers
         }
 
         [HttpPost]
+        public async Task<ActionResult> SetCompleted(int id, bool completed)
+        {
+            //try
+            //{
+            await _service.SetCompleted(id, completed);
+            return RedirectToAction(nameof(Details), new { id });
+            //}
+            //catch
+            //{
+            //    return BadRequest();
+            //}
+        }
+
+        [HttpPost]
         public async Task<ActionResult> AddMessage(int id, string MessageText)
         {
             //try

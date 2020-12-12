@@ -18,5 +18,6 @@ namespace Warehouse.BusinessLogicLayer.Interfaces
         Task UpdateAsync(ClientRequestDTO item);
         Task AddMessageAsync(int requestId, string messageText, ClaimsPrincipal User);
         Task ReadMessagesAsync(int requestId, ClaimsPrincipal User);
+        Task SetCompleted(int requestId, bool completed);
     }
 }

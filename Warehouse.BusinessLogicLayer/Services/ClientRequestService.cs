@@ -95,5 +95,12 @@ namespace Warehouse.BusinessLogicLayer.Services
             }
             await _repo.UpdateAsync(request);
         }
+
+        public async Task SetCompleted(int requestId, bool completed)
+        {
+            var request =  await _repo.ReadAsync(r => r.Id == requestId);
+            request.Completed = completed;
+            await _repo.UpdateAsync(request);
+        }
     }
 }
