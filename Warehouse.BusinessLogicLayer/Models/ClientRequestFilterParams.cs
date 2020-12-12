@@ -11,8 +11,11 @@ namespace Warehouse.BusinessLogicLayer.Models
         public int? Id { get; set; }
         public string ApplicationUserId { get; set; }
         public string Title { get; set; }
-        public string Body { get; set; }
         public bool? Completed { get; set; }
+        public int? ClientUnreadMessagesCountMin { get; set; }
+        public int? ClientUnreadMessagesCountMax { get; set; }
+        public int? ManagersUnreadMessagesCountMin { get; set; }
+        public int? ManagersUnreadMessagesCountMax { get; set; }
 
         internal Expression<Func<ClientRequest, bool>> GetLinqExpression()
         {
@@ -20,7 +23,9 @@ namespace Warehouse.BusinessLogicLayer.Models
                 (Id != null ? c.Id == Id : true) &&
                 (ApplicationUserId != null ? c.ApplicationUserId == ApplicationUserId : true) &&
                 (Title != null ? c.Title == Title : true) &&
-                (Completed != null ? c.Completed == Completed : true);
+                (Completed != null ? c.Completed == Completed : true) &&
+                (ClientUnreadMessagesCountMin != null ? c.ClientUnreadMessagesCount < ClientUnreadMessagesCountMin : true) &&
+                (ClientUnreadMessagesCountMax != null ? c.ClientUnreadMessagesCount > ClientUnreadMessagesCountMax : true);
         }
 
         internal Func<ClientRequest, bool> GetFuncPredicate()
@@ -29,8 +34,9 @@ namespace Warehouse.BusinessLogicLayer.Models
                 (Id != null ? c.Id == Id : true) &&
                 (ApplicationUserId != null ? c.ApplicationUserId == ApplicationUserId : true) &&
                 (Title != null ? c.Title == Title : true) &&
-                (Body != null ? c.Body == Body : true) &&
-                (Answered != null ? c.Answered == Answered : true);
+                (Completed != null ? c.Completed == Completed : true) &&
+                (ClientUnreadMessagesCountMin != null ? c.ClientUnreadMessagesCount < ClientUnreadMessagesCountMin : true) &&
+                (ClientUnreadMessagesCountMax != null ? c.ClientUnreadMessagesCount > ClientUnreadMessagesCountMax : true);
         }
     }
 }
