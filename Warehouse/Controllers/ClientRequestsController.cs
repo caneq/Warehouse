@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Warehouse.BusinessLogicLayer.DataTransferObjects;
 using Warehouse.BusinessLogicLayer.Interfaces;
 using Warehouse.BusinessLogicLayer.Models;
 using Warehouse.ViewModels;
@@ -40,16 +41,36 @@ namespace Warehouse.Controllers
             return View();
         }
 
+        [HttpPost]
+        public async Task<ActionResult> AddMessage(int id, string MessageText)
+        {
+            //try
+            //{
+                await _service.AddMessageAsync(id, MessageText, User);
+                return RedirectToAction(nameof(Details), new { id });
+            //}
+            //catch
+            //{
+            //    return BadRequest();
+            //}
+        }
+
         // POST: ClientRequests/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(ClientRequestDTO request, IFormCollection collection)
         {
             try
             {
-                // TODO: Add insert logic here
+                var messageText = collection["MessageText"].FirstOrDefault();
+                request.Messages = new List<ClientRequestMessageDTO>
+                {
+                    new ClientRequestMessageDTO { ApplicationUserId = request.ApplicationUserId, MessageText = messageText},
+                };
 
-                return RedirectToAction(nameof(Index));
+                int id = await _service.CreateAsync(request);
+
+                return RedirectToAction(nameof(Details), new { id });
             }
             catch
             {
