@@ -41,6 +41,7 @@ namespace Warehouse.DataAccessLayer.Repositories
                 .Include(c => c.ApplicationUser)
                 .Include(c => c.Messages)
                     .ThenInclude(c => c.User)
+                .OrderByDescending(c => c.DateTime)
                 .FirstOrDefaultAsync(predicate);
 
             return c;
@@ -48,11 +49,20 @@ namespace Warehouse.DataAccessLayer.Repositories
 
         public IEnumerable<ClientRequest> ReadMany(Func<ClientRequest, bool> predicate)
         {
-            return _dbSet.AsNoTracking()
+            var requests = _dbSet.AsNoTracking()
                 .Include(c => c.ApplicationUser)
                 .Include(c => c.Messages)
                     .ThenInclude(c => c.User)
+                .OrderByDescending(c => c.DateTime)
                 .Where(predicate).AsEnumerable();
+
+            requests.Select(r =>
+            {
+                r.Messages = r.Messages.OrderByDescending(o => o.DateTime).ToList();
+                return r;
+            });
+
+            return requests;
         }
 
         public async Task UpdateAsync(ClientRequest item)
