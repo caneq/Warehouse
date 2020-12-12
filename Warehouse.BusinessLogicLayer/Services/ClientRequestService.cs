@@ -75,15 +75,16 @@ namespace Warehouse.BusinessLogicLayer.Services
         {
             var request = await _repo.ReadAsync(r => r.Id == requestId);
 
-            if (User.Identity.Name.Contains("User", StringComparison.OrdinalIgnoreCase))
+            if (User.GetUserId() == request.ApplicationUserId)
             {
                 
                 request.ClientUnreadMessagesCount = 0;
             }
-            else
+            if(!User.Identity.Name.Contains("User", StringComparison.OrdinalIgnoreCase))
             {
                 request.ManagersUnreadMessagesCount = 0;
             }
+            await _repo.UpdateAsync(request);
         }
     }
 }

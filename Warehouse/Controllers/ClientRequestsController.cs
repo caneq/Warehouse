@@ -38,6 +38,7 @@ namespace Warehouse.Controllers
         public async Task<ActionResult> Details(int id)
         {
             var request = await _service.ReadAsync(id);
+            await _service.ReadMessagesAsync(id, User);
             return View(_mapper.Map<ClientRequestViewModel>(request));
         }
 
