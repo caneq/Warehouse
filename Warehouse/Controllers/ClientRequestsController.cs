@@ -2,23 +2,36 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Warehouse.BusinessLogicLayer.Interfaces;
+using Warehouse.BusinessLogicLayer.Models;
+using Warehouse.ViewModels;
 
 namespace Warehouse.Controllers
 {
     public class ClientRequestsController : Controller
     {
+        private readonly IMapper _mapper;
+        private readonly IClientRequestService _service;
+        public ClientRequestsController(IMapper mapper, IClientRequestService service)
+        {
+            _mapper = mapper;
+            _service = service;
+        }
         // GET: ClientRequests
         public ActionResult Index()
         {
-            return View();
+            var requests = _service.ReadMany(new ClientRequestFilterParams { });
+            return View(_mapper.Map<IEnumerable<ClientRequestViewModel>>(requests));
         }
 
         // GET: ClientRequests/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            var request = await _service.ReadAsync(id);
+            return View(_mapper.Map<ClientRequestViewModel>(request));
         }
 
         // GET: ClientRequests/Create
