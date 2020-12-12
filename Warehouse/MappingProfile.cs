@@ -28,6 +28,7 @@ namespace Warehouse
             CreateMap<UrlViewModel, UrlDTO>().ReverseMap();
             CreateMap<ShipmentViewModel, ShipmentDTO>().ReverseMap();
             CreateMap<ClientRequestViewModel, ClientRequestDTO>().ReverseMap();
+            CreateMap<ClientRequestMessageViewModel, ClientRequestMessageDTO>().ReverseMap();
 
             //TEMP
             //view - data

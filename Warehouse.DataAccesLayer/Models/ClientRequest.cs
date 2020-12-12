@@ -10,7 +10,9 @@ namespace Warehouse.DataAccessLayer.Models
         public string ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
         public string Title { get; set; }
-        public string Body { get; set; }
-        public bool Answered { get; set; }
+        public List<ClientRequestMessage> Messages { get; set; }
+        public bool Сompleted { get; set; }
+        public int ClientUnreadMessagesCount { get; set; }
+        public int ManagersUnreadMessagesCount { get; set; }
     }
 }
