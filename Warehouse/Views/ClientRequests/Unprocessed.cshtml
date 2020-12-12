@@ -6,21 +6,14 @@
     Layout = "_Layout";
 }
 
-<h2>Ваши вопросы:</h2>
+<h2>Необработанные вопросы:</h2>
 <ul class="list-group">
     @foreach (var r in Model)
     {
         <li class="list-group-item">
             <span class="text-muted"><small>@r.DateTime.ToString("dd.MM HH:mm")</small></span>
             <a asp-controller="ClientRequests" asp-action="Details" asp-route-id="@r.Id">Запрос №@r.Id. @r.Title</a>
-            <span class="badge badge-primary">@r.ClientUnreadMessagesCount</span>
-            @if (r.Completed)
-            {
-                <span class="badge badge-success">Завершен</span>
-            }
+            <span class="badge badge-primary">@r.ManagersUnreadMessagesCount</span>
         </li>
     }
 </ul>
-<div class="row justify-content-center">
-    <a class="btn btn-primary mt-4" asp-action="Create" asp-controller="ClientRequests">Создать</a>
-</div>

@@ -2,41 +2,100 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Warehouse.BusinessLogicLayer.DataTransferObjects;
+using Warehouse.BusinessLogicLayer.Extensions;
+using Warehouse.BusinessLogicLayer.Interfaces;
+using Warehouse.BusinessLogicLayer.Models;
+using Warehouse.ViewModels;
 
 namespace Warehouse.Controllers
 {
     public class ClientRequestsController : Controller
     {
-        // GET: ClientRequests
+        private readonly IMapper _mapper;
+        private readonly IClientRequestService _service;
+        public ClientRequestsController(IMapper mapper, IClientRequestService service)
+        {
+            _mapper = mapper;
+            _service = service;
+        }
+
         public ActionResult Index()
         {
-            return View();
+            var requests = _service.ReadMany(new ClientRequestFilterParams { ApplicationUserId = User.GetUserId() });
+            return View(_mapper.Map<IEnumerable<ClientRequestViewModel>>(requests));
         }
 
-        // GET: ClientRequests/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Unprocessed()
         {
-            return View();
+            var requests = _service.ReadMany(new ClientRequestFilterParams { Completed = false });
+            return View(_mapper.Map<IEnumerable<ClientRequestViewModel>>(requests));
         }
 
-        // GET: ClientRequests/Create
+        public ActionResult Filter(ClientRequestFilterParams filterParams)
+        {
+            var requests = _service.ReadMany(filterParams);
+            return View(_mapper.Map<IEnumerable<ClientRequestViewModel>>(requests));
+        }
+
+        public async Task<ActionResult> Details(int id)
+        {
+            var request = await _service.ReadAsync(id);
+            await _service.ReadMessagesAsync(id, User);
+            return View(_mapper.Map<ClientRequestViewModel>(request));
+        }
+
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: ClientRequests/Create
+        [HttpPost]
+        public async Task<ActionResult> SetCompleted(int id, bool completed)
+        {
+            //try
+            //{
+            await _service.SetCompleted(id, completed);
+            return RedirectToAction(nameof(Details), new { id });
+            //}
+            //catch
+            //{
+            //    return BadRequest();
+            //}
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddMessage(int id, string MessageText)
+        {
+            //try
+            //{
+                await _service.AddMessageAsync(id, MessageText, User);
+                return RedirectToAction(nameof(Details), new { id });
+            //}
+            //catch
+            //{
+            //    return BadRequest();
+            //}
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(ClientRequestDTO request, IFormCollection collection)
         {
             try
             {
-                // TODO: Add insert logic here
+                var messageText = collection["MessageText"].FirstOrDefault();
+                request.Messages = new List<ClientRequestMessageDTO>
+                {
+                    new ClientRequestMessageDTO { ApplicationUserId = request.ApplicationUserId, MessageText = messageText},
+                };
 
-                return RedirectToAction(nameof(Index));
+                int id = await _service.CreateAsync(request);
+
+                return RedirectToAction(nameof(Details), new { id });
             }
             catch
             {

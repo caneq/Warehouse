@@ -20,6 +20,7 @@ namespace Warehouse.DataAccessLayer.Data
         public DbSet<Unit> Units { get; set; }
         public DbSet<Url> Urls { get; set; }
         public DbSet<Shipment> Shipments { get; set; }
+        public DbSet<ClientRequest> ClientRequests { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

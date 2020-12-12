@@ -1,36 +1,70 @@
 ﻿@using Warehouse.ViewModels
-@model int
+@model ClientRequestViewModel
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Запрос №1. Состояние заказа";
+
+    string completedText;
+    string badgeClass;
+    string FormSubmitText;
+    bool notCompleted = !Model.Completed;
+    if (Model.Completed)
+    {
+        completedText = "Завершен";
+        badgeClass = "badge-success";
+        FormSubmitText = "Открыть снова";
+    }
+    else
+    {
+        completedText = "Не завершен";
+        badgeClass = "badge-primary";
+        FormSubmitText = "Завершить";
+    }
 }
-
-
 <section class="order-form my-4 mx-4 col-lg-9">
     <div class="container pt-4">
 
         <div class="row">
             <div class="col-12">
-                <h3>Запрос №1. Состояние заказа</h3>
+                <h3>@Model.Title <span class="badge @badgeClass"><small>@completedText</small></span></h3>
                 <hr class="mt-1">
             </div>
             <div class="col-12">
                 <div class="row mt-3 mx-4">
-                    <h4 class="col-lg-11">Текст запроса:</h4>
-                    <p>Состояние заказа долго не изменяется</p>
-                </div>
-                <div class="row mt-3 mx-4">
-                    <span>Ответ:</span>
-                    <textarea class="order-form-input">
-
-                    </textarea>
-                </div>
-                <div class="row mt-3 justify-content-center">
+                    <h4 class="col-lg-11">Сообщения:</h4>
                     <div class="col-auto">
-                        <button type="button" id="btnSubmit" class="btn btn-primary d-block mx-auto btn-submit">Ответить</button>
+                        @foreach (var m in Model.Messages)
+                        {
+                            <p>
+                                <span class="text-muted">
+                                    <small>@m.DateTime.ToString("dd.MM HH:mm") </small>
+                                </span>
+                                <b>@m.User.UserName</b>:@m.MessageText
+                            </p>
+                        }
                     </div>
                 </div>
-
+                <form asp-controller="ClientRequests" asp-action="AddMessage" method="post">
+                    <input name="id" value="@Model.Id" hidden>
+                    <div class="row mt-3 mx-4">
+                        <span>Добавить сообщение:</span>
+                        <textarea name="MessageText" class="order-form-input"></textarea>
+                    </div>
+                    <div class="row mt-3 justify-content-center">
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary d-block mx-auto btn-submit">Ответить</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="row mt-3 justify-content-center">
+                    <div class="col-auto">
+                        <form asp-action="SetCompleted" asp-controller="ClientRequests">
+                            <input name="completed" value="@notCompleted.ToString()" hidden />
+                            <input name="id" value="@Model.Id" hidden>
+                            <button type="submit" class="btn btn-primary d-block mx-auto btn-submit">@FormSubmitText</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
