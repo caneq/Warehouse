@@ -15,5 +15,6 @@ namespace Warehouse.DataAccessLayer.Models
         public List<Order> Orders { get; set; }
         public List<Shipment> RepicientShipments { get; set; }
         public List<Shipment> ConveyedShipments { get; set; }
+        public List<ClientRequest> ClientRequests { get; set; }
     }
 }

@@ -110,12 +110,6 @@ namespace Warehouse.Controllers
             }
         }
 
-        //// GET: Cart/Delete/5
-        //public ActionResult Delete(int id)
-        //{
-        //    return View();
-        //}
-
         // POST: Cart/Delete/5
         [HttpDelete]
         public async Task<ActionResult> Delete(int cartProductid)
