@@ -44,6 +44,8 @@ namespace Warehouse.DataAccessLayer.Repositories
                 .OrderByDescending(c => c.DateTime)
                 .FirstOrDefaultAsync(predicate);
 
+            c.Messages = c.Messages.OrderByDescending(o => o.DateTime).ToList();
+
             return c;
         }
 
@@ -82,7 +84,7 @@ namespace Warehouse.DataAccessLayer.Repositories
 
             foreach (var c in added)
             {
-                c.DateTime = DateTime.Now;   
+                c.DateTime = DateTime.Now;
             }
 
             var removed = req.Messages.Where(s => !item.Messages.Any(o => o.Id == s.Id));
@@ -91,7 +93,7 @@ namespace Warehouse.DataAccessLayer.Repositories
             req.Messages.AddRange(added);
 
             req.Title = item.Title;
-            
+
             await _context.SaveChangesAsync();
         }
     }
