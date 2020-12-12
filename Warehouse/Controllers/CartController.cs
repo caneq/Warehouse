@@ -127,7 +127,7 @@ namespace Warehouse.Controllers
             }
             catch (UnauthorizeAccessException)
             {
-                return StatusCode(403);
+                return Forbid();
             }
             catch (NotFoundException)
             {
