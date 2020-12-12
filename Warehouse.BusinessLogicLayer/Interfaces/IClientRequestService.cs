@@ -16,6 +16,7 @@ namespace Warehouse.BusinessLogicLayer.Interfaces
         Task<int> CreateAsync(ClientRequestDTO item);
         Task DeleteAsync(ClientRequestDTO item);
         Task UpdateAsync(ClientRequestDTO item);
-        Task AddMessageAsync(int id, string messageText, ClaimsPrincipal User);
+        Task AddMessageAsync(int requestId, string messageText, ClaimsPrincipal User);
+        Task ReadMessagesAsync(int requestId, ClaimsPrincipal User);
     }
 }

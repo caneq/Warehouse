@@ -44,11 +44,11 @@ namespace Warehouse.BusinessLogicLayer.Services
             return _mapper.Map<ClientRequestDTO>(await _repo.ReadAsync(filterParams.GetLinqExpression()));
         }
 
-        public async Task AddMessageAsync(int id, string messageText, ClaimsPrincipal User)
+        public async Task AddMessageAsync(int requestId, string messageText, ClaimsPrincipal User)
         {
-            var request = await _repo.ReadAsync(r => r.Id == id);
+            var request = await _repo.ReadAsync(r => r.Id == requestId);
             if (request.Messages == null) request.Messages = new List<ClientRequestMessage>();
-            request.Messages.Add(new ClientRequestMessage { MessageText = messageText, ApplicationUserId = User.GetUserId(), ClientRequestId = id });
+            request.Messages.Add(new ClientRequestMessage { MessageText = messageText, ApplicationUserId = User.GetUserId(), ClientRequestId = requestId });
 
             if(User.Identity.Name.Contains("User", StringComparison.OrdinalIgnoreCase))
             {
@@ -69,6 +69,21 @@ namespace Warehouse.BusinessLogicLayer.Services
         public async Task UpdateAsync(ClientRequestDTO item)
         {
             await _repo.UpdateAsync(_mapper.Map<ClientRequest>(item));
+        }
+
+        public async Task ReadMessagesAsync(int requestId, ClaimsPrincipal User)
+        {
+            var request = await _repo.ReadAsync(r => r.Id == requestId);
+
+            if (User.Identity.Name.Contains("User", StringComparison.OrdinalIgnoreCase))
+            {
+                
+                request.ClientUnreadMessagesCount = 0;
+            }
+            else
+            {
+                request.ManagersUnreadMessagesCount = 0;
+            }
         }
     }
 }

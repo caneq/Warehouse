@@ -6,13 +6,13 @@
     Layout = "_Layout";
 }
 
-<h2>Ваши вопросы:</h2>
+<h2>Необработанные вопросы:</h2>
 <ul class="list-group">
     @foreach (var r in Model)
     {
         <li class="list-group-item">
             <a asp-controller="ClientRequests" asp-action="Details" asp-route-id="@r.Id">Запрос №@r.Id. @r.Title</a>
-            <span class="badge badge-primary">@r.ClientUnreadMessagesCount</span>
+            <span class="badge badge-primary">@r.ManagersUnreadMessagesCount</span>
         </li>
     }
 </ul>

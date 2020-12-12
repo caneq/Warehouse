@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Warehouse.BusinessLogicLayer.DataTransferObjects;
+using Warehouse.BusinessLogicLayer.Extensions;
 using Warehouse.BusinessLogicLayer.Interfaces;
 using Warehouse.BusinessLogicLayer.Models;
 using Warehouse.ViewModels;
@@ -21,21 +22,25 @@ namespace Warehouse.Controllers
             _mapper = mapper;
             _service = service;
         }
-        // GET: ClientRequests
+
         public ActionResult Index()
         {
-            var requests = _service.ReadMany(new ClientRequestFilterParams { });
+            var requests = _service.ReadMany(new ClientRequestFilterParams { ApplicationUserId = User.GetUserId() });
             return View(_mapper.Map<IEnumerable<ClientRequestViewModel>>(requests));
         }
 
-        // GET: ClientRequests/Details/5
+        public ActionResult Unprocessed()
+        {
+            var requests = _service.ReadMany(new ClientRequestFilterParams { Completed = false });
+            return View(_mapper.Map<IEnumerable<ClientRequestViewModel>>(requests));
+        }
+
         public async Task<ActionResult> Details(int id)
         {
             var request = await _service.ReadAsync(id);
             return View(_mapper.Map<ClientRequestViewModel>(request));
         }
 
-        // GET: ClientRequests/Create
         public ActionResult Create()
         {
             return View();
@@ -55,7 +60,6 @@ namespace Warehouse.Controllers
             //}
         }
 
-        // POST: ClientRequests/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(ClientRequestDTO request, IFormCollection collection)
