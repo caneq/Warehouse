@@ -11,6 +11,7 @@
     @foreach (var r in Model)
     {
         <li class="list-group-item">
+            <p class="text-muted"><small>@r.DateTime.ToString("HH:mm dd MMMM yyyy")</small></p>
             <a asp-controller="ClientRequests" asp-action="Details" asp-route-id="@r.Id">Запрос №@r.Id. @r.Title</a>
             <span class="badge badge-primary">@r.ManagersUnreadMessagesCount</span>
         </li>
