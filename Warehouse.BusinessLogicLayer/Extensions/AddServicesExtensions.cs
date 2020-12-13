@@ -23,6 +23,9 @@ namespace Warehouse.BusinessLogicLayer.Extensions
             services.AddScoped<IOrderStatusesService, OrderStatusesService>();
             services.AddScoped<IShipmentService, ShipmentService>();
             services.AddScoped<IClientRequestService, ClientRequestService>();
+            services.AddScoped<ISupplierOrderService, SupplierOrderService>();
+            services.AddScoped<ISupplierOrderStatusService, SupplierOrderStatusService>();
+            services.AddScoped<ISupplierService, SupplierService>();
 
             services.AddTransient<IDocumentService, DocumentService>();
 
