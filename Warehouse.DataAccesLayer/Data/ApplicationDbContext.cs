@@ -21,6 +21,9 @@ namespace Warehouse.DataAccessLayer.Data
         public DbSet<Url> Urls { get; set; }
         public DbSet<Shipment> Shipments { get; set; }
         public DbSet<ClientRequest> ClientRequests { get; set; }
+        public DbSet<SupplierOrder> SupplierOrders { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<SupplierOrderStatus> SupplierOrderStatuses { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
