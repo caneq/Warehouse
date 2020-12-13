@@ -38,6 +38,9 @@ namespace Warehouse.DataAccessLayer.Repositories
         {
             return await _dbSet.AsNoTracking()
                     .Include(p => p.Order)
+                        .ThenInclude(o => o.Items)
+                            .ThenInclude(i => i.Product)
+                                .ThenInclude(p => p.Unit)
                     .Include(p => p.Repicient)
                     .Include(p => p.Conveyed)
                     .FirstOrDefaultAsync(predicate);
@@ -47,6 +50,9 @@ namespace Warehouse.DataAccessLayer.Repositories
         {
             return _dbSet.AsNoTracking().AsNoTracking()
                     .Include(p => p.Order)
+                        .ThenInclude(o => o.Items)
+                            .ThenInclude(i => i.Product)
+                                .ThenInclude(p => p.Unit)
                     .Include(p => p.Repicient)
                     .Include(p => p.Conveyed)
                     .OrderByDescending(s => s.DateTime)
