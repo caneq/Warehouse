@@ -25,12 +25,15 @@ namespace Warehouse.DataAccessLayer
             services.AddScoped<IShipmentRepository, ShipmentRepository>();
             services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
             services.AddScoped<IClientRequestRepository, ClientRequestRepository>();
+            services.AddScoped<ISupplierOrderRepository, SupplierOrderRepository>();
 
             services.AddScoped<IRepository<ApplicationUser>, Repository<ApplicationUser>>();
             services.AddScoped<IRepository<Country>, Repository<Country>>();
             services.AddScoped<IRepository<Order>, Repository<Order>>();
             services.AddScoped<IRepository<OrderStatus>, Repository<OrderStatus>>();
             services.AddScoped<IRepository<Unit>, Repository<Unit>>();
+            services.AddScoped<IRepository<SupplierOrderStatus>, Repository<SupplierOrderStatus>>();
+            services.AddScoped<IRepository<Supplier>, Repository<Supplier>>();
 
 
         }
