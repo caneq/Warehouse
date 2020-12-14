@@ -60,6 +60,16 @@ namespace Warehouse.DataAccessLayer.Data
                 .Property(p => p.Price)
                 .HasConversion(p => p.Penny, p => new Price(p));
 
+            builder
+                .Entity<SupplierOrder>()
+                .Property(p => p.ResultPrice)
+                .HasConversion(p => p.Penny, p => new Price(p));
+
+            builder
+                .Entity<SupplierOrderItem>()
+                .Property(p => p.Price)
+                .HasConversion(p => p.Penny, p => new Price(p));
+
             builder.Entity<Country>().HasData(
                 new Country[]
                 {
