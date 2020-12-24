@@ -8,9 +8,9 @@
 
 <h2>Поставщики</h2>
 
-<a asp-action="Create" asp-controller="Supplier">Добавить</a>
+<p><a class="btn btn-primary" asp-action="Create" asp-controller="Supplier">Добавить</a></p>
 
 @foreach (var sup in Model)
 {
-    <a asp-action="Details" asp-controller="Supplier" asp-route-id="@sup.Id">@sup.Name</a>
+    <p><a asp-action="Details" asp-controller="Supplier" asp-route-id="@sup.Id">@sup.Name</a></p>
 }
