@@ -75,10 +75,12 @@ namespace Warehouse.DataAccessLayer.Repositories
                     .ThenInclude(s => s.Conveyed)
                 .Where(predicate).AsEnumerable();
 
-            return res.Select(s => {
+            res = res.Select(s => {
                 s.OrderStatuses = s?.OrderStatuses.OrderByDescending(s => s?.DateTime).ToList();
                 return s;
             });
+
+            return res;
         }
 
         public async Task UpdateAsync(Order item)

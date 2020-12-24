@@ -8,11 +8,13 @@
   <ItemGroup>
     <Content Remove="Pages\Shared\_CarouselPartial.cshtml" />
     <Content Remove="Views\Products\Details.cshtml" />
+    <Content Remove="Views\Supplier\Details.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="Views\Products\Details.cshtml" />
     <None Include="Views\Shared\_CarouselPartial.cshtml" />
+    <None Include="Views\Supplier\Details.cshtml" />
   </ItemGroup>
 
 

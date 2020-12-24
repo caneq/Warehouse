@@ -21,11 +21,15 @@ namespace Warehouse.BusinessLogicLayer
             CreateMap<OrderItem, OrderItemDTO>().ReverseMap();
             CreateMap<OrderStatus, OrderStatusDTO>().ReverseMap();
             CreateMap<OrderOrderStatus, OrderOrderStatusDTO>().ReverseMap();
-            //CreateMap<Price, PriceDTO>().ReverseMap();
             CreateMap<Url, UrlDTO>().ReverseMap();
             CreateMap<Shipment, ShipmentDTO>().ReverseMap();
             CreateMap<ClientRequest, ClientRequestDTO>().ReverseMap();
             CreateMap<ClientRequestMessage, ClientRequestMessageDTO>().ReverseMap();
+            CreateMap<Supplier, SupplierDTO>().ReverseMap();
+            CreateMap<SupplierOrder, SupplierOrderDTO>().ReverseMap();
+            CreateMap<SupplierOrderItem, SupplierOrderItemDTO>().ReverseMap();
+            CreateMap<SupplierOrderStatus, SupplierOrderStatusDTO>().ReverseMap();
+            CreateMap<SupplierOrderSupplierOrderStatus, SupplierOrderSupplierOrderStatusDTO>().ReverseMap();
 
         }
     }

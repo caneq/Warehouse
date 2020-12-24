@@ -21,6 +21,9 @@ namespace Warehouse.DataAccessLayer.Data
         public DbSet<Url> Urls { get; set; }
         public DbSet<Shipment> Shipments { get; set; }
         public DbSet<ClientRequest> ClientRequests { get; set; }
+        public DbSet<SupplierOrder> SupplierOrders { get; set; }
+        public DbSet<Supplier> Suppliers { get; set; }
+        public DbSet<SupplierOrderStatus> SupplierOrderStatuses { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -54,6 +57,16 @@ namespace Warehouse.DataAccessLayer.Data
 
             builder
                 .Entity<OrderItem>()
+                .Property(p => p.Price)
+                .HasConversion(p => p.Penny, p => new Price(p));
+
+            builder
+                .Entity<SupplierOrder>()
+                .Property(p => p.ResultPrice)
+                .HasConversion(p => p.Penny, p => new Price(p));
+
+            builder
+                .Entity<SupplierOrderItem>()
                 .Property(p => p.Price)
                 .HasConversion(p => p.Penny, p => new Price(p));
 

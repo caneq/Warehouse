@@ -89,7 +89,8 @@ namespace Warehouse.BusinessLogicLayer.Services
                 
                 request.ClientUnreadMessagesCount = 0;
             }
-            if(!User.Identity.Name.Contains("User", StringComparison.OrdinalIgnoreCase))
+            if(!User.Identity.Name.Contains("User", StringComparison.OrdinalIgnoreCase) 
+                || User.Identity.Name.Contains("manager", StringComparison.OrdinalIgnoreCase))
             {
                 request.ManagersUnreadMessagesCount = 0;
             }

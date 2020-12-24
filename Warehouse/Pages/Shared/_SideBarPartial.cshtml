@@ -2,7 +2,7 @@
 <ul class="list-unstyled components">
     <li><a asp-controller="Orders" asp-action="Index">Мои заказы</a></li>
     <li><a asp-controller="Cart" asp-action="Index">Моя корзина</a></li>
-    <li class="active">
+    <li><a asp-controller="ClientRequests" asp-action="Index">Мои запросы</a></li>
 </ul>
 
 <p>Заказы</p>
@@ -19,4 +19,14 @@
 <p>Курьер</p>
 <ul class="list-unstyled components">
     <li><a asp-controller="Courier" asp-action="Deliver">Я доставляю</a></li>
+</ul>
+
+<p>Менеджер по клиентам</p>
+<ul class="list-unstyled components">
+    <li><a asp-controller="ClientRequests" asp-action="Filter">Запросы</a></li>
+</ul>
+
+<p>Менеджер по закупкам</p>
+<ul class="list-unstyled components">
+    <li><a asp-controller="Supplier" asp-action="Index">Поставщики</a></li>
 </ul>

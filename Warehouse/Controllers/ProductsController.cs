@@ -79,8 +79,9 @@ namespace Warehouse.Controllers
         // GET: Products/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            ViewBag.Units = new SelectList(_unitService.ReadAll(), "Id", "UnitString");
-            ViewBag.Countries = new SelectList(_countriesService.ReadAll(), "Id", "Name");
+            var defSelect = new SelectListItem { Value = "-1", Text = "Не выбрано", Selected = true };
+            ViewBag.Units = (new SelectList(_unitService.ReadAll(), "Id", "UnitString")).Append(defSelect);
+            ViewBag.Countries = (new SelectList(_countriesService.ReadAll(), "Id", "Name")).Append(defSelect);
             return View(_mapper.Map<ProductViewModel>(await _productService.ReadAsync(id)));
         }
 

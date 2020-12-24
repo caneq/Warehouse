@@ -35,10 +35,12 @@ namespace Warehouse.Controllers
             return View(_mapper.Map<IEnumerable<ClientRequestViewModel>>(requests));
         }
 
-        public ActionResult Filter(ClientRequestFilterParams filterParams)
+        public ActionResult Filter(ClientRequestFilterViewModel filterParams)
         {
-            var requests = _service.ReadMany(filterParams);
-            return View(_mapper.Map<IEnumerable<ClientRequestViewModel>>(requests));
+            var requests = _service.ReadMany(_mapper.Map<ClientRequestFilterParams>(filterParams));
+            filterParams.Requests = _mapper.Map<IEnumerable<ClientRequestViewModel>>(requests);
+            
+            return View(filterParams);
         }
 
         public async Task<ActionResult> Details(int id)

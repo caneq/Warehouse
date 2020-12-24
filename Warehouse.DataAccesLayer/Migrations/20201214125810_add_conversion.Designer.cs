@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Warehouse.DataAccessLayer.Data;
 
 namespace Warehouse.DataAccessLayer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201214125810_add_conversion")]
+    partial class add_conversion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -665,9 +667,6 @@ namespace Warehouse.DataAccessLayer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Number")
-                        .HasColumnType("int");
-
                     b.Property<long?>("Price")
                         .HasColumnType("bigint");
 
@@ -701,7 +700,7 @@ namespace Warehouse.DataAccessLayer.Migrations
                     b.ToTable("SupplierOrderStatuses");
                 });
 
-            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.SupplierOrderSupplierOrderStatus", b =>
+            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.SupplierOrderStatusSupplierOrder", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -723,7 +722,7 @@ namespace Warehouse.DataAccessLayer.Migrations
 
                     b.HasIndex("SupplierOrderStatusId");
 
-                    b.ToTable("SupplierOrderSupplierOrderStatus");
+                    b.ToTable("SupplierOrderStatusSupplierOrder");
                 });
 
             modelBuilder.Entity("Warehouse.DataAccessLayer.Models.Unit", b =>
@@ -1028,7 +1027,7 @@ namespace Warehouse.DataAccessLayer.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.SupplierOrderSupplierOrderStatus", b =>
+            modelBuilder.Entity("Warehouse.DataAccessLayer.Models.SupplierOrderStatusSupplierOrder", b =>
                 {
                     b.HasOne("Warehouse.DataAccessLayer.Models.SupplierOrder", "SupplierOrder")
                         .WithMany("Statuses")
