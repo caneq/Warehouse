@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,6 +9,7 @@ using Warehouse.BusinessLogicLayer.DataTransferObjects;
 using Warehouse.BusinessLogicLayer.Extensions;
 using Warehouse.BusinessLogicLayer.Interfaces;
 using Warehouse.BusinessLogicLayer.Models;
+using Warehouse.ClassLibrary;
 using Warehouse.DataAccessLayer.Interfaces;
 using Warehouse.DataAccessLayer.Models;
 
@@ -25,6 +27,8 @@ namespace Warehouse.BusinessLogicLayer.Services
         public async Task Create(ClaimsPrincipal User, SupplierOrderDTO order)
         {
             order.UserId = User.GetUserId();
+            order.DateTime = DateTime.Now;
+            order.ResultPrice = new Price(order.Items.Sum(p => p.Price.Penny));
             await _repo.CreateAsync(_mapper.Map<SupplierOrder>(order));
         }
 
@@ -36,7 +40,7 @@ namespace Warehouse.BusinessLogicLayer.Services
 
         public IEnumerable<SupplierOrderDTO> ReadMany(ClaimsPrincipal User, SupplierOrderFilterParams filterParams = null)
         {
-            if (filterParams == null) filterParams = new SupplierOrderFilterParams { UserId = User.GetUserId() };
+            if (filterParams == null) filterParams = new SupplierOrderFilterParams { };
             var o = _repo.ReadMany(filterParams.GetFuncPredicate());
             return _mapper.Map<IEnumerable<SupplierOrderDTO>>(o);
         }

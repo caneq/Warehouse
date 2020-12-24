@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Warehouse.DataAccessLayer.Models;
 using Warehouse.DataAccessLayer.Data;
 using AutoMapper;
 using Warehouse.ViewModels;
@@ -13,6 +12,8 @@ using Warehouse.ClassLibrary;
 using Warehouse.BusinessLogicLayer.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Warehouse.BusinessLogicLayer.Models;
+using Warehouse.BusinessLogicLayer.DataTransferObjects;
+using Warehouse.BusinessLogicLayer.Extensions;
 
 namespace Warehouse.Controllers
 {
@@ -32,12 +33,14 @@ namespace Warehouse.Controllers
         }
         public ActionResult Index()
         {
-            return View();
+            var orders = _mapper.Map<IEnumerable<SupplierOrderViewModel>>(_supplierOrderService.ReadMany(User));
+            return View(orders);
         }
 
         public async Task<ActionResult> Details(int id)
         {
-            return View();
+            var order = _mapper.Map<SupplierOrderViewModel>(await _supplierOrderService.ReadAsync(User, id));
+            return View(order);
         }
 
         public ActionResult Create()
@@ -50,11 +53,32 @@ namespace Warehouse.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> Create(IFormCollection collection)
         {
             try
             {
-                // TODO: Add insert logic here
+                var supplierId = int.Parse(collection["SupplierId"].FirstOrDefault());
+                var itemsIds = collection["Items"].Select(i => int.Parse(i));
+                var Counts = collection["Counts"].Select(i => int.Parse(i));
+                var Prices = collection["Counts"].Select(i => Price.Parse(i));
+
+                var items = itemsIds.Zip(Counts).Zip(Prices).Select((idCountPrice) => new SupplierOrderItemDTO
+                {
+                    ProductId = idCountPrice.First.First,
+                    Number = idCountPrice.First.Second,
+                    SupplierOrderId = supplierId,
+                    Price = idCountPrice.Second,
+
+                });
+
+                var supplierOrder = new SupplierOrderDTO 
+                { 
+                    SupplierId = int.Parse(collection["SupplierId"]),
+                    UserId = User.GetUserId(), 
+                    Items = items.ToList(),
+                };
+
+                await _supplierOrderService.Create(User, supplierOrder);
 
                 return RedirectToAction(nameof(Index));
             }
