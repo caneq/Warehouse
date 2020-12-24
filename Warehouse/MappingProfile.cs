@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Warehouse.BusinessLogicLayer.DataTransferObjects;
 using Warehouse.BusinessLogicLayer.Models;
-using Warehouse.DataAccessLayer.Models;
 using Warehouse.ViewModels;
 
 namespace Warehouse
@@ -25,25 +24,17 @@ namespace Warehouse
             CreateMap<OrderItemViewModel, OrderItemDTO>().ReverseMap();
             CreateMap<OrderStatusViewModel, OrderStatusDTO>().ReverseMap();
             CreateMap<OrderOrderStatusViewModel, OrderOrderStatusDTO>().ReverseMap();
-            //CreateMap<PriceViewModel, PriceDTO>().ReverseMap();
             CreateMap<UrlViewModel, UrlDTO>().ReverseMap();
             CreateMap<ShipmentViewModel, ShipmentDTO>().ReverseMap();
             CreateMap<ClientRequestViewModel, ClientRequestDTO>().ReverseMap();
             CreateMap<ClientRequestMessageViewModel, ClientRequestMessageDTO>().ReverseMap();
             CreateMap<ClientRequestFilterViewModel, ClientRequestFilterParams>().ReverseMap();
+            CreateMap<SupplierViewModel, SupplierDTO>().ReverseMap();
+            CreateMap<SupplierOrderViewModel, SupplierOrderDTO>().ReverseMap();
+            CreateMap<SupplierOrderItemViewModel, SupplierOrderItemDTO>().ReverseMap();
+            CreateMap<SupplierOrderStatusViewModel, SupplierOrderStatusDTO>().ReverseMap();
+            CreateMap<SupplierOrderSupplierOrderStatusViewModel, SupplierOrderSupplierOrderStatusDTO>().ReverseMap();
 
-            //TEMP
-            //view - data
-            CreateMap<Product, ProductViewModel>().ReverseMap();
-            CreateMap<Unit, UnitViewModel>().ReverseMap();
-            CreateMap<ApplicationUser, ApplicationUserViewModel>().ReverseMap();
-            CreateMap<Cart, CartViewModel>().ReverseMap();
-            CreateMap<Country, CountryViewModel>().ReverseMap();
-            CreateMap<Order, OrderViewModel>().ReverseMap();
-            CreateMap<OrderItem, OrderItemViewModel>().ReverseMap();
-            CreateMap<OrderStatus, OrderStatusViewModel>().ReverseMap();
-            //CreateMap<Price, PriceViewModel>().ReverseMap();
-            CreateMap<Url, UrlViewModel>().ReverseMap();
         }
     }
 }

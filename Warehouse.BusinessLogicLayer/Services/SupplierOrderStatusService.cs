@@ -45,7 +45,7 @@ namespace Warehouse.BusinessLogicLayer.Services
                 await _repo.CreateAsync(new SupplierOrderStatus { String = statusString });
                 status = await _repo.ReadAsync(s => s.String == statusString);
             }
-            order.Statuses.Add(new SupplierOrderStatusSupplierOrder
+            order.Statuses.Add(new SupplierOrderSupplierOrderStatus
             {
                 SupplierOrderId = order.Id,
                 SupplierOrderStatus = status,

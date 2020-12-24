@@ -15,7 +15,7 @@ namespace Warehouse.DataAccessLayer.Models
         public Supplier Supplier { get; set; }
         public List<SupplierOrderItem> Items { get; set; }
         public Price ResultPrice { get; set; }
-        public List<SupplierOrderStatusSupplierOrder> Statuses { get; set; }
+        public List<SupplierOrderSupplierOrderStatus> Statuses { get; set; }
 
     }
 }

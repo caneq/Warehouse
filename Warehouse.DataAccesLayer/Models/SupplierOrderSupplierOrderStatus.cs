@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Warehouse.DataAccessLayer.Models
 {
-    public class SupplierOrderStatusSupplierOrder
+    public class SupplierOrderSupplierOrderStatus
     {
         public int Id { get; set; }
         public int SupplierOrderId { get; set; }
