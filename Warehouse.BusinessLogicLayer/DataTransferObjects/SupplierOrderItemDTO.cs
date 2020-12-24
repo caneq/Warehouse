@@ -13,5 +13,6 @@ namespace Warehouse.BusinessLogicLayer.DataTransferObjects
         public Price Price { get; set; }
         public int ProductId { get; set; }
         public ProductDTO Product { get; set; }
+        public int Number { get; set; }
     }
 }

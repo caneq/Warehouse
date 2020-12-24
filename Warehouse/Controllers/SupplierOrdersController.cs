@@ -49,7 +49,7 @@ namespace Warehouse.Controllers
 
             //l.Add(new Order { OrderDate = DateTime.Today, Id = 1, UserId = "123", OrderStatus = _context.OrderStatuses.Find(3), TotalPrice = resultPrice, Items = items.ToList() });
             //return View(_mapper.Map<IEnumerable<OrderViewModel>>(l));
-            return null;
+            return View();
         }
 
         // GET: SupplierOrders/Details/5
@@ -66,7 +66,7 @@ namespace Warehouse.Controllers
 
             //Order o = new Order { OrderDate = DateTime.Now, Id = 2, UserId = "123", OrderStatus = _context.OrderStatuses.Find(1), TotalPrice = resultPrice, Items = items.ToList() };
             //return View(_mapper.Map<OrderViewModel>(o));
-            return null;
+            return View();
         }
 
         // GET: SupplierOrders/Create

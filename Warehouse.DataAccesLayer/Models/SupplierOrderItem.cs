@@ -12,5 +12,6 @@ namespace Warehouse.DataAccessLayer.Models
         public Price Price { get; set; }
         public int ProductId { get; set; }
         public Product Product { get; set; }
+        public int Number { get; set; }
     }
 }

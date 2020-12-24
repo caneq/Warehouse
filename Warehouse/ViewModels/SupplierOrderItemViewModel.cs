@@ -13,5 +13,6 @@ namespace Warehouse.ViewModels
         public Price Price { get; set; }
         public int ProductId { get; set; }
         public ProductViewModel Product { get; set; }
+        public int Number { get; set; }
     }
 }
