@@ -1,0 +1,16 @@
+﻿@using Warehouse.ViewModels
+@model SupplierViewModel
+
+@{
+    ViewData["Title"] = Model?.Name ?? "Поставщик не найден";
+    Layout = "_Layout";
+}
+
+<h2>@Model.Name</h2>
+
+<p>Реквизиты оплаты:</p>
+<p>@Model.PaymentDetails</p>
+
+<a asp-action="Edit" asp-controller="Supplier" asp-route-id="@Model.Id" class="btn btn-primary">Редактировать</a>
+<a asp-action="Delete" asp-controller="Supplier" asp-route-id="@Model.Id" class="btn btn-danger">Удалить</a>
+

@@ -1,57 +1,91 @@
 ﻿@using Warehouse.ViewModels
-
+@model SupplierOrderViewModel
 @{
     Layout = "_Layout";
     ViewData["Title"] = "Заказать у поставщиков";
 }
 
-<section class="order-form my-4 mx-4 col-lg-9">
-    <div class="container pt-4">
+<form method="post">
+    <section class="order-form my-4 mx-4 col-lg-9">
+        <div class="container pt-4">
 
-        <div class="row">
-            <div class="col-12">
-                <h3>Заказать у поставщика</h3>
-                <hr class="mt-1">
-            </div>
-            <div class="col-12">
-
-                <div class="row mt-7 mx-4">
-                    <div class="col-12 col-sm-8">
-                        <label class="order-form-label">Поставщик</label>
-                        <input class="order-form-input" placeholder="" required>
-                    </div>
+            <div class="row">
+                <div class="col-12">
+                    <h3>Заказать у поставщика</h3>
+                    <hr class="mt-1">
                 </div>
+                <div class="col-12">
 
-                <div class="row mt-7 mx-4">
-                    <div class="col-12 col-sm-8">
-                        <label class="order-form-label">Товар</label>
-                        <input class="order-form-input" placeholder="" required>
-                    </div>
-                    <div class="col-12 col-sm-3">
-                        <label class="order-form-label">Количество</label>
-                        <input class="order-form-input" type="number" min="1" placeholder="" required>
-                    </div>
-                </div>
-
-                <div class="row mt-7 mx-4">
-                    <div class="col-12 col-sm-8">
-                        <div class="col-sm-3">
-                            <button type="button" class="btn btn-primary d-block mx-auto btn-submit"><i class="fas fa-plus"></i></button>
+                    <div class="row mt-7 mx-4">
+                        <div class="col-lg-12">
+                            <label class="order-form-label">Поставщик</label>
+                            @*<input name="Supplier" class="order-form-input" placeholder="" required>*@
+                            @Html.DropDownListFor(m => m.SupplierId, ViewBag.Suppliers as IEnumerable<SelectListItem>, new { @class = "order-form-input" })
                         </div>
                     </div>
-                </div>
-
-                <div class="row mt-3 mx-4">
-                    <label class="order-form-label">Адрес доставки</label>
-                    <input class="order-form-input" value="Минск, улица ленина, д. 7" placeholder="" required>
-                </div>
-                <div class="row mt-3 justify-content-center">
-                    <div class="col-auto">
-                        <button type="button" id="btnSubmit" class="btn btn-primary d-block mx-auto btn-submit">Обработать</button>
+                    <div id="ItemsContainer">
+                        <div class="row mt-3 mx-4">
+                            <div class="col-12 col-sm-10">
+                                <label class="order-form-label">Товар</label>
+                                @*<input name="Items" class="order-form-input" placeholder="" required>*@
+                                @Html.DropDownListFor(m => m.Items, ViewBag.Products as IEnumerable<SelectListItem>, new { @class = "order-form-input" })
+                                
+                            </div>
+                            <div class="col-12 col-sm-2">
+                                <label class="order-form-label">Количество</label>
+                                <input name="Counts" class="order-form-input" value="1" type="number" min="1" placeholder="" required>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    <div class="row mt-3 mx-4">
+                        <div class="col-sm-1">
+                            <button type="button" class="btn btn-primary d-block mx-auto btn-submit" onclick="addItemInput()">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
 
+                    <div class="row mt-3 mx-4">
+                        <label class="order-form-label">Адрес доставки</label>
+                        <input class="order-form-input" name="address" value="Минск, улица ленина, д. 7" placeholder="" required>
+                    </div>
+                    <div class="row mt-3 justify-content-center">
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary d-block mx-auto btn-submit">Заказать</button>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</form>
+
+<script>
+    var itemsContainer = document.getElementById('ItemsContainer');
+
+    function addItemInput() {
+        var itemInputDiv = document.createElement("div");
+        itemInputDiv.className = "col-12 col-sm-10";
+
+        var select = document.getElementById('Items').cloneNode(true);
+        select.id = null;
+        itemInputDiv.appendChild(select);
+
+        var countInputDiv = document.createElement("div");
+        countInputDiv.className = "col-12 col-sm-2";
+        var countInput = document.createElement("input");
+        countInput.className = "order-form-input";
+        countInput.name = "Counts";
+        countInput.type = "number";
+        countInput.min = "1";
+        countInputDiv.appendChild(countInput);
+
+        var wrapDiv = document.createElement("div");
+        wrapDiv.className = "row mt-3 mx-4";
+
+        wrapDiv.appendChild(itemInputDiv);
+        wrapDiv.appendChild(countInputDiv);
+        itemsContainer.appendChild(wrapDiv);
+    }
+</script>

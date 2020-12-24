@@ -1,0 +1,16 @@
+﻿@using Warehouse.ViewModels;
+@model IEnumerable<SupplierViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "_Layout";
+}
+
+<h2>Поставщики</h2>
+
+<a asp-action="Create" asp-controller="Supplier">Добавить</a>
+
+@foreach (var sup in Model)
+{
+    <a asp-action="Details" asp-controller="Supplier" asp-route-id="@sup.Id">@sup.Name</a>
+}
