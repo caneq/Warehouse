@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Warehouse.BusinessLogicLayer.DataTransferObjects;
+using Warehouse.BusinessLogicLayer.Models;
 using Warehouse.DataAccessLayer.Models;
 using Warehouse.ViewModels;
 
@@ -29,6 +30,7 @@ namespace Warehouse
             CreateMap<ShipmentViewModel, ShipmentDTO>().ReverseMap();
             CreateMap<ClientRequestViewModel, ClientRequestDTO>().ReverseMap();
             CreateMap<ClientRequestMessageViewModel, ClientRequestMessageDTO>().ReverseMap();
+            CreateMap<ClientRequestFilterViewModel, ClientRequestFilterParams>().ReverseMap();
 
             //TEMP
             //view - data

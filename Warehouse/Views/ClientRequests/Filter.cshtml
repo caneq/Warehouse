@@ -1,5 +1,5 @@
 ﻿@using Warehouse.ViewModels
-@model IEnumerable<ClientRequestViewModel>
+@model ClientRequestFilterViewModel
 
 @{
     ViewData["Title"] = "Запросы клиентов";
@@ -8,9 +8,9 @@
 
 <div class="row">
     <div class="col-lg-9">
-        <h2>Необработанные вопросы:</h2>
+        <h2>Вопросы:</h2>
         <ul class="list-group">
-            @foreach (var r in Model)
+            @foreach (var r in Model.Requests)
             {
                 <li class="list-group-item">
                     <span class="text-muted"><small>@r.DateTime.ToString("dd.MM HH:mm")</small></span>
@@ -28,34 +28,34 @@
         <form method="get">
             <div class="form-group">
                 <label>Id</label>
-                <input class="form-control" name="Id" type="number" />
+                <input class="form-control" name="Id" type="number" value="@Model.Id" />
             </div>
             <div class="form-group">
                 <label>Id пользователя</label>
-                <input class="form-control" name="ApplicationUserId" />
+                <input class="form-control" name="ApplicationUserId" value="@Model.ApplicationUserId" />
             </div>
 
             <div class="form-group">
                 <label>Завершен</label>
-                <input class="form-control" name="Completed" />
+                <input class="form-control" name="Completed" value="@Model.Completed?.ToString()" />
             </div>
 
             <div class="form-group">
                 <label>Дата от</label>
-                <input class="form-control" type="datetime-local" name="DateTimeMin" />
+                <input class="form-control" type="datetime-local" name="DateTimeMin" value="@Model.DateTimeMin" />
             </div>
             <div class="form-group">
                 <label>Дата до</label>
-                <input class="form-control" type="datetime-local" name="DateTimeMax" />
+                <input class="form-control" type="datetime-local" name="DateTimeMax" value="@Model.DateTimeMax" />
             </div>
 
             <div class="form-group">
                 <label>Непрочитанных сообщ. от</label>
-                <input class="form-control" name="ManagersUnreadMessagesCountMin" type="number" />
+                <input class="form-control" name="ManagersUnreadMessagesCountMin" type="number" min="0" value="@Model.ManagersUnreadMessagesCountMin" />
             </div>
             <div class="form-group">
                 <label>Непрочитанных сообщ. до</label>
-                <input class="form-control" name="ManagersUnreadMessagesCountMax" type="number" />
+                <input class="form-control" name="ManagersUnreadMessagesCountMax" type="number" min="0" value="@Model.ManagersUnreadMessagesCountMax" />
             </div>
 
             <div class="row justify-content-center">
