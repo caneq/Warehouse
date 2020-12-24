@@ -26,23 +26,17 @@ namespace Warehouse.BusinessLogicLayer.Models
                 (ApplicationUserId != null ? c.ApplicationUserId == ApplicationUserId : true) &&
                 (Title != null ? c.Title == Title : true) &&
                 (Completed != null ? c.Completed == Completed : true) &&
-                (ClientUnreadMessagesCountMin != null ? c.ClientUnreadMessagesCount < ClientUnreadMessagesCountMin : true) &&
-                (ClientUnreadMessagesCountMax != null ? c.ClientUnreadMessagesCount > ClientUnreadMessagesCountMax : true) &&
+                (ClientUnreadMessagesCountMin != null ? c.ClientUnreadMessagesCount >= ClientUnreadMessagesCountMin : true) &&
+                (ClientUnreadMessagesCountMax != null ? c.ClientUnreadMessagesCount <= ClientUnreadMessagesCountMax : true) &&
+                (ManagersUnreadMessagesCountMin != null ? c.ManagersUnreadMessagesCount >= ManagersUnreadMessagesCountMin : true) &&
+                (ManagersUnreadMessagesCountMax != null ? c.ManagersUnreadMessagesCount <= ManagersUnreadMessagesCountMax : true) &&
                 (DateTimeMin != null ? c.DateTime > DateTimeMin : true) &&
                 (DateTimeMax != null ? c.DateTime < DateTimeMax : true);
         }
 
         internal Func<ClientRequest, bool> GetFuncPredicate()
         {
-            return (ClientRequest c) =>
-                (Id != null ? c.Id == Id : true) &&
-                (ApplicationUserId != null ? c.ApplicationUserId == ApplicationUserId : true) &&
-                (Title != null ? c.Title == Title : true) &&
-                (Completed != null ? c.Completed == Completed : true) &&
-                (ClientUnreadMessagesCountMin != null ? c.ClientUnreadMessagesCount < ClientUnreadMessagesCountMin : true) &&
-                (ClientUnreadMessagesCountMax != null ? c.ClientUnreadMessagesCount > ClientUnreadMessagesCountMax : true) &&
-                (DateTimeMin != null ? c.DateTime > DateTimeMin : true) &&
-                (DateTimeMax != null ? c.DateTime < DateTimeMax : true);
+            return GetLinqExpression().Compile();
         }
     }
 }
