@@ -29,14 +29,12 @@ namespace Warehouse.Controllers
             _countriesService = countriesService;
         }
 
-        // GET: Products
         public ActionResult Index(ProductFilterParams f)
         {
             var a = _mapper.Map<IEnumerable<ProductViewModel>>(_productService.ReadMany(f));
             return View(a);
         }
 
-        // GET: Products/Details/5
         public async Task<ActionResult> Details(int id)
         {
             try
@@ -51,7 +49,6 @@ namespace Warehouse.Controllers
             }
         }
 
-        // GET: Products/Create
         public ActionResult Create()
         {
             ViewBag.Units = new SelectList(_unitService.ReadAll(), "Id", "UnitString");
@@ -59,7 +56,6 @@ namespace Warehouse.Controllers
             return View();
         }
 
-        // POST: Products/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(ProductViewModel p, IFormCollection collection)
@@ -76,7 +72,6 @@ namespace Warehouse.Controllers
             }
         }
 
-        // GET: Products/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
             var defSelect = new SelectListItem { Value = "-1", Text = "Не выбрано", Selected = true };
@@ -85,14 +80,12 @@ namespace Warehouse.Controllers
             return View(_mapper.Map<ProductViewModel>(await _productService.ReadAsync(id)));
         }
 
-        // POST: Products/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(ProductViewModel p, IFormCollection collection)
         {
             try
             {
-                // TODO: Add update logic here
                 p.Pictures = collection["pictures"].Select(s => new UrlViewModel { UrlString = s }).ToList();
                 await _productService.UpdateAsync(_mapper.Map<ProductDTO>(p));
 

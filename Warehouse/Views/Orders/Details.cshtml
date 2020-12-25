@@ -161,6 +161,16 @@
                 </form>
             }
         }
+        @if (User.GetUserId() == Model.Shipments.FirstOrDefault()?.RepicientApplicationUserId
+            && Model?.OrderStatuses?.First().OrderStatus.OrderStatusString == "Передан курьеру")
+        {
+            <form method="post" action="/shipments/create">
+                <input name="OrderId" value="@Model.Id" hidden />
+                <input name="ConveyedApplicationUserId" value="@User.GetUserId()" hidden />
+                <input name="RepicientApplicationUserId" value="@Model.UserId" hidden />
+                <button type="submit" class="btn btn-primary">Передан клиенту</button>
+            </form>
+        }
     </div>
 }
 else

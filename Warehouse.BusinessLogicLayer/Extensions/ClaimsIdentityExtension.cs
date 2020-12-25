@@ -31,7 +31,7 @@ namespace Warehouse.BusinessLogicLayer.Extensions
             {
 
             }
-            throw new UnableToGetIdException();
+            return null;
         }
     }
 }

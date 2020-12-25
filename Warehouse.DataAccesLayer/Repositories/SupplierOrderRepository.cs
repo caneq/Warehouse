@@ -34,6 +34,7 @@ namespace Warehouse.DataAccessLayer.Repositories
         public async Task<SupplierOrder> ReadAsync(Expression<Func<SupplierOrder, bool>> predicate)
         {
             SupplierOrder c = await _context.SupplierOrders.AsNoTracking()
+                                .Include(o => o.Supplier)
                                 .Include(o => o.Statuses)
                                     .ThenInclude(os => os.SupplierOrderStatus)
                                 .OrderByDescending(o => o.DateTime)
@@ -55,6 +56,7 @@ namespace Warehouse.DataAccessLayer.Repositories
         public IEnumerable<SupplierOrder> ReadMany(Func<SupplierOrder, bool> predicate)
         {
             var res = _context.SupplierOrders.AsNoTracking()
+                    .Include(o => o.Supplier)
                     .Include(o => o.Statuses)
                         .ThenInclude(os => os.SupplierOrderStatus)
                     .OrderByDescending(o => o.DateTime)
