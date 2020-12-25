@@ -5,20 +5,16 @@
     <li><a asp-controller="ClientRequests" asp-action="Index">Мои запросы</a></li>
 </ul>
 
-<p>Заказы</p>
-<ul class="list-unstyled components">
-    <li><a asp-controller="Orders" asp-action="Unpaid">Не оплаченные</a></li>
-    <li><a asp-controller="Orders" asp-action="Deliver">Ожидают доставку</a></li>
-</ul>
-
-<p>Продукты</p>
+<p>Кладовщик</p>
 <ul class="list-unstyled components">
     <li><a asp-controller="Products" asp-action="Create">Оформить</a></li>
+    <li><a asp-controller="Orders" asp-action="Deliver">Ожидают доставку</a></li>
 </ul>
 
 <p>Курьер</p>
 <ul class="list-unstyled components">
     <li><a asp-controller="Courier" asp-action="Deliver">Я доставляю</a></li>
+    <li><a asp-controller="Orders" asp-action="Deliver">Ожидают доставку</a></li>
 </ul>
 
 <p>Менеджер по клиентам</p>
@@ -32,3 +28,10 @@
     <li><a asp-controller="SupplierOrders" asp-action="Create">Заказать у поставщика</a></li>
     <li><a asp-controller="SupplierOrders" asp-action="Index">Заказы у поставщиков</a></li>
 </ul>
+
+<p>Бухгалтер</p>
+<ul class="list-unstyled components">
+    <li><a asp-controller="Orders" asp-action="Unpaid">Не оплаченные заказы</a></li>
+    <li><a asp-controller="SupplierOrders" asp-action="Unpaid">Не оплаченные заказы у поставщиков</a></li>
+</ul>
+

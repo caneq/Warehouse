@@ -20,7 +20,7 @@ namespace Warehouse.BusinessLogicLayer.Models
         internal Expression<Func<SupplierOrder, bool>> GetLinqExpression()
         {
             return (SupplierOrder p) => (UserId != null ? p.UserId == UserId : true) &&
-                (Status != null ? (p.Statuses.FirstOrDefault() != null ? p.Statuses.FirstOrDefault().SupplierOrderStatus.String == Status : false) : true) &&
+                (Status != null ? (p.Statuses.FirstOrDefault() != null ? p.Statuses.OrderByDescending(o => o.DateTime).FirstOrDefault().SupplierOrderStatus.String == Status : false) : true) &&
                 (Id != null ? p.Id == Id : true) &&
                 (SupplierId != null ? p.SupplierId == SupplierId : true) &&
                 (DateTimeMin != null ? p.DateTime > DateTimeMin : true) &&
@@ -30,7 +30,7 @@ namespace Warehouse.BusinessLogicLayer.Models
         internal Func<SupplierOrder, bool> GetFuncPredicate()
         {
             return (SupplierOrder p) => (UserId != null ? p.UserId == UserId : true) &&
-                (Status != null ? (p.Statuses.FirstOrDefault() != null ? p.Statuses.FirstOrDefault().SupplierOrderStatus.String == Status : false) : true) &&
+                (Status != null ? (p.Statuses.FirstOrDefault() != null ? p.Statuses.OrderByDescending(o => o.DateTime).FirstOrDefault().SupplierOrderStatus.String == Status : false) : true) &&
                 (Id != null ? p.Id == Id : true) &&
                 (SupplierId != null ? p.SupplierId == SupplierId : true) &&
                 (DateTimeMin != null ? p.DateTime > DateTimeMin : true) &&
