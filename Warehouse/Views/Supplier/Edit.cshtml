@@ -2,13 +2,23 @@
 @model SupplierViewModel
 
 @{
-    ViewData["Title"] = $"Редактировать";
     Layout = "_Layout";
+}
+
+@if (Model == null)
+{
+    ViewData["Title"] = "Поставщик не найден";
+    <h1>Поставщик не найден</h1>
+    return;
+}
+
+@{
+    ViewData["Title"] = "Редактировать";
 }
 
 <section class="order-form my-4 mx-4 col-lg-9">
     <form method="post" enctype="multipart/form-data" id="form">
-        <input name="Id" value="@Model.Id" hidden/>
+        <input name="Id" value="@Model.Id" hidden />
         <div class="container pt-4">
 
             <div class="row">

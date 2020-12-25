@@ -2,8 +2,18 @@
 @model ProductViewModel;
 
 @{
-    ViewData["Title"] = Model?.Name ?? "Продукт не найден";
     Layout = "_Layout";
+}
+
+@if (Model == null)
+{
+    ViewData["Title"] = "Продукт не найден";
+    <h1>Продукт не найден</h1>
+    return;
+}
+
+@{
+    ViewData["Title"] = Model.Name;
 }
 
 @if (Model == null)
@@ -36,8 +46,8 @@
 </div>
 
 @if (User.Identity.Name == "Adm1n@gmail.com" ||
-   User.Identity.Name == "StoreKeeper1@gmail.com"
-   )
+  User.Identity.Name == "StoreKeeper1@gmail.com"
+  )
 {
     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#ModalDelete">Удалить</button>
     <a class="btn btn-primary" asp-action="Edit" asp-controller="Products" asp-route-id="@Model.Id">Редактировать</a>

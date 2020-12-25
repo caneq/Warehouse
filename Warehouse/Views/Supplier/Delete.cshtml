@@ -2,12 +2,22 @@
 @model SupplierViewModel
 
 @{
-    ViewData["Title"] = "Удалить";
     Layout = "_Layout";
+}
+
+@if (Model == null)
+{
+    ViewData["Title"] = "Поставщик не найден";
+    <h1>Поставщик не найден</h1>
+    return;
+}
+
+@{
+    ViewData["Title"] = "Удалить";
 }
 
 <p>Удалить @Model.Name</p>
 <form method="post">
-    <input name="id" value="@Model.Id" hidden/>
+    <input name="id" value="@Model.Id" hidden />
     <button type="submit" class="btn btn-danger">Удалить</button>
 </form>

@@ -2,8 +2,18 @@
 @model SupplierViewModel
 
 @{
-    ViewData["Title"] = Model?.Name ?? "Поставщик не найден";
     Layout = "_Layout";
+}
+
+@if (Model == null)
+{
+    ViewData["Title"] = "Поставщик не найден";
+    <h1>Поставщик не найден</h1>
+    return;
+}
+
+@{
+    ViewData["Title"] = Model.Name;
 }
 
 <h2>@Model.Name</h2>

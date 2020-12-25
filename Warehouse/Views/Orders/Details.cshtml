@@ -1,8 +1,20 @@
 ﻿@using Warehouse.ViewModels
 @using Warehouse.BusinessLogicLayer.Extensions;
 @model OrderViewModel
+
 @{
     Layout = "_Layout";
+}
+
+@if (Model == null)
+{
+    ViewData["Title"] = "Заказ не найден";
+    <h1>Заказ не найден</h1>
+    return;
+}
+
+
+@{
     string conveyed = null;
     string recepient = null;
 }
@@ -162,7 +174,7 @@
             }
         }
         @if (User.GetUserId() == Model.Shipments.FirstOrDefault()?.RepicientApplicationUserId
-            && Model?.OrderStatuses?.First().OrderStatus.OrderStatusString == "Передан курьеру")
+           && Model?.OrderStatuses?.First().OrderStatus.OrderStatusString == "Передан курьеру")
         {
             <form method="post" action="/shipments/create">
                 <input name="OrderId" value="@Model.Id" hidden />
