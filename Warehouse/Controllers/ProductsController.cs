@@ -31,8 +31,10 @@ namespace Warehouse.Controllers
 
         public ActionResult Index(ProductFilterParams f)
         {
-            var a = _mapper.Map<IEnumerable<ProductViewModel>>(_productService.ReadMany(f));
-            return View(a);
+            var products = _mapper.Map<IEnumerable<ProductViewModel>>(_productService.ReadMany(f));
+            var viewModel = _mapper.Map<ProductFilterViewModel>(f);
+            viewModel.Products = products;
+            return View(viewModel);
         }
 
         public async Task<ActionResult> Details(int id)

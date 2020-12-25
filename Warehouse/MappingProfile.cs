@@ -34,6 +34,7 @@ namespace Warehouse
             CreateMap<SupplierOrderItemViewModel, SupplierOrderItemDTO>().ReverseMap();
             CreateMap<SupplierOrderStatusViewModel, SupplierOrderStatusDTO>().ReverseMap();
             CreateMap<SupplierOrderSupplierOrderStatusViewModel, SupplierOrderSupplierOrderStatusDTO>().ReverseMap();
+            CreateMap<ProductFilterViewModel, ProductFilterParams>().ReverseMap();
 
         }
     }

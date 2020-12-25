@@ -1,5 +1,5 @@
 ﻿@using Warehouse.ViewModels;
-@model IEnumerable<ProductViewModel>
+@model ProductFilterViewModel
 @{
     ViewData["Title"] = "Index";
     Layout = "_Layout";
@@ -18,7 +18,51 @@
     </div>
 </div>
 
-@foreach (var p in Model)
-{
-    @await Html.PartialAsync("_ProductCardPartial", p)
-}
+<div class="row">
+    <div class="col-lg-9">
+        @foreach (var p in Model.Products)
+        {
+            @await Html.PartialAsync("_ProductCardPartial", p)
+        }
+    </div>
+    <div class="col-lg-3">
+        <form method="get">
+            <div class="form-group">
+                <label>Имя</label>
+                <input class="form-control" name="Name" value="@Model.Name" />
+            </div>
+
+            <div class="form-group">
+                <label>Id</label>
+                @{ 
+                    string id = Model.Ids.Any() ? Model.Ids.FirstOrDefault().ToString() : "";
+                }
+                <input class="form-control" name="Ids" value="@id" />
+            </div>
+
+            <div class="form-group">
+                <label>В наличии от</label>
+                <input class="form-control" name="MinCount" type="number" min="0" value="@Model.MinCount" />
+            </div>
+            <div class="form-group">
+                <label>В наличии до</label>
+                <input class="form-control" name="MaxCount" type="number" min="0" value="@Model.MaxCount" />
+            </div>
+
+            <div class="form-group">
+                <label>Вес от</label>
+                <input class="form-control" name="MinWeight" type="number" min="0" value="@Model.MinWeight" />
+            </div>
+            <div class="form-group">
+                <label>Вес до</label>
+                <input class="form-control" name="MaxWeight" type="number" min="0" value="@Model.MaxWeight" />
+            </div>
+
+            <div class="row justify-content-center">
+                <button type="submit" class="btn btn-primary">Найти</button>
+                <a class="btn btn-primary ml-3" asp-controller="Products" asp-action="Index">Сбросить</a>
+            </div>
+        </form>
+
+    </div>
+</div>
