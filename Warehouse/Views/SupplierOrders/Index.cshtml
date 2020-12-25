@@ -9,5 +9,5 @@
 
 @foreach(var o in Model)
 {
-    <p><a asp-action="Details" asp-controller="SupplierOrders" asp-route-id="@o.Id">№@o.Id @o.DateTime.ToString("dd MM yyyy")</a></p>
+    <p><a asp-action="Details" asp-controller="SupplierOrders" asp-route-id="@o.Id">Заказ №@o.Id. @o.DateTime @o.ResultPrice</a></p>
 }

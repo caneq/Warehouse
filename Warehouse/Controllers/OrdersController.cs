@@ -26,13 +26,15 @@ namespace Warehouse.Controllers
         private readonly IOrderService _orderService;
         private readonly IProductService _productService;
         private readonly IOrderStatusesService _orderStatusesService;
+        private readonly IApplicationUserService _userService;
         public OrdersController(IOrderService orderService, IProductService productService,
-            IOrderStatusesService orderStatusesService, IMapper mapper)
+            IOrderStatusesService orderStatusesService, IMapper mapper, IApplicationUserService userService)
         {
             _mapper = mapper;
             _orderService = orderService;
             _productService = productService;
             _orderStatusesService = orderStatusesService;
+            _userService = userService;
         }
 
         // GET: Orders
@@ -57,23 +59,21 @@ namespace Warehouse.Controllers
         // GET: Orders/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            var users = new ApplicationUserViewModel[] {
-                new ApplicationUserViewModel{ Id = "304bef4a-d060-40c0-9794-999984f304d5", UserName = "Courier1@gmail.com"},
-            };
+            //var users = new ApplicationUserViewModel[] {
+            //    new ApplicationUserViewModel{ Id = "304bef4a-d060-40c0-9794-999984f304d5", UserName = "Courier1@gmail.com"},
+            //};
+            var users = _mapper.Map<IEnumerable<ApplicationUserViewModel>>(_userService.ReadMany(new ApplicationUserFilterParams { UserNameContains = "courier" }));
             ViewBag.Couriers = new SelectList(users, "Id", "UserName");
             return View(_mapper.Map<OrderViewModel>(await _orderService.ReadAsync(User, id)));
         }
 
-        // GET: Orders/Create
         public ActionResult Create([FromQuery] int[] ids)
         {
             IEnumerable<ProductViewModel> products = _mapper.Map<IEnumerable<ProductViewModel>>(_productService.ReadMany(new ProductFilterParams { Ids = ids }));
             return View(products);
         }
 
-        // POST: Orders/Create
         [HttpPost]
-        //[ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(IFormCollection collection)
         {
             IEnumerable<ProductDTO> products = null; 
@@ -97,13 +97,12 @@ namespace Warehouse.Controllers
             }
         }
 
-        // GET: Orders/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Orders/Edit/5
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -142,7 +141,6 @@ namespace Warehouse.Controllers
             }
         }
 
-        // GET: Orders/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
@@ -154,14 +152,12 @@ namespace Warehouse.Controllers
                 _orderService.ReadMany(User, new OrderFilterParams { OrderStatus = await _orderStatusesService.GetByStatusStringAsync("Ожидание доставки") })));
         }
 
-        // POST: Orders/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
             try
             {
-                // TODO: Add delete logic here
 
                 return RedirectToAction(nameof(Index));
             }

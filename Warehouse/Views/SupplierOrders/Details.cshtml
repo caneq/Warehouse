@@ -1,8 +1,169 @@
 ﻿@using Warehouse.ViewModels
+@using Warehouse.BusinessLogicLayer.Extensions;
 @model SupplierOrderViewModel
 
 @{
     Layout = "_Layout";
 }
 
-@Html.DisplayForModel()
+@if (Model != null)
+{
+    ViewData["Title"] = $"Детали заказа {Model?.Id}";
+    <h3>Заказ №@Model.Id <small class="text-muted">@Model.DateTime.ToString("HH:mm dd MMMM yyyy")</small></h3>
+
+    <div class="card margin-bottom-15px col-lg-9">
+        <div class="card-body">
+
+            <div>
+                @foreach (var orderItem in Model.Items)
+                {
+                    <div class="card card-secondary lg-12">
+                        <div class="row no-gutters">
+                            <div class="col-lg-2">
+                                <img src="@orderItem.Product.Pictures.FirstOrDefault()" class="card-img" alt="...">
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="card-body">
+                                    <h6 class="card-title"><a asp-controller="Products" asp-action="Details" asp-route-id="@orderItem.Product.Id">@orderItem.Product.Name</a></h6>
+                                    <p class="card-text" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">@orderItem.Product.Description</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <h6><b>@orderItem.Price</b></h6>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+            <p>Итоговая стоимость: <b>@Model.ResultPrice</b></p>
+
+        </div>
+
+
+        <div class="d-flex justify-content-center margin-bottom-15px">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="card-title">История состояний заказа:</div>
+                    <table class="card-body">
+                        @foreach (var os in Model?.Statuses)
+                        {
+                            <tr>
+                                <td>
+                                    <p class="card-text"><small>@os.DateTime.ToString("dd.MM.yyyy HH:mm")</small></p>
+                                </td>
+                                <td>
+                                    <p class="card-text">@os.SupplierOrderStatus.String</p>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+        @if (User.Identity.Name == "StoreKeeper1@gmail.com" || User.Identity.Name == "Adm1n@gmail.com")
+        {
+            <div class="d-flex justify-content-center margin-bottom-15px">
+                <div class="col-lg-9">
+                    <div class="card">
+                        <div class="card-title">История прием-передач:</div>
+                        @*<table class="card-body">
+                                <tr><th>Дата</th><th>Отдал</th><th>Получил</th></tr>
+                                @foreach (var shipment in Model?.Shipments)
+                                {
+                                    conveyed = shipment.Conveyed?.UserName ?? shipment.ConveyedName;
+                                    recepient = shipment.Repicient?.UserName ?? shipment.RepicientName;
+
+                                    <tr>
+                                        <td>
+                                            <p class="card-text"><small>@shipment.DateTime.ToString("dd.MM.yyyy HH:mm")</small></p>
+                                        </td>
+                                        <td>
+                                            <p class="card-text">@conveyed</p>
+                                        </td>
+                                        <td>
+                                            <p class="card-text">@recepient</p>
+                                        </td>
+                                        <td>
+                                            <a asp-controller="Shipments" asp-action="DownloadDocx" asp-route-id="@shipment.Id">
+                                                <i class="far fa-file-word" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </table>*@
+                    </div>
+                </div>
+            </div>
+
+            @if (Model?.Statuses?.First().SupplierOrderStatus.String == "Ожидание доставки")
+            {
+                <form method="post" action="/shipments/create">
+                    <input name="OrderId" value="@Model.Id" hidden />
+                    <input name="ConveyedApplicationUserId" value="@User.GetUserId()" hidden />
+                    <div class="row">
+                        <div class="col">
+                            @Html.DropDownList("RepicientApplicationUserId", ViewBag.Couriers as SelectList, new { @class = "form-control" })
+                        </div>
+                        <div class="col">
+                            <button type="submit" class="btn btn-primary">Отдать курьеру</button>
+                        </div>
+                    </div>
+                </form>
+                <form method="post" action="/shipments/create">
+                    <input name="OrderId" value="@Model.Id" hidden />
+                    <input name="OrderId" value="@Model.Id" hidden />
+                    <div class="row">
+                        <div class="col-12">
+                            <h3>Добавить прием-передачу</h3>
+                            <hr class="mt-1">
+                        </div>
+                        <div class="col-12">
+
+                            <div class="row mx-4">
+                                <div class="col-12 mb-2">
+                                    <label class="order-form-label">ФИО Отдающий</label>
+                                </div>
+                                <div class="col-12 col-sm-12">
+                                    <input name="СonveyedName" class="order-form-input" placeholder="Иванов Иван Иванович" required>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3 mx-4">
+                                <div class="col-12">
+                                    <label class="order-form-label">ФИО Получатель</label>
+                                </div>
+                                <div class="col-12">
+                                    <input name="RepicientName" class="order-form-input" placeholder="Иванов Иван Иванович" required>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-12">
+                                    <button type="submit" id="btnSubmit" class="btn btn-primary d-block mx-auto btn-submit">Добавить</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            }
+        }
+        @if (User.Identity.Name == "Accountant1@gmail.com" || User.Identity.Name == "Adm1n@gmail.com")
+        {
+
+            @if (Model?.Statuses?.First().SupplierOrderStatus.String == "Ожидание оплаты")
+            {
+                <form method="post" action="/orders/setPayed">
+                    <input name="id" value="@Model.Id" hidden />
+                    <button type="submit" class="btn btn-primary btn-md active">Оплачен</button>
+                </form>
+            }
+        }
+    </div>
+}
+else
+{
+    <h1>Заказ не найден</h1>
+    ViewData["Title"] = "Заказ не найден";
+}
