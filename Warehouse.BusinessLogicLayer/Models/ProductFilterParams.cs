@@ -14,25 +14,35 @@ namespace Warehouse.BusinessLogicLayer.Models
         public string Name { get; set; }
         public int? MaxCount { get; set; }
         public int? MinCount { get; set; }
-        public UnitDTO Unit { get; set; }
+        public int? UnitId { get; set; }
         public float? MinWeight { get; set; }
         public float? MaxWeight { get; set; }
         public int? ManufactureCountryId { get; set; }
 
         internal Expression<Func<Product, bool>> GetLinqExpression()
         {
-            return (Product p) => p.CountInStock > (MinCount ?? int.MinValue) &&
-                p.CountInStock < (MaxCount ?? int.MaxValue) &&
-                p.Weight < (MaxWeight ?? float.MaxValue) &&
-                (Ids != null ? Ids.Contains(p.Id) : true);
+            return (Product p) =>
+                    (Ids != null && Ids.Any() ? Ids.Contains(p.Id) : true) &&
+                    (MaxCount != null ? p.CountInStock < MaxCount : true) &&
+                    (MinCount != null ? p.CountInStock > MinCount : true) &&
+                    (UnitId != null ? p.UnitId == UnitId : true) &&
+                    (MinWeight != null ? p.Weight > MinWeight : true) &&
+                    (MaxWeight != null ? p.Weight < MaxWeight : true) &&
+                    (ManufactureCountryId != null ? p.ManufactureCountryId == ManufactureCountryId : true) &&
+                    (Name != null ? p.Name.Contains(Name, StringComparison.OrdinalIgnoreCase) : true);
         }
 
         internal Func<Product, bool> GetFuncPredicate()
         {
-            return (Product p) => p.CountInStock > (MinCount ?? int.MinValue) &&
-                p.CountInStock < (MaxCount ?? int.MaxValue) &&
-                p.Weight < (MaxWeight ?? float.MaxValue) &&
-                (Ids != null ? Ids.Contains(p.Id) : true);
+            return (Product p) =>
+                    (Ids != null && Ids.Any() ? Ids.Contains(p.Id) : true) &&
+                    (MaxCount != null ? p.CountInStock < MaxCount : true) &&
+                    (MinCount != null ? p.CountInStock > MinCount : true) &&
+                    (UnitId != null ? p.UnitId == UnitId : true) &&
+                    (MinWeight != null ? p.Weight > MinWeight : true) &&
+                    (MaxWeight != null ? p.Weight < MaxWeight : true) &&
+                    (ManufactureCountryId != null ? p.ManufactureCountryId == ManufactureCountryId : true) &&
+                    (Name != null ? p.Name.Contains(Name, StringComparison.OrdinalIgnoreCase) : true);
         }
     }
 }

@@ -1,8 +1,19 @@
 ﻿@using Warehouse.ViewModels
 @model ClientRequestViewModel
-@{
+
+@{ 
     Layout = "_Layout";
-    ViewData["Title"] = "Запрос №1. Состояние заказа";
+}
+
+@if (Model == null)
+{
+    ViewData["Title"] = "Запрос не найден";
+    <h1>Запрос не найден</h1>
+    return;
+}
+
+@{
+    ViewData["Title"] = $"Запрос №{Model.Id}. {Model.Title}";
 
     string completedText;
     string badgeClass;
