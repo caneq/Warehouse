@@ -19,17 +19,27 @@ namespace Warehouse.BusinessLogicLayer.Services
     {
         private readonly ISupplierOrderRepository _repo;
         private readonly IMapper _mapper;
-        public SupplierOrderService(ISupplierOrderRepository repo, IMapper mapper)
+        private readonly ISupplierOrderStatusService _statusService;
+        public SupplierOrderService(ISupplierOrderRepository repo, IMapper mapper, ISupplierOrderStatusService statusService)
         {
             _repo = repo;
             _mapper = mapper;
+            _statusService = statusService;
         }
         public async Task Create(ClaimsPrincipal User, SupplierOrderDTO order)
         {
             order.UserId = User.GetUserId();
             order.DateTime = DateTime.Now;
-            order.ResultPrice = new Price(order.Items.Sum(p => p.Price.Penny));
+            order.ResultPrice = new Price(order.Items.Sum(p => p.Price.Penny * p.Number));
+            var status = new SupplierOrderSupplierOrderStatusDTO
+            {
+                DateTime = DateTime.Now,
+                SupplierOrderStatusId = (await _statusService.GetOrCreateByStatusStringAsync("Ожидание оплаты")).Id,
+            };
+            order.Statuses = new List<SupplierOrderSupplierOrderStatusDTO> { status };
+
             await _repo.CreateAsync(_mapper.Map<SupplierOrder>(order));
+
         }
 
         public async Task<SupplierOrderDTO> ReadAsync(ClaimsPrincipal User, int id)

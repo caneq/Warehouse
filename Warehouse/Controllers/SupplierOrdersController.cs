@@ -22,19 +22,33 @@ namespace Warehouse.Controllers
         private readonly ISupplierService _supplierService;
         private readonly ISupplierOrderService _supplierOrderService;
         private readonly IProductService _productService;
+        private readonly ISupplierOrderStatusService _supplierOrderStatusService;
         private readonly IMapper _mapper;
         public SupplierOrdersController(IMapper mapper, ISupplierService supplierService,
-            ISupplierOrderService supplierOrderService, IProductService productService)
+            ISupplierOrderService supplierOrderService, IProductService productService,
+            ISupplierOrderStatusService supplierOrderStatusService)
         {
             _mapper = mapper;
             _supplierService = supplierService;
             _supplierOrderService = supplierOrderService;
             _productService = productService;
+            _supplierOrderStatusService = supplierOrderStatusService;
         }
         public ActionResult Index()
         {
             var orders = _mapper.Map<IEnumerable<SupplierOrderViewModel>>(_supplierOrderService.ReadMany(User));
             return View(orders);
+        }
+        public ActionResult Unpaid()
+        {
+            var orders = _mapper.Map<IEnumerable<SupplierOrderViewModel>>(_supplierOrderService.ReadMany(User, 
+                new SupplierOrderFilterParams { Status = "Ожидание оплаты" }));
+            return View(orders);
+        }
+        public async Task<ActionResult> Pay(int id)
+        {
+            var order = _mapper.Map<SupplierOrderViewModel>(await _supplierOrderService.ReadAsync(User, id));
+            return View(order);
         }
 
         public async Task<ActionResult> Details(int id)
@@ -60,7 +74,7 @@ namespace Warehouse.Controllers
                 var supplierId = int.Parse(collection["SupplierId"].FirstOrDefault());
                 var itemsIds = collection["Items"].Select(i => int.Parse(i));
                 var Counts = collection["Counts"].Select(i => int.Parse(i));
-                var Prices = collection["Counts"].Select(i => Price.Parse(i));
+                var Prices = collection["Prices"].Select(i => Price.Parse(i));
 
                 var items = itemsIds.Zip(Counts).Zip(Prices).Select((idCountPrice) => new SupplierOrderItemDTO
                 {
@@ -86,6 +100,21 @@ namespace Warehouse.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddStatus(int id, string status)
+        {
+            try
+            {
+                await _supplierOrderStatusService.SetByStatusString(id, status, User);
+                return RedirectToAction(nameof(Details), new { id });
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Details), new { id });
+            }
+
         }
 
         public ActionResult Edit(int id)

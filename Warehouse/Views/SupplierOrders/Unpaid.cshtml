@@ -1,0 +1,13 @@
+﻿@using Warehouse.ViewModels
+@model IEnumerable<SupplierOrderViewModel>
+@{
+    ViewData["Title"] = "Не оплаченные заказы у поставщиков ";
+    Layout = "_Layout";
+}
+
+<h2>Не оплаченные заказы у поставщиков:</h2>
+
+@foreach (var o in Model)
+{
+    <p><a asp-action="Details" asp-controller="SupplierOrders" asp-route-id="@o.Id">Заказ №@o.Id. @o.DateTime @o.ResultPrice</a></p>
+}

@@ -33,7 +33,16 @@ namespace Warehouse.BusinessLogicLayer.Services
             var res = await _repo.ReadAsync(s => s.String == statusString);
             return _mapper.Map<SupplierOrderStatusDTO>(res);
         }
-
+        public async Task<SupplierOrderStatusDTO> GetOrCreateByStatusStringAsync(string statusString)
+        {
+            var res = await _repo.ReadAsync(s => s.String == statusString);
+            if (res == null)
+            {
+                await _repo.CreateAsync(new SupplierOrderStatus { String = statusString });
+                res = await _repo.ReadAsync(s => s.String == statusString);
+            }
+            return _mapper.Map<SupplierOrderStatusDTO>(res);
+        }
         public async Task SetByStatusString(int orderId, string statusString, ClaimsPrincipal User)
         {
             var order = await _supplierOrderRepository.ReadAsync(o => o.Id == orderId);

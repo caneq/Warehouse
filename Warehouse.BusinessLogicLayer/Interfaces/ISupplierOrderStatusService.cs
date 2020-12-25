@@ -10,6 +10,7 @@ namespace Warehouse.BusinessLogicLayer.Interfaces
     public interface ISupplierOrderStatusService
     {
         Task<SupplierOrderStatusDTO> GetByStatusStringAsync(string statusString);
+        Task<SupplierOrderStatusDTO> GetOrCreateByStatusStringAsync(string statusString);
         Task CreateAsync(SupplierOrderStatusDTO orderStatus);
         Task SetByStatusString(int orderId, string status, ClaimsPrincipal User);
     }

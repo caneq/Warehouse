@@ -1,0 +1,91 @@
+﻿@using Warehouse.ViewModels
+@model SupplierOrderViewModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Заказать у поставщиков";
+}
+
+<section class="order-form my-4 mx-4 col-lg-9">
+    <div class="container pt-4">
+
+        <div class="row">
+            <div class="col-12">
+                <h3>Оплатить заказ у поставщика</h3>
+                <hr class="mt-1">
+            </div>
+            <div class="col-12">
+
+                <div class="row mt-7 mx-4">
+                    <div class="col-12 col-sm-8">
+                        <label class="order-form-label">Поставщик</label>
+                        <input class="order-form-input" value="@Model.Supplier.Name" placeholder="" readonly>
+                    </div>
+                </div>
+
+                <div class="row mt-7 mx-4">
+                    <div class="col-12 col-sm-8">
+                        <label class="order-form-label">Реквизиты</label>
+                        <textarea class="order-form-input" placeholder="" readonly>@Model.Supplier.PaymentDetails</textarea>
+                    </div>
+                </div>
+
+
+
+                <div class="row mt-7 mx-4">
+
+                    @foreach (var item in Model.Items)
+                    {
+
+                        <div class="col-sm-8">
+                            <label class="order-form-label">Товар</label>
+                            <input class="order-form-input" value="@item.Product.Name" readonly>
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="order-form-label">Цена</label>
+                            <input class="order-form-input" value="@item.Price.RoublesString" readonly>
+                        </div>
+                        <div class="col-sm-2">
+                            <label class="order-form-label">Количество</label>
+                            <input class="order-form-input" value="@item.Number" type="number" placeholder="" readonly>
+                        </div>
+
+                    }
+
+                </div>
+
+
+                <div class="row mt-2 mx-4">
+                    <div class="col-12 col-sm-8">
+                        <b>Итоговая стоимость: @Model.ResultPrice</b>
+                    </div>
+                </div>
+
+                <div class="row mt-2 mx-4">
+                    <div class="col-12 col-sm-8">
+                        @if (Model.Statuses.FirstOrDefault()?.SupplierOrderStatus?.String == "Ожидание оплаты")
+                        {
+                            <p class="text-danger"><b>Статус: не оплачено</b></p>
+                        }
+                        else
+                        {
+                            <p class="text-success"><b>Статус: оплачено</b></p>
+                        }
+                    </div>
+                </div>
+                @if (Model.Statuses.FirstOrDefault().SupplierOrderStatus.String == "Ожидание оплаты")
+                {
+                    <form method="post" asp-action="AddStatus" asp-controller="SupplierOrders" asp-route-id="@Model.Id">
+                        <input name="status" value="Оплачен" hidden/>
+                        <input name="id" value="@Model.Id" hidden/>
+                        <div class="row mt-3 justify-content-center">
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-primary d-block mx-auto btn-submit">Оплачен</button>
+                            </div>
+                        </div>
+                    </form>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>
