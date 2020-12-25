@@ -59,7 +59,7 @@ namespace Warehouse.BusinessLogicLayer.Services
                 DateTime = DateTime.Now 
             });
 
-            if(User.Identity.Name.Contains("User", StringComparison.OrdinalIgnoreCase))
+            if(User.Identity.Name == "User1@gmail.com")
             {
                 request.ManagersUnreadMessagesCount++;
             }
