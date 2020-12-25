@@ -11,12 +11,14 @@ namespace Warehouse.BusinessLogicLayer.Models
     public class OrderFilterParams
     {
         public string UserId { get; set; }
-        public OrderStatusDTO OrderStatus { get; set; }
+        public int? OrderStatusId { get; set; }
+        public string OrderStatusString { get; set; }
         public string LastShippedForUserId { get; set; }
         internal Expression<Func<Order, bool>> GetLinqExpression()
         {
             return (Order p) => (UserId != null ? p.UserId == UserId : true) &&
-                (OrderStatus != null ? p.OrderStatuses.OrderByDescending(s => s.DateTime).FirstOrDefault().OrderStatusId == OrderStatus.Id : true) &&
+                (OrderStatusId != null ? p.OrderStatuses.OrderByDescending(s => s.DateTime).FirstOrDefault().OrderStatusId == OrderStatusId : true) &&
+                (OrderStatusString != null ? p.OrderStatuses.OrderByDescending(s => s.DateTime).FirstOrDefault().OrderStatus.OrderStatusString == OrderStatusString : true) &&
                 (LastShippedForUserId != null ? (p.Shipments.Any() ? p.Shipments.OrderByDescending(s => s.DateTime).FirstOrDefault().RepicientApplicationUserId == LastShippedForUserId : false) : true)
                 ;
         }
@@ -24,7 +26,8 @@ namespace Warehouse.BusinessLogicLayer.Models
         internal Func<Order, bool> GetFuncPredicate()
         {
             return (Order p) => (UserId != null ? p.UserId == UserId : true) &&
-                (OrderStatus != null ? p.OrderStatuses.OrderByDescending(s => s.DateTime).FirstOrDefault().OrderStatusId == OrderStatus.Id : true) &&
+                (OrderStatusId != null ? p.OrderStatuses.OrderByDescending(s => s.DateTime).FirstOrDefault().OrderStatusId == OrderStatusId : true) &&
+                (OrderStatusString != null ? p.OrderStatuses.OrderByDescending(s => s.DateTime).FirstOrDefault().OrderStatus.OrderStatusString == OrderStatusString : true) &&
                 (LastShippedForUserId != null ? (p.Shipments.Any() ? p.Shipments.OrderByDescending(s => s.DateTime).FirstOrDefault().RepicientApplicationUserId == LastShippedForUserId : false) : true)
                 ;
         }

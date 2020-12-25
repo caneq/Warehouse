@@ -27,7 +27,7 @@ namespace Warehouse.Controllers
 
         public IActionResult Deliver()
         {
-            return View(_mapper.Map<IEnumerable<OrderViewModel>>(_service.ReadMany(User, new OrderFilterParams { LastShippedForUserId = User.GetUserId() })));
+            return View(_mapper.Map<IEnumerable<OrderViewModel>>(_service.ReadMany(User, new OrderFilterParams { LastShippedForUserId = User.GetUserId(), OrderStatusString = "Передан курьеру" })));
         }
     }
 }

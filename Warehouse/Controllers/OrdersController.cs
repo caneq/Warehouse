@@ -16,6 +16,7 @@ using Warehouse.BusinessLogicLayer.Interfaces;
 using Warehouse.BusinessLogicLayer.Models;
 using Warehouse.BusinessLogicLayer.Exceptions;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Warehouse.BusinessLogicLayer.Extensions;
 
 namespace Warehouse.Controllers
 {
@@ -37,7 +38,6 @@ namespace Warehouse.Controllers
             _userService = userService;
         }
 
-        // GET: Orders
         [Authorize]
         public ActionResult Index()
         {
@@ -47,7 +47,7 @@ namespace Warehouse.Controllers
         public async Task<ActionResult> Unpaid()
         {
             return View(_mapper.Map<IEnumerable<OrderViewModel>>(
-                _orderService.ReadMany(User, new OrderFilterParams { OrderStatus = await _orderStatusesService.GetByStatusStringAsync("Ожидание оплаты") })));
+                _orderService.ReadMany(User, new OrderFilterParams { OrderStatusString = "Ожидание оплаты" })));
         }
 
         public IActionResult All()
@@ -56,12 +56,8 @@ namespace Warehouse.Controllers
                 _orderService.ReadMany(User, new OrderFilterParams {})));
         }
 
-        // GET: Orders/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            //var users = new ApplicationUserViewModel[] {
-            //    new ApplicationUserViewModel{ Id = "304bef4a-d060-40c0-9794-999984f304d5", UserName = "Courier1@gmail.com"},
-            //};
             var users = _mapper.Map<IEnumerable<ApplicationUserViewModel>>(_userService.ReadMany(new ApplicationUserFilterParams { UserNameContains = "courier" }));
             ViewBag.Couriers = new SelectList(users, "Id", "UserName");
             return View(_mapper.Map<OrderViewModel>(await _orderService.ReadAsync(User, id)));
@@ -146,10 +142,10 @@ namespace Warehouse.Controllers
             return View();
         }
 
-        public async Task<ActionResult> Deliver(int id)
+        public ActionResult Deliver(int id)
         {
             return View(_mapper.Map<IEnumerable<OrderViewModel>>(
-                _orderService.ReadMany(User, new OrderFilterParams { OrderStatus = await _orderStatusesService.GetByStatusStringAsync("Ожидание доставки") })));
+                _orderService.ReadMany(User, new OrderFilterParams { OrderStatusString = "Ожидание доставки"})));
         }
 
         [HttpPost]
