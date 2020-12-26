@@ -1,37 +1,59 @@
-﻿
-<ul class="list-unstyled components">
-    <li><a asp-controller="Orders" asp-action="Index">Мои заказы</a></li>
-    <li><a asp-controller="Cart" asp-action="Index">Моя корзина</a></li>
-    <li><a asp-controller="ClientRequests" asp-action="Index">Мои запросы</a></li>
-</ul>
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <ul class="list-unstyled components">
+        <li><a asp-controller="Orders" asp-action="Index">Мои заказы</a></li>
+        <li><a asp-controller="Cart" asp-action="Index">Моя корзина</a></li>
+        <li><a asp-controller="ClientRequests" asp-action="Index">Мои запросы</a></li>
+    </ul>
 
-<p>Кладовщик</p>
-<ul class="list-unstyled components">
-    <li><a asp-controller="Products" asp-action="Create">Оформить</a></li>
-    <li><a asp-controller="Orders" asp-action="Deliver">Ожидают доставку</a></li>
-</ul>
 
-<p>Курьер</p>
-<ul class="list-unstyled components">
-    <li><a asp-controller="Courier" asp-action="Deliver">Я доставляю</a></li>
-    <li><a asp-controller="Orders" asp-action="Deliver">Ожидают доставку</a></li>
-</ul>
+    @if (User.Identity.Name == "StoreKeeper1@gmail.com"
+      || User.Identity.Name == "Adm1n@gmail.com")
+    {
+        <p>Кладовщик</p>
+        <ul class="list-unstyled components">
+            <li><a asp-controller="Products" asp-action="Create">Оформить</a></li>
+            <li><a asp-controller="Orders" asp-action="Deliver">Ожидают доставку</a></li>
+        </ul>
+    }
 
-<p>Менеджер по клиентам</p>
-<ul class="list-unstyled components">
-    <li><a asp-controller="ClientRequests" asp-action="Filter">Запросы</a></li>
-</ul>
+    @if (User.Identity.Name == "Courier1@gmail.com"
+      || User.Identity.Name == "Adm1n@gmail.com")
+    {
+        <p>Курьер</p>
+        <ul class="list-unstyled components">
+            <li><a asp-controller="Courier" asp-action="Deliver">Я доставляю</a></li>
+            <li><a asp-controller="Orders" asp-action="Deliver">Ожидают доставку</a></li>
+        </ul>
+    }
 
-<p>Менеджер по закупкам</p>
-<ul class="list-unstyled components">
-    <li><a asp-controller="Supplier" asp-action="Index">Поставщики</a></li>
-    <li><a asp-controller="SupplierOrders" asp-action="Create">Заказать у поставщика</a></li>
-    <li><a asp-controller="SupplierOrders" asp-action="Index">Заказы у поставщиков</a></li>
-</ul>
+    @if (User.Identity.Name == "UsersManager1@gmail.com"
+      || User.Identity.Name == "Adm1n@gmail.com")
+    {
+        <p>Менеджер по клиентам</p>
+        <ul class="list-unstyled components">
+            <li><a asp-controller="ClientRequests" asp-action="Filter">Запросы</a></li>
+        </ul>
+    }
 
-<p>Бухгалтер</p>
-<ul class="list-unstyled components">
-    <li><a asp-controller="Orders" asp-action="Unpaid">Не оплаченные заказы</a></li>
-    <li><a asp-controller="SupplierOrders" asp-action="Unpaid">Не оплаченные заказы у поставщиков</a></li>
-</ul>
+    @if (User.Identity.Name == "PurchasingManager1@gmail.com"
+      || User.Identity.Name == "Adm1n@gmail.com")
+    {
+        <p>Менеджер по закупкам</p>
+        <ul class="list-unstyled components">
+            <li><a asp-controller="Supplier" asp-action="Index">Поставщики</a></li>
+            <li><a asp-controller="SupplierOrders" asp-action="Create">Заказать у поставщика</a></li>
+            <li><a asp-controller="SupplierOrders" asp-action="Index">Заказы у поставщиков</a></li>
+        </ul>
+    }
 
+    @if (User.Identity.Name == "Accountant1@gmail.com"
+      || User.Identity.Name == "Adm1n@gmail.com")
+    {
+        <p>Бухгалтер</p>
+        <ul class="list-unstyled components">
+            <li><a asp-controller="Orders" asp-action="Unpaid">Не оплаченные заказы</a></li>
+            <li><a asp-controller="SupplierOrders" asp-action="Unpaid">Не оплаченные заказы у поставщиков</a></li>
+        </ul>
+    }
+}
