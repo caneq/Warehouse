@@ -20,10 +20,12 @@ namespace Warehouse.BusinessLogicLayer.Services
     {
         private readonly IOrderRepository _repo;
         private readonly IMapper _mapper;
-        public OrderService(IOrderRepository repo, IMapper mapper)
+        private readonly IProductService _productService;
+        public OrderService(IOrderRepository repo, IMapper mapper, IProductService productService)
         {
             _repo = repo;
             _mapper = mapper;
+            _productService = productService;
         }
 
         private void _checkAccess(ClaimsPrincipal User, string userId)
@@ -50,10 +52,20 @@ namespace Warehouse.BusinessLogicLayer.Services
             userId = userId ?? User.GetUserId();
             _checkAccess(User, userId);
 
+            var productsList = products.Select(async p =>
+            {
+                var prod = await _productService.ReadAsync(p.Id);
+                prod.CountInStock--;
+                await _productService.UpdateAsync(prod);
+                return new OrderItem { Price = prod.Price, ProductId = prod.Id };
+            });
+
+            var pList = await Task.WhenAll(productsList);
+
             Order order = new Order
             {
                 UserId = userId,
-                Items = products.Select(p => new OrderItem { Price = p.Price, ProductId = p.Id }).ToList(),
+                Items = pList.ToList(),
                 OrderDate = DateTime.Now,
                 TotalPrice = new ClassLibrary.Price(products.Sum(p => p.Price.Penny)),
                 OrderStatuses = new List<OrderOrderStatus>

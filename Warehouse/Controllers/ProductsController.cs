@@ -31,6 +31,7 @@ namespace Warehouse.Controllers
 
         public ActionResult Index(ProductFilterParams f)
         {
+            if (f.MinCount == null) f.MinCount = 1;
             var products = _mapper.Map<IEnumerable<ProductViewModel>>(_productService.ReadMany(f));
             var viewModel = _mapper.Map<ProductFilterViewModel>(f);
             viewModel.Products = products;
